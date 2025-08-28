@@ -1,235 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Free AI Tools</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <meta name="description" content="Explore a collection of the best and most popular free AI tools for writing, design, coding, and more.">
-  <meta name="keywords" content="Free AI Tools, AI website, AI, ChatGPT, Gemini, DeepSeek, Copilot, Claude, Sora, Perplexity, Notion AI, Canva AI, ElevenLabs, GPT-5">
-  <meta name="author" content="MMTV SPORT">
-  <meta name="robots" content="index, follow">
-  <meta name="google-adsense-account" content="ca-pub-9712880367116888">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9712880367116888" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Thuwanawaddy Taxi Service</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    :root {
-      --bg-color: #1a1a1a;
-      --text-color: #ffffff;
-      --card-bg: #2d2d2d;
-      --accent-color: #FFD700;
-    }
-
-    [data-theme="light"] {
-      --bg-color: #f0f0f0;
-      --text-color: #333333;
-      --card-bg: #ffffff;
-      --accent-color: #007bff;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      font-size: 16px; /* Fixed Font Size */
-      transition: all 0.3s ease;
-      padding: 60px 20px 80px;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    body[data-theme="dark"] {
-      --text-color: #FFD700; /* All Text Gold in Dark Mode */
-    }
-
-    h1, h2, h3, h4, h5, h6, p, a, button, span, div, figcaption {
-      color: inherit;
-      font-size: 16px; /* Fixed Font Size */
-    }
-
-    .content-wrap {
-      flex: 1;
-    }
-
-    .theme-switcher, .sidebar-toggle, .history-back-btn {
-      position: fixed;
-      z-index: 999;
-      background: var(--card-bg);
-      border: 2px solid var(--accent-color);
-      color: var(--accent-color);
-      border-radius: 25px;
-      padding: 8px 15px;
-      cursor: pointer;
-    }
-
-    .theme-switcher { top: 20px; right: 20px; }
-    .sidebar-toggle { top: 20px; left: 20px; }
-    .history-back-btn { bottom: 20px; right: 20px; }
-
     .sidebar {
-      position: fixed;
-      top: 0;
-      left: -250px;
-      width: 250px;
       height: 100vh;
-      background: var(--card-bg);
-      transition: left 0.3s ease;
-      padding-top: 60px;
-      z-index: 998;
+      transition: transform 0.3s ease-in-out;
     }
-
-    .sidebar.active {
-      left: 0;
+    .sidebar.hidden {
+      transform: translateX(-100%);
     }
-
-    .sidebar a {
-      display: flex;
-      align-items: center;
-      padding: 15px;
-      color: var(--accent-color);
-      text-decoration: none;
+    @media (min-width: 1024px) {
+      .sidebar {
+        transform: translateX(0) !important;
+      }
+      #menu-toggle {
+        display: none !important;
+      }
     }
-
-    .sidebar a:hover {
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    #overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 997;
-    }
-
-    h1 {
-      text-align: center;
-      color: var(--accent-color);
-      margin-bottom: 20px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: 1rem;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    .btn2 {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      background: var(--card-bg);
-      border: none;
-      border-radius: 12px;
-      padding: 15px;
-      cursor: pointer;
-      overflow: hidden;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      transition: transform 0.2s;
-    }
-
-    .btn2:hover {
-      transform: scale(1.05);
-    }
-
-    .btn2 i {
-      color: var(--accent-color);
-      margin-bottom: 10px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: #888;
-      font-size: 0.8rem;
-    }
-
-    footer a {
-      color: var(--accent-color);
-      text-decoration: none;
-    }
-
-    /* START POPUP CSS */
-    .popup-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-    }
-    .popup-content {
-      background: var(--card-bg);
-      padding: 20px;
-      border-radius: 15px;
-      max-width: 90%;
-      width: 400px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-      position: relative;
-      animation: fadeIn 0.3s ease-out;
-      border: 2px solid var(--accent-color);
-    }
-    .popup-content h3 {
-      text-align: center;
-      margin-top: 0;
-      color: var(--accent-color);
-      font-size: 1.2rem;
-    }
-    .popup-content p {
-      line-height: 1.5;
-      font-size: 1rem;
-      color: var(--text-color);
-    }
-    .popup-buttons {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 20px;
-    }
-    .popup-close-btn, .popup-link-btn {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .popup-close-btn {
-      background-color: #555;
-      color: #fff;
-    }
-    .popup-link-btn {
-      background-color: var(--accent-color);
-      color: #000;
-      text-decoration: none;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
-    /* END POPUP CSS */
   </style>
 </head>
-<body>
+<body class="bg-gray-100 font-sans">
 
-  <button class="theme-switcher" onclick="toggleTheme()" aria-label="Toggle Theme">🌓Dark/Light</button>
-  <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Open Menu">☰ Menu</button>
-  <button class="history-back-btn" onclick="history.back()" aria-label="Go Back">←Back</button>
+  <!-- HEADER (Mobile Menu Button) -->
+  <header class="lg:hidden flex items-center justify-between bg-black p-4 fixed top-0 left-0 right-0 z-50">
+    <h1 class="text-white font-bold text-lg flex items-center">
+      <i class="fas fa-city mr-2 text-yellow-400"></i>သုဝဏ္ဏဝတီမြို့</h1>
+    <button id="menu-toggle" class="text-white text-2xl">
+      <i class="fas fa-bars"></i>
+    </button>
+  </header>
 
-  <div class="sidebar" id="sidebar">
-    <a href="index.html"><i class="fas fa-home"></i>&nbsp;Home</a>
-    <a href="about.html"><i class="fas fa-info-circle"></i>&nbsp;About</a>
-    <a href="contact.html"><i class="fas fa-phone"></i>&nbsp;Contact</a>
-    <a href="privacy.html"><i class="fas fa-lock"></i>&nbsp;Privacy</a>
-    <a href="term.html"><i>⚖️</i>Terms & Conditions</a>
-  </div>
+  <div class="flex">
+    <!-- SIDEBAR -->
+    <div id="sidebar" class="sidebar bg-gray-800 w-48 fixed top-0 left-0 lg:translate-x-0 hidden lg:block z-40">
+      <div class="p-4 flex items-center">
+        <i class="fas fa-taxi text-yellow-400 text-2xl mr-2"></i>
+        <h1 class="text-lg font-bold text-yellow-400">Thuwanawaddy</h1>
+      </div>
+      <div class="flex flex-col">
+        <a href="/" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-home mr-3"></i><span>Home</span>
+        </a>
+        <a href="mmtv/index.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-tv mr-3"></i><span>မြန်မာတီဗွီ</span>
+        </a>
+        <a href="movie/index.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-film mr-3"></i><span>မြန်မာစာတန်းထိုး</span>
+        </a>
+        <a href="freeAi.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-tools mr-3"></i><span>အေအိုင်(Ai)</span>
+        </a>
+        <a href="comingsoon.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-futbol mr-3"></i><span>ဘောလုံးပွဲ</span>
+        </a>
+        <a href="https://subuu-gq2t.vercel.app/" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-money-bill mr-3"></i><span>အွန်လိုင်ငွေရှာနည်း</span>
+        </a>
+      </div>
+    </div>
 
   <div id="overlay" onclick="toggleSidebar()"></div>
 
