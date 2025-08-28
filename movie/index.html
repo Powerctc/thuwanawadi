@@ -7,20 +7,55 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    .sidebar {
-      height: 100vh;
-      transition: transform 0.3s ease-in-out;
-    }
-    .sidebar.hidden {
-      transform: translateX(-100%);
-    }
+    .sidebar { height: 100vh; transition: transform 0.3s ease-in-out; }
+    .sidebar.hidden { transform: translateX(-100%); }
     @media (min-width: 1024px) {
-      .sidebar {
-        transform: translateX(0) !important;
-      }
-      #menu-toggle {
-        display: none !important;
-      }
+      .sidebar { transform: translateX(0) !important; }
+      #menu-toggle { display: none !important; }
+    }
+
+    /* marquee style (CSS animation, accessible) */
+    .top-marquee {
+      position: fixed;
+      top: 56px; /* below header */
+      left: 0;
+      right: 0;
+      z-index: 60;
+      background: linear-gradient(90deg, rgba(0,0,0,0.85), rgba(0,0,0,0.65));
+      color: #ffd700;
+      padding: 16px 20px;
+      overflow: hidden;
+      white-space: nowrap;
+      font-weight: 600;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+    }
+    .top-marquee .track {
+      display: inline-block;
+      padding-left: 100%;
+      animation: marquee-left 18s linear infinite;
+    }
+    @keyframes marquee-left {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* sidebar overlay for mobile */
+    #sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 50;
+    }
+
+    /* make sure main content is pushed a bit for lg */
+    main { transition: margin-left .3s ease; }
+
+    /* small responsive tweaks so marquee doesn't cover content on small screens */
+    @media (max-width: 640px) {
+      .top-marquee { font-size: 13px; top: 56px; }
     }
   </style>
 </head>
@@ -30,13 +65,21 @@
   <header class="lg:hidden flex items-center justify-between bg-black p-4 fixed top-0 left-0 right-0 z-50">
     <h1 class="text-white font-bold text-lg flex items-center">
       <i class="fas fa-city mr-2 text-yellow-400"></i>သုဝဏ္ဏဝတီမြို့</h1>
-    <button id="menu-toggle" class="text-white text-2xl">
+    <button id="menu-toggle" class="text-white text-2xl" aria-label="Open menu">
       <i class="fas fa-bars"></i>
     </button>
   </header>
 
+  <!-- MARQUEE -->
+  <div class="top-marquee" role="status" aria-live="polite">
+    <div class="track" id="marquee-text">
+      အစီအစဉ်များကြည့်ရန် Network Streaming Video Player ကို install ပြုလုပ်ရန် လိုအပ်ပါသည် — Please install the Network Streaming Video Player to watch streams.
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div id="sidebar-overlay"></div>
   <div class="flex">
-    <!-- SIDEBAR -->
     <div id="sidebar" class="sidebar bg-gray-800 w-48 fixed top-0 left-0 lg:translate-x-0 hidden lg:block z-40">
       <div class="p-4 flex items-center">
         <i class="fas fa-taxi text-yellow-400 text-2xl mr-2"></i>
@@ -64,23 +107,19 @@
       </div>
     </div>
 
-
     <!-- MAIN CONTENT -->
-    <main class="flex-1 lg:ml-56 p-6 pb-16 mt-14 lg:mt-0">
+    <main class="flex-1 lg:ml-56 p-6 pb-16 mt-24 lg:mt-0"> <!-- mt-24 to avoid header + marquee -->
       <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
-       <h2 class="text-3xl font-bold text-yellow-400">
-          
-          <span id="device-id-inline" class="text-sm text-gray-400 font-normal ml-3"></span>
-        </h2>
+       
         <div class="flex gap-2">
           <button id="movies-selector-btn" class="bg-yellow-500 text-black px-3 py-2 rounded-lg font-bold flex items-center gap-2">
-            <i class="fas fa-film"></i> Select Movies
+            <i class="fas fa-film"></i> Selector 
           </button>
           <button id="category-selector-btn" class="bg-blue-500 text-white px-3 py-2 rounded-lg font-bold flex items-center gap-2">
             <i class="fas fa-folder-open"></i> Category
           </button>
           <button id="year-group-btn" class="bg-green-500 text-white px-3 py-2 rounded-lg font-bold flex items-center gap-2">
-            <i class="fas fa-calendar-alt"></i> Group by Year
+            <i class="fas fa-calendar-alt"></i> Group
           </button>
         </div>
       </div>
@@ -100,7 +139,7 @@
     </p>
   </footer>
 
-  <!-- OVERLAY MENU -->
+  <!-- OVERLAY MENU (modal) -->
   <div id="overlay-menu" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden">
     <div class="bg-gray-900 text-white w-80 max-h-[80vh] rounded-lg shadow-lg overflow-y-auto">
       <div class="p-4 border-b border-gray-700 flex justify-between items-center">
@@ -112,12 +151,53 @@
   </div>
 
 <script>
-  // ====== Mobile Sidebar toggle ======
+  // ====== Mobile Sidebar toggle (with overlay) ======
   const toggleBtn = document.getElementById("menu-toggle");
   const sidebar = document.getElementById("sidebar");
-  if (toggleBtn) toggleBtn.addEventListener("click", () => sidebar.classList.toggle("hidden"));
+  const sidebarOverlay = document.getElementById("sidebar-overlay");
 
-  // ====== Overlay menu ======
+  function openSidebar() {
+    sidebar.classList.remove("hidden");
+    sidebarOverlay.style.display = "block";
+    // prevent body scroll when sidebar open
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeSidebar() {
+    // on lg screens, we want sidebar visible, so only add hidden if small screen
+    if (window.innerWidth < 1024) {
+      sidebar.classList.add("hidden");
+    }
+    sidebarOverlay.style.display = "none";
+    document.body.style.overflow = "";
+  }
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", () => {
+      if (sidebar.classList.contains("hidden")) openSidebar();
+      else closeSidebar();
+    });
+  }
+  // overlay click closes sidebar
+  sidebarOverlay.addEventListener("click", closeSidebar);
+
+  // handle window resize — ensure correct state (desktop keeps sidebar visible)
+  window.addEventListener("resize", () => {
+    if (window.innerWidth >= 1024) {
+      sidebar.classList.remove("hidden");
+      sidebarOverlay.style.display = "none";
+      document.body.style.overflow = "";
+    } else {
+      // keep it hidden by default on small screens
+      if (!sidebar.classList.contains("hidden")) {
+        // do nothing — user may have opened it
+      } else {
+        sidebar.classList.add("hidden");
+      }
+    }
+  });
+
+  // ====== Overlay menu (modal) ======
   const overlayMenu = document.getElementById("overlay-menu");
   const overlayTitle = document.getElementById("overlay-title");
   const overlayList = document.getElementById("overlay-list");
@@ -144,10 +224,16 @@
   function closeOverlay() { overlayMenu.classList.add("hidden"); }
 
   async function loadMovies(file) {
-    const res = await fetch(file);
-    currentMovies = await res.json();
-    filteredMovies = [...currentMovies];
-    displayMovies(filteredMovies);
+    try {
+      const res = await fetch(file);
+      if (!res.ok) throw new Error('Failed to load');
+      currentMovies = await res.json();
+      filteredMovies = [...currentMovies];
+      displayMovies(filteredMovies);
+    } catch (e) {
+      console.error(e);
+      alert('Unable to load movie list. Check network or file path.');
+    }
   }
 
   function displayMovies(movies) {
@@ -175,7 +261,7 @@
 
   // Overlay buttons
   document.getElementById("movies-selector-btn").addEventListener("click", () => {
-    openOverlay("Select Movies", movieFiles.map(f => ({ label: f, value: f })), loadMovies);
+    openOverlay("Select Movies", movieFiles.map(f => ({ label: f, value: f })), (f) => loadMovies(f));
   });
 
   document.getElementById("category-selector-btn").addEventListener("click", () => {
@@ -196,9 +282,10 @@
   });
 
   overlayClose.addEventListener("click", closeOverlay);
-
   // ====== FREE VERSION: Load movies directly (no access control) ======
   document.addEventListener('DOMContentLoaded', () => {
     loadMovies("https://moviesplaylist-github-io.vercel.app/2/movies.json");
   });
       </script>
+</body>
+    </html>
