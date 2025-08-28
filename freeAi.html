@@ -31,77 +31,6 @@
 </head>
 <body data-theme="dark" x-data="app()" x-init="init()">
 
-<script>
-  // 📦 AI Tools အားလုံးကို JSON နဲ့ စီမံထားပါတယ်
-  const aiTools = [
-    { name: "Website Builder AI", icon: "globe", desc: "AI ကိုအသုံးပြုပြီး Website ကို လွယ်ကူလျင်မြန်စွာ ဖန်တီးနိုင်ပါတယ်။", link: "https://mmtvsport.vercel.app/webbuildAi.html" },
-    { name: "GPT-5", icon: "robot", desc: "GPT-5 (Thinking mini) — အဆင့်မြင့် ဘာသာစကား မော်ဒယ် ဖြစ်ပြီး စကားပြော၊ စာရေး၊ ကိုးကားရှာဖွေရေးနှင့် စိတ်ကြိုက် အကူအညီများ ပေးနိုင်သည်။", link: "https://openai.com/gpt-5" },
-    { name: "Logo Maker AI", icon: "paint-brush", desc: "AI နည်းပညာနဲ့ စိတ်ကြိုက်လိုဂိုတွေကို အလွယ်တကူ ဒီဇိုင်းဆွဲနိုင်ပါတယ်။", link: "https://looka.com/" },
-    { name: "Image Generator AI", icon: "image", desc: "စာသားကို ပုံအဖြစ် ပြောင်းပေးနိုင်တဲ့ AI Tool ပါ။", link: "https://app.leonardo.ai/" },
-    { name: "Text to Speech AI", icon: "volume-up", desc: "စာသားတွေကို လူသားဆန်တဲ့အသံအဖြစ် ပြောင်းပေးနိုင်ပါတယ်။", link: "https://www.speechgen.io/" },
-    { name: "Chatbot AI", icon: "robot", desc: "မေးခွန်းတွေ မေးမြန်း၊ အဖြေရှာနိုင်တဲ့ စကားပြော AI ပါ။", link: "https://chat.openai.com/" },
-    { name: "AI Text to Image", icon: "magic", desc: "စာသားကနေ ပုံတွေဖန်တီးပါ။", link: "https://app.leonardo.ai/" },
-    { name: "PFP Maker AI", icon: "user-circle", desc: "Profile Picture တွေကို AI နဲ့ဖန်တီးပါ။", link: "https://d-id.com/" },
-    { name: "Video Maker AI", icon: "video", desc: "AI နဲ့ ဗီဒီယိုတွေကို အလွယ်တကူဖန်တီးပါ။", link: "https://runwayml.com/" },
-    { name: "AI Talking Avatar", icon: "face-smile", desc: "AI ကိုယ်စားလှယ်နဲ့ စကားပြောပါ။", link: "https://d-id.com/" },
-    { name: "Background Remover", icon: "scissors", desc: "ဓာတ်ပုံကနေ နောက်ခံကို ဖယ်ရှားပါ။", link: "https://www.remove.bg/" },
-    { name: "AI Object Remover", icon: "eraser", desc: "ပုံထဲက မလိုအပ်တဲ့အရာကို ဖယ်ပါ။", link: "https://cleanup.pictures/" },
-    { name: "ChatGPT", icon: "comments", desc: "OpenAI ရဲ့ နာမည်ကြီး စကားပြော AI။", link: "https://chat.openai.com/" },
-    { name: "DeepSeek AI", icon: "search", desc: "တရုတ်မှ ထွက်ရှိသော အဆင့်မြင့် AI။", link: "https://deepseek.com/" },
-    { name: "Gemini AI", icon: "gem", desc: "Google ရဲ့ AI အကူအညီ။", link: "https://gemini.google.com/" }
-  ];
-
-  function app() {
-    return {
-      // 🛠️ State Variables
-      sidebarOpen: false,
-      popup: { show: false, title: '', description: '', link: '' },
-      theme: 'dark',
-      tools: aiTools,
-
-      // 🚀 စတင်တဲ့အခါ theme ကို ဖတ်ပါ
-      init() {
-        const saved = localStorage.getItem('theme');
-        this.theme = saved ? saved : 'dark';
-        document.body.dataset.theme = this.theme;
-      },
-
-      // ☀️🌙 Theme ပြောင်းရန်
-      toggleTheme() {
-        this.theme = this.theme === 'dark' ? 'light' : 'dark';
-        document.body.dataset.theme = this.theme;
-        localStorage.setItem('theme', this.theme);
-      },
-
-      // 📱 Sidebar ဖွင့်/ပိတ်
-      toggleSidebar() {
-        this.sidebarOpen = !this.sidebarOpen;
-      },
-      closeSidebar() {
-        this.sidebarOpen = false;
-      },
-
-      // 💬 Popup ပြသရန်
-      showPopup(toolName) {
-        const tool = this.tools.find(t => t.name === toolName);
-        if (tool) {
-          this.popup = {
-            show: true,
-            title: tool.name,
-            description: tool.desc,
-            link: tool.link
-          };
-        }
-      },
-
-      // ❌ Popup ပိတ်ရန်
-      hidePopup() {
-        this.popup.show = false;
-      }
-    }
-  }
-</script>
-
 <!-- HEADER -->
 <header class="lg:hidden flex items-center justify-between bg-black p-4 fixed top-0 left-0 right-0 z-50">
   <h1 class="text-white font-bold text-lg flex items-center">
@@ -202,5 +131,71 @@
   <a href="contact.html" class="text-yellow-400 hover:underline">➡️Contact⬅️</a>
 </footer>
 
+<!-- အရေးကြီး: script ကို body အဆုံးမှာ ထားပါ -->
+<script>
+  // 📦 AI Tools အားလုံးကို JSON နဲ့ စီမံထားပါတယ်
+  const aiTools = [
+    { name: "Website Builder AI", icon: "globe", desc: "AI ကိုအသုံးပြုပြီး Website ကို လွယ်ကူလျင်မြန်စွာ ဖန်တီးနိုင်ပါတယ်။", link: "https://mmtvsport.vercel.app/webbuildAi.html" },
+    { name: "GPT-5", icon: "robot", desc: "GPT-5 (Thinking mini) — အဆင့်မြင့် ဘာသာစကား မော်ဒယ် ဖြစ်ပြီး စကားပြော၊ စာရေး၊ ကိုးကားရှာဖွေရေးနှင့် စိတ်ကြိုက် အကူအညီများ ပေးနိုင်သည်။", link: "https://openai.com/gpt-5" },
+    { name: "Logo Maker AI", icon: "paint-brush", desc: "AI နည်းပညာနဲ့ စိတ်ကြိုက်လိုဂိုတွေကို အလွယ်တကူ ဒီဇိုင်းဆွဲနိုင်ပါတယ်။", link: "https://looka.com/" },
+    { name: "Image Generator AI", icon: "image", desc: "စာသားကို ပုံအဖြစ် ပြောင်းပေးနိုင်တဲ့ AI Tool ပါ။", link: "https://app.leonardo.ai/" },
+    { name: "Text to Speech AI", icon: "volume-up", desc: "စာသားတွေကို လူသားဆန်တဲ့အသံအဖြစ် ပြောင်းပေးနိုင်ပါတယ်။", link: "https://www.speechgen.io/" },
+    { name: "Chatbot AI", icon: "robot", desc: "မေးခွန်းတွေ မေးမြန်း၊ အဖြေရှာနိုင်တဲ့ စကားပြော AI ပါ။", link: "https://chat.openai.com/" },
+    { name: "AI Text to Image", icon: "magic", desc: "စာသားကနေ ပုံတွေဖန်တီးပါ။", link: "https://app.leonardo.ai/" },
+    { name: "PFP Maker AI", icon: "user-circle", desc: "Profile Picture တွေကို AI နဲ့ဖန်တီးပါ။", link: "https://d-id.com/" },
+    { name: "Video Maker AI", icon: "video", desc: "AI နဲ့ ဗီဒီယိုတွေကို အလွယ်တကူဖန်တီးပါ။", link: "https://runwayml.com/" },
+    { name: "AI Talking Avatar", icon: "face-smile", desc: "AI ကိုယ်စားလှယ်နဲ့ စကားပြောပါ။", link: "https://d-id.com/" },
+    { name: "Background Remover", icon: "scissors", desc: "ဓာတ်ပုံကနေ နောက်ခံကို ဖယ်ရှားပါ။", link: "https://www.remove.bg/" },
+    { name: "AI Object Remover", icon: "eraser", desc: "ပုံထဲက မလိုအပ်တဲ့အရာကို ဖယ်ပါ။", link: "https://cleanup.pictures/" },
+    { name: "ChatGPT", icon: "comments", desc: "OpenAI ရဲ့ နာမည်ကြီး စကားပြော AI။", link: "https://chat.openai.com/" },
+    { name: "DeepSeek AI", icon: "search", desc: "တရုတ်မှ ထွက်ရှိသော အဆင့်မြင့် AI။", link: "https://deepseek.com/" },
+    { name: "Gemini AI", icon: "gem", desc: "Google ရဲ့ AI အကူအညီ။", link: "https://gemini.google.com/" }
+  ];
+
+  function app() {
+    return {
+      sidebarOpen: false,
+      popup: { show: false, title: '', description: '', link: '' },
+      theme: 'dark',
+      tools: aiTools,
+
+      init() {
+        const saved = localStorage.getItem('theme');
+        this.theme = saved ? saved : 'dark';
+        document.body.dataset.theme = this.theme;
+      },
+
+      toggleTheme() {
+        this.theme = this.theme === 'dark' ? 'light' : 'dark';
+        document.body.dataset.theme = this.theme;
+        localStorage.setItem('theme', this.theme);
+      },
+
+      toggleSidebar() {
+        this.sidebarOpen = !this.sidebarOpen;
+      },
+      closeSidebar() {
+        this.sidebarOpen = false;
+      },
+
+      showPopup(toolName) {
+        const tool = this.tools.find(t => t.name === toolName);
+        if (tool) {
+          this.popup = {
+            show: true,
+            title: tool.name,
+            description: tool.desc,
+            link: tool.link
+          };
+        }
+      },
+
+      hidePopup() {
+        this.popup.show = false;
+      }
+    }
+  }
+</script>
+
 </body>
-  </html>
+</html>
