@@ -1,4 +1,4 @@
-      <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -20,10 +20,10 @@
       top: 56px; /* below header */
       left: 0;
       right: 0;
-      z-index: 60;
+      z-index: 30; /* lower than header & overlay */
       background: linear-gradient(90deg, rgba(0,0,0,0.85), rgba(0,0,0,0.65));
       color: #ffd700;
-      padding: 16px 20px;
+      padding: 10px 20px;
       overflow: hidden;
       white-space: nowrap;
       font-weight: 600;
@@ -47,7 +47,7 @@
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.5);
-      z-index: 50;
+      z-index: 40;
     }
 
     /* make sure main content is pushed a bit for lg */
@@ -110,7 +110,6 @@
     <!-- MAIN CONTENT -->
     <main class="flex-1 lg:ml-56 p-6 pb-16 mt-24 lg:mt-0"> <!-- mt-24 to avoid header + marquee -->
       <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
-       
         <div class="flex gap-2">
           <button id="movies-selector-btn" class="bg-yellow-500 text-black px-3 py-2 rounded-lg font-bold flex items-center gap-2">
             <i class="fas fa-film"></i> Selector 
@@ -159,12 +158,10 @@
   function openSidebar() {
     sidebar.classList.remove("hidden");
     sidebarOverlay.style.display = "block";
-    // prevent body scroll when sidebar open
     document.body.style.overflow = "hidden";
   }
 
   function closeSidebar() {
-    // on lg screens, we want sidebar visible, so only add hidden if small screen
     if (window.innerWidth < 1024) {
       sidebar.classList.add("hidden");
     }
@@ -178,19 +175,15 @@
       else closeSidebar();
     });
   }
-  // overlay click closes sidebar
   sidebarOverlay.addEventListener("click", closeSidebar);
 
-  // handle window resize — ensure correct state (desktop keeps sidebar visible)
   window.addEventListener("resize", () => {
     if (window.innerWidth >= 1024) {
       sidebar.classList.remove("hidden");
       sidebarOverlay.style.display = "none";
       document.body.style.overflow = "";
     } else {
-      // keep it hidden by default on small screens
       if (!sidebar.classList.contains("hidden")) {
-        // do nothing — user may have opened it
       } else {
         sidebar.classList.add("hidden");
       }
@@ -283,11 +276,9 @@
 
   overlayClose.addEventListener("click", closeOverlay);
 
-  // ====== FREE VERSION: Load movies directly (no access control) ======
   document.addEventListener('DOMContentLoaded', () => {
-    // initial fetch (change to local file or remote URL as needed)
     loadMovies("https://moviesplaylist-github-io.vercel.app/myanmar.json");
   });
 </script>
 </body>
-</html>
+              </html>
