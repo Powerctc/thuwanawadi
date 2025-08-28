@@ -23,6 +23,32 @@
       }
     }
     
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-size: 16px; /* Fixed Font Size */
+      transition: all 0.3s ease;
+      padding: 60px 20px 80px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    body[data-theme="dark"] {
+      --text-color: #FFD700; /* All Text Gold in Dark Mode */
+    }
+
+    h1, h2, h3, h4, h5, h6, p, a, button, span, div, figcaption {
+      color: inherit;
+      font-size: 16px; /* Fixed Font Size */
+    }
+
+    .content-wrap {
+      flex: 1;
+    }
+    
     #overlay {
       display: none;
       position: fixed;
