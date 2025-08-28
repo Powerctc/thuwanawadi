@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>EnzosTV Player - Share4it Myanmar</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .responsive-iframe-container {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 aspect ratio */
+      overflow: hidden;
+      flex-grow: 1;
+    }
+
+    .responsive-iframe-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    footer {
+      background: #111;
+      text-align: center;
+      padding: 14px 10px;
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    .share-button {
+      display: inline-block;
+      background-color: #1877f2;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    .share-button:hover {
+      background-color: #145dbf;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="responsive-iframe-container">
+    <iframe
+      src="https://enzostvs-deepsite.hf.space"
+      allowfullscreen
+    ></iframe>
+  </div>
+
+  <footer>
+    © Share4it Myanmar<br>
+    <a
+      href="https://www.facebook.com/share/1E2RJiJR8s/"
+      target="_blank"
+      class="share-button"
+    >
+      📤 Share on Facebook
+    </a>
+  </footer>
+
+</body>
+</html>
