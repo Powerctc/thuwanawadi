@@ -1,201 +1,416 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Thuwanawaddy Taxi Service</title>
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Alpine.js -->
-  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Free AI Tools</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <meta name="description" content="Explore a collection of the best and most popular free AI tools for writing, design, coding, and more.">
+  <meta name="keywords" content="Free AI Tools, AI website, AI, ChatGPT, Gemini, DeepSeek, Copilot, Claude, Sora, Perplexity, Notion AI, Canva AI, ElevenLabs, GPT-5">
+  <meta name="author" content="MMTV SPORT">
+  <meta name="robots" content="index, follow">
+  <meta name="google-adsense-account" content="ca-pub-9712880367116888">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9712880367116888" crossorigin="anonymous"></script>
   <style>
-    body[data-theme="dark"] {
-      --text-color: #FFD700; 
-      --card-bg: #1f2937;
+    :root {
+      --bg-color: #1a1a1a;
+      --text-color: #ffffff;
+      --card-bg: #2d2d2d;
       --accent-color: #FFD700;
-      background-color: #111827;
+    }
+
+    [data-theme="light"] {
+      --bg-color: #f0f0f0;
+      --text-color: #333333;
+      --card-bg: #ffffff;
+      --accent-color: #007bff;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-size: 16px; /* Fixed Font Size */
+      transition: all 0.3s ease;
+      padding: 60px 20px 80px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    body[data-theme="dark"] {
+      --text-color: #FFD700; /* All Text Gold in Dark Mode */
+    }
+
+    h1, h2, h3, h4, h5, h6, p, a, button, span, div, figcaption {
+      color: inherit;
+      font-size: 16px; /* Fixed Font Size */
+    }
+
+    .content-wrap {
+      flex: 1;
+    }
+
+    .theme-switcher, .sidebar-toggle, .history-back-btn {
+      position: fixed;
+      z-index: 999;
+      background: var(--card-bg);
+      border: 2px solid var(--accent-color);
+      color: var(--accent-color);
+      border-radius: 25px;
+      padding: 8px 15px;
+      cursor: pointer;
+    }
+
+    .theme-switcher { top: 20px; right: 20px; }
+    .sidebar-toggle { top: 20px; left: 20px; }
+    .history-back-btn { bottom: 20px; right: 20px; }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100vh;
+      background: var(--card-bg);
+      transition: left 0.3s ease;
+      padding-top: 60px;
+      z-index: 998;
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      color: var(--accent-color);
+      text-decoration: none;
+    }
+
+    .sidebar a:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 997;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--accent-color);
+      margin-bottom: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 1rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .btn2 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: var(--card-bg);
+      border: none;
+      border-radius: 12px;
+      padding: 15px;
+      cursor: pointer;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+
+    .btn2:hover {
+      transform: scale(1.05);
+    }
+
+    .btn2 i {
+      color: var(--accent-color);
+      margin-bottom: 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #888;
+      font-size: 0.8rem;
+    }
+
+    footer a {
+      color: var(--accent-color);
+      text-decoration: none;
+    }
+
+    /* START POPUP CSS */
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .popup-content {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 15px;
+      max-width: 90%;
+      width: 400px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      position: relative;
+      animation: fadeIn 0.3s ease-out;
+      border: 2px solid var(--accent-color);
+    }
+    .popup-content h3 {
+      text-align: center;
+      margin-top: 0;
+      color: var(--accent-color);
+      font-size: 1.2rem;
+    }
+    .popup-content p {
+      line-height: 1.5;
+      font-size: 1rem;
       color: var(--text-color);
     }
-    .btn2 {
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      background: var(--card-bg, #fff); border: none; border-radius: 12px; padding: 15px;
-      cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: transform 0.2s;
+    .popup-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
     }
-    .btn2:hover { transform: scale(1.05); }
-    .btn2 i { color: var(--accent-color, #f59e0b); margin-bottom: 10px; }
-    footer { text-align: center; padding: 20px; color: #888; font-size: 0.8rem; }
-    .popup-content { border: 2px solid var(--accent-color, #f59e0b); }
+    .popup-close-btn, .popup-link-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .popup-close-btn {
+      background-color: #555;
+      color: #fff;
+    }
+    .popup-link-btn {
+      background-color: var(--accent-color);
+      color: #000;
+      text-decoration: none;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    /* END POPUP CSS */
   </style>
 </head>
-<body data-theme="dark" x-data="app()" x-init="init()">
+<body>
 
-<!-- HEADER -->
-<header class="lg:hidden flex items-center justify-between bg-black p-4 fixed top-0 left-0 right-0 z-50">
-  <h1 class="text-white font-bold text-lg flex items-center">
-    <i class="fas fa-city mr-2 text-yellow-400"></i>သုဝဏ္ဏဝတီမြို့
-  </h1>
-  <button @click="toggleSidebar()" class="text-white text-2xl"><i class="fas fa-bars"></i></button>
-</header>
+  <button class="theme-switcher" onclick="toggleTheme()" aria-label="Toggle Theme">🌓Dark/Light</button>
+  <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Open Menu">☰ Menu</button>
+  <button class="history-back-btn" onclick="history.back()" aria-label="Go Back">←Back</button>
 
-<!-- SIDEBAR -->
-<div 
-  id="sidebar" 
-  class="bg-gray-800 w-48 fixed top-0 left-0 h-full z-40 transform transition-transform duration-300 ease-in-out"
-  :class="{ '-translate-x-full': !sidebarOpen }"
-  @click.away="closeSidebar()"
->
-  <div class="p-4 flex items-center">
-    <i class="fas fa-taxi text-yellow-400 text-2xl mr-2"></i>
-    <h1 class="text-lg font-bold text-yellow-400">Thuwanawaddy</h1>
-  </div>
-  <div class="flex flex-col">
-    <a href="/" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
-      <i class="fas fa-home mr-3"></i><span>Home</span>
-    </a>
-    <a href="mmtv/index.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
-      <i class="fas fa-tv mr-3"></i><span>မြန်မာတီဗွီ</span>
-    </a>
-    <a href="movie/index.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
-      <i class="fas fa-film mr-3"></i><span>မြန်မာစာတန်းထိုး</span>
-    </a>
-    <a href="freeAi.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
-      <i class="fas fa-tools mr-3"></i><span>အေအိုင်(Ai)</span>
-    </a>
-    <a href="comingsoon.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
-      <i class="fas fa-futbol mr-3"></i><span>ဘောလုံးပွဲ</span>
-    </a>
-    <a href="https://subuu-gq2t.vercel.app/" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
-      <i class="fas fa-money-bill mr-3"></i><span>အွန်လိုင်ငွေရှာနည်း</span>
-    </a>
-  </div>
-</div>
-
-<!-- Overlay -->
-<div 
-  x-show="sidebarOpen" 
-  class="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
-  x-cloak
-></div>
-
-<!-- Main Content -->
-<div class="content-wrap px-4 pt-20 lg:pt-8">
-  <h1 class="text-2xl font-bold text-yellow-400 mb-6">🤖 POPULAR FREE AI TOOLS</h1>
-
-  <!-- Theme Toggle Button -->
-  <div class="flex justify-end mb-4">
-    <button @click="toggleTheme" class="px-4 py-2 bg-yellow-400 text-black rounded-lg text-sm font-bold">
-      <span x-text="theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode'"></span>
-    </button>
+  <div class="sidebar" id="sidebar">
+    <a href="index.html"><i class="fas fa-home"></i>&nbsp;Home</a>
+    <a href="about.html"><i class="fas fa-info-circle"></i>&nbsp;About</a>
+    <a href="contact.html"><i class="fas fa-phone"></i>&nbsp;Contact</a>
+    <a href="privacy.html"><i class="fas fa-lock"></i>&nbsp;Privacy</a>
+    <a href="term.html"><i>⚖️</i>Terms & Conditions</a>
   </div>
 
-  <!-- AI Tools Grid -->
-  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-    <template x-for="tool in tools" :key="tool.name">
-      <div class="btn2" @click="showPopup(tool.name)">
-        <i :class="`fas fa-${tool.icon} fa-2x`"></i>
-        <h2 class="text-sm mt-2" x-text="tool.name"></h2>
-      </div>
-    </template>
-  </div>
-</div>
+  <div id="overlay" onclick="toggleSidebar()"></div>
 
-<!-- Popup Modal -->
-<div 
-  class="popup-overlay fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center" 
-  x-show="popup.show" 
-  x-cloak
->
-  <div class="popup-content bg-gray-800 text-white p-6 rounded-xl max-w-sm w-full">
-    <h3 class="text-lg font-bold text-yellow-400" x-text="popup.title"></h3>
-    <p class="mt-3" x-text="popup.description"></p>
-    <div class="popup-buttons flex mt-6 space-x-2">
-      <button @click="hidePopup()" class="popup-close-btn bg-gray-600 text-white px-4 py-2 rounded-lg">Cancel</button>
-      <a 
-        :href="popup.link" 
-        target="_blank" 
-        rel="noopener" 
-        @click="hidePopup()" 
-        class="popup-link-btn bg-yellow-400 text-black px-4 py-2 rounded-lg font-bold"
-      >
-        Go to Tool
-      </a>
+  <h1>🤖 POPULAR FREE AI TOOLS</h1>
+
+  <div class="content-wrap">
+    <div class="grid">
+      <!-- NEW: GPT-5 inserted as second item -->
+      <div class="btn2" onclick="showPopup('Website Builder AI')"><i class="fas fa-globe fa-2x"></i><h2>Website Builder AI</h2></div>
+      <div class="btn2" onclick="showPopup('GPT-5')"><i class="fas fa-robot fa-2x"></i><h2>GPT-5 (Thinking mini)</h2></div>
+
+      <div class="btn2" onclick="showPopup('Logo Maker AI')"><i class="fas fa-paint-brush fa-2x"></i><h2>Logo Maker AI</h2></div>
+      <div class="btn2" onclick="showPopup('Image Generator AI')"><i class="fas fa-image fa-2x"></i><h2>Image Generator AI</h2></div>
+      <div class="btn2" onclick="showPopup('Text to Speech AI')"><i class="fas fa-volume-up fa-2x"></i><h2>Text to Speech AI</h2></div>
+      <div class="btn2" onclick="showPopup('Chatbot AI')"><i class="fas fa-robot fa-2x"></i><h2>Chatbot AI</h2></div>
+      <div class="btn2" onclick="showPopup('AI Text to Image')"><i class="fas fa-magic fa-2x"></i><h2>AI Text to Image</h2></div>
+      <div class="btn2" onclick="showPopup('PFP Maker AI')"><i class="fas fa-user-circle fa-2x"></i><h2>PFP Maker AI</h2></div>
+      <div class="btn2" onclick="showPopup('Video Maker AI')"><i class="fas fa-video fa-2x"></i><h2>Video Maker AI</h2></div>
+      <div class="btn2" onclick="showPopup('AI Talking Avatar')"><i class="fas fa-face-smile fa-2x"></i><h2>AI Talking Avatar</h2></div>
+      <div class="btn2" onclick="showPopup('Background Remover')"><i class="fas fa-scissors fa-2x"></i><h2>Background Remover</h2></div>
+      <div class="btn2" onclick="showPopup('AI Object Remover')"><i class="fas fa-eraser fa-2x"></i><h2>AI Object Remover</h2></div>
+
+      <div class="btn2" onclick="showPopup('ChatGPT')"><i class="fas fa-comments fa-2x"></i><h2>ChatGPT</h2></div>
+      <div class="btn2" onclick="showPopup('DeepSeek AI')"><i class="fas fa-search fa-2x"></i><h2>DeepSeek AI</h2></div>
+      <div class="btn2" onclick="showPopup('Gemini AI')"><i class="fas fa-gem fa-2x"></i><h2>Gemini AI</h2></div>
+      <div class="btn2" onclick="showPopup('Microsoft Copilot')"><i class="fas fa-microchip fa-2x"></i><h2>Microsoft Copilot</h2></div>
+      <div class="btn2" onclick="showPopup('Claude AI')"><i class="fas fa-brain fa-2x"></i><h2>Claude AI</h2></div>
+      <div class="btn2" onclick="showPopup('Perplexity AI')"><i class="fas fa-question-circle fa-2x"></i><h2>Perplexity AI</h2></div>
+      <div class="btn2" onclick="showPopup('Notion AI')"><i class="fas fa-lightbulb fa-2x"></i><h2>Notion AI</h2></div>
+      <div class="btn2" onclick="showPopup('Canva AI Design')"><i class="fas fa-palette fa-2x"></i><h2>Canva AI Design</h2></div>
+      <div class="btn2" onclick="showPopup('Runway ML')"><i class="fas fa-film fa-2x"></i><h2>Runway ML</h2></div>
+      <div class="btn2" onclick="showPopup('Sora Video AI')"><i class="fas fa-video fa-2x"></i><h2>Sora Video AI</h2></div>
+      <div class="btn2" onclick="showPopup('ElevenLabs Voice AI')"><i class="fas fa-headphones fa-2x"></i><h2>ElevenLabs Voice AI</h2></div>
     </div>
   </div>
-</div>
 
-<!-- Footer -->
-<footer class="text-center text-sm text-gray-400 mt-8 pb-4">
-  2025 All Rights Reserved - Share4it Myanmar Team | Development By U Maung (<span class="text-yellow-400 font-bold">Study Forever</span>) 
-  <a href="contact.html" class="text-yellow-400 hover:underline">➡️Contact⬅️</a>
-</footer>
+  <footer>
+    2025 All Rights Reserved - Share4it Myanmar Team | Development By U Maung (Forever Study) <a href="contact.html">➡️Contact⬅️</a>
+  </footer>
 
-<!-- အရေးကြီး: script ကို body အဆုံးမှာ ထားပါ -->
-<script>
-  // 📦 AI Tools အားလုံးကို JSON နဲ့ စီမံထားပါတယ်
-  const aiTools = [
-    { name: "Website Builder AI", icon: "globe", desc: "AI ကိုအသုံးပြုပြီး Website ကို လွယ်ကူလျင်မြန်စွာ ဖန်တီးနိုင်ပါတယ်။", link: "https://mmtvsport.vercel.app/webbuildAi.html" },
-    { name: "GPT-5", icon: "robot", desc: "GPT-5 (Thinking mini) — အဆင့်မြင့် ဘာသာစကား မော်ဒယ် ဖြစ်ပြီး စကားပြော၊ စာရေး၊ ကိုးကားရှာဖွေရေးနှင့် စိတ်ကြိုက် အကူအညီများ ပေးနိုင်သည်။", link: "https://openai.com/gpt-5" },
-    { name: "Logo Maker AI", icon: "paint-brush", desc: "AI နည်းပညာနဲ့ စိတ်ကြိုက်လိုဂိုတွေကို အလွယ်တကူ ဒီဇိုင်းဆွဲနိုင်ပါတယ်။", link: "https://looka.com/" },
-    { name: "Image Generator AI", icon: "image", desc: "စာသားကို ပုံအဖြစ် ပြောင်းပေးနိုင်တဲ့ AI Tool ပါ။", link: "https://app.leonardo.ai/" },
-    { name: "Text to Speech AI", icon: "volume-up", desc: "စာသားတွေကို လူသားဆန်တဲ့အသံအဖြစ် ပြောင်းပေးနိုင်ပါတယ်။", link: "https://www.speechgen.io/" },
-    { name: "Chatbot AI", icon: "robot", desc: "မေးခွန်းတွေ မေးမြန်း၊ အဖြေရှာနိုင်တဲ့ စကားပြော AI ပါ။", link: "https://chat.openai.com/" },
-    { name: "AI Text to Image", icon: "magic", desc: "စာသားကနေ ပုံတွေဖန်တီးပါ။", link: "https://app.leonardo.ai/" },
-    { name: "PFP Maker AI", icon: "user-circle", desc: "Profile Picture တွေကို AI နဲ့ဖန်တီးပါ။", link: "https://d-id.com/" },
-    { name: "Video Maker AI", icon: "video", desc: "AI နဲ့ ဗီဒီယိုတွေကို အလွယ်တကူဖန်တီးပါ။", link: "https://runwayml.com/" },
-    { name: "AI Talking Avatar", icon: "face-smile", desc: "AI ကိုယ်စားလှယ်နဲ့ စကားပြောပါ။", link: "https://d-id.com/" },
-    { name: "Background Remover", icon: "scissors", desc: "ဓာတ်ပုံကနေ နောက်ခံကို ဖယ်ရှားပါ။", link: "https://www.remove.bg/" },
-    { name: "AI Object Remover", icon: "eraser", desc: "ပုံထဲက မလိုအပ်တဲ့အရာကို ဖယ်ပါ။", link: "https://cleanup.pictures/" },
-    { name: "ChatGPT", icon: "comments", desc: "OpenAI ရဲ့ နာမည်ကြီး စကားပြော AI။", link: "https://chat.openai.com/" },
-    { name: "DeepSeek AI", icon: "search", desc: "တရုတ်မှ ထွက်ရှိသော အဆင့်မြင့် AI။", link: "https://deepseek.com/" },
-    { name: "Gemini AI", icon: "gem", desc: "Google ရဲ့ AI အကူအညီ။", link: "https://gemini.google.com/" }
-  ];
 
-  function app() {
-    return {
-      sidebarOpen: false,
-      popup: { show: false, title: '', description: '', link: '' },
-      theme: 'dark',
-      tools: aiTools,
+  <div class="popup-overlay" id="popup-overlay">
+    <div class="popup-content">
+      <h3 id="popup-title"></h3>
+      <p id="popup-description"></p>
+      <div class="popup-buttons">
+        <button class="popup-close-btn" onclick="hidePopup()">Cancel</button>
+        <a id="popup-link" class="popup-link-btn" href="#" target="_blank" rel="noopener noreferrer">Go to Tool</a>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.body.dataset.theme = localStorage.getItem('theme') || 'dark';
+    });
 
-      init() {
-        const saved = localStorage.getItem('theme');
-        this.theme = saved ? saved : 'dark';
-        document.body.dataset.theme = this.theme;
+    function toggleTheme() {
+      const currentTheme = document.body.dataset.theme;
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.body.dataset.theme = newTheme;
+      localStorage.setItem('theme', newTheme);
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      const isActive = sidebar.classList.toggle('active');
+      overlay.style.display = isActive ? 'block' : 'none';
+    }
+
+    // START POPUP JS
+    const aiTools = {
+      'Website Builder AI': {
+        description: 'AI ကိုအသုံးပြုပြီး Website ကို လွယ်ကူလျင်မြန်စွာ ဖန်တီးနိုင်ပါတယ်။',
+        link: 'https://mmtvsport.vercel.app/webbuildAi.html'
       },
-
-      toggleTheme() {
-        this.theme = this.theme === 'dark' ? 'light' : 'dark';
-        document.body.dataset.theme = this.theme;
-        localStorage.setItem('theme', this.theme);
+      'GPT-5': {
+        description: 'GPT-5 (Thinking mini) — အဆင့်မြင့် ဘာသာစကား မော်ဒယ် ဖြစ်ပြီး စကားပြော၊ စာရေး၊ ကိုးကားရှာဖွေရေးနှင့် စိတ်ကြိုက် အကူအညီများ ပေးနိုင်သည်။',
+        link: 'https://openai.com/gpt-5'
       },
-
-      toggleSidebar() {
-        this.sidebarOpen = !this.sidebarOpen;
+      'Logo Maker AI': {
+        description: 'AI နည်းပညာနဲ့ စိတ်ကြိုက်လိုဂိုတွေကို အလွယ်တကူ ဒီဇိုင်းဆွဲနိုင်ပါတယ်။',
+        link: 'https://looka.com/'
       },
-      closeSidebar() {
-        this.sidebarOpen = false;
+      'Image Generator AI': {
+        description: 'စာသားကို ပုံအဖြစ် ပြောင်းပေးနိုင်တဲ့ AI Tool ပါ။',
+        link: 'https://app.leonardo.ai/'
       },
-
-      showPopup(toolName) {
-        const tool = this.tools.find(t => t.name === toolName);
-        if (tool) {
-          this.popup = {
-            show: true,
-            title: tool.name,
-            description: tool.desc,
-            link: tool.link
-          };
-        }
+      'Text to Speech AI': {
+        description: 'စာသားတွေကို လူသားဆန်တဲ့အသံအဖြစ် ပြောင်းပေးနိုင်ပါတယ်။',
+        link: 'https://www.speechgen.io/'
       },
+      'Chatbot AI': {
+        description: 'မေးခွန်းတွေ မေးမြန်း၊ အဖြေရှာနိုင်တဲ့ စကားပြော AI ပါ။',
+        link: 'https://chat.openai.com/'
+      },
+      'AI Text to Image': {
+        description: 'စာသားကနေ ပုံအမျိုးမျိုးကို ဖန်တီးပေးနိုင်တဲ့ AI ပါ။',
+        link: 'https://deepai.org/machine-learning-model/text2img'
+      },
+      'PFP Maker AI': {
+        description: 'သင့်အတွက် Profile Picture ကို လှပအောင် ဖန်တီးပေးပါမယ်။',
+        link: 'https://pfpmaker.com/'
+      },
+      'Video Maker AI': {
+        description: 'AI ကိုအသုံးပြုပြီး ဗီဒီယိုတွေကို လွယ်ကူစွာ ဖန်တီးပါ။',
+        link: 'https://app.invideo.io/'
+      },
+      'AI Talking Avatar': {
+        description: 'သင့်ရဲ ဓာတ်ပုံကို စကားပြောတဲ့ Avatar အဖြစ် ပြောင်းပေးနိုင်ပါတယ်။',
+        link: 'https://studio.d-id.com/'
+      },
+      'Background Remover': {
+        description: 'ပုံတွေရဲ့ နောက်ခံကို အလွယ်တကူ ဖျက်ပေးနိုင်ပါတယ်။',
+        link: 'https://remove.bg/'
+      },
+      'AI Object Remover': {
+        description: 'ပုံထဲက မလိုတဲ့ အရာဝတ္ထုတွေကို ဖယ်ရှားပေးပါတယ်။',
+        link: 'https://clipdrop.co/cleanup'
+      },
+      'ChatGPT': {
+        description: 'OpenAI မှ စွမ်းဆောင်ပေးထားသော အစွမ်းထက်ဆုံး စကားပြော AI တစ်ခုပါ။',
+        link: 'https://chat.openai.com/'
+      },
+      'DeepSeek AI': {
+        description: 'အချက်အလက်ရှာဖွေရေးအတွက် အထောက်အကူပြုနိုင်တဲ့ AI ပါ။',
+        link: 'https://deepseek.com/'
+      },
+      'Gemini AI': {
+        description: 'Google မှ ဖန်တီးထားသော ဘာသာစကားမော်ဒယ်လ် (LLM) ဖြစ်ပါတယ်။',
+        link: 'https://gemini.google.com/'
+      },
+      'Microsoft Copilot': {
+        description: 'Microsoft ကနေ ထောက်ပံ့ပေးထားတဲ့ AI လက်ထောက်ပါ။',
+        link: 'https://copilot.microsoft.com/'
+      },
+      'Claude AI': {
+        description: 'Anthropic မှ ဖန်တီးထားတဲ့ AI chatbot ပါ။',
+        link: 'https://claude.ai/'
+      },
+      'Perplexity AI': {
+        description: 'ရှုပ်ထွေးတဲ့ မေးခွန်းတွေကို အသေးစိတ် အဖြေရှာပေးနိုင်ပါတယ်။',
+        link: 'https://perplexity.ai/'
+      },
+      'Notion AI': {
+        description: 'စာရေးသားခြင်း၊ အစီအစဉ်ချမှတ်ခြင်းတို့ကို ကူညီပေးတဲ့ Notion ရဲ့ AI ပါ။',
+        link: 'https://www.notion.so/product/ai'
+      },
+      'Canva AI Design': {
+        description: 'ဒီဇိုင်းဆွဲတဲ့အခါ အထောက်အကူပေးနိုင်တဲ့ Canva ရဲ့ AI Feature ပါ။',
+        link: 'https://www.canva.com/ai/'
+      },
+      'Runway ML': {
+        description: 'ဗီဒီယိုနဲ့ ပုံတွေ ဖန်တီးရာမှာ AI နည်းပညာကို အသုံးပြုထားပါတယ်။',
+        link: 'https://runwayml.com/'
+      },
+      'Sora Video AI': {
+        description: 'စာသားကနေ ဗီဒီယိုဖိုင်တွေကို ဖန်တီးပေးနိုင်တဲ့ AI နည်းပညာပါ။',
+        link: 'https://openai.com/sora'
+      },
+      'ElevenLabs Voice AI': {
+        description: 'အသံတွေကို အစွမ်းထက်စွာ ပြောင်းလဲဖန်တီးပေးနိုင်တဲ့ AI ပါ။',
+        link: 'https://elevenlabs.io/'
+      }
+    };
 
-      hidePopup() {
-        this.popup.show = false;
+    function showPopup(toolName) {
+      const toolData = aiTools[toolName];
+      if (toolData) {
+        document.getElementById('popup-title').innerText = toolName;
+        document.getElementById('popup-description').innerText = toolData.description;
+        document.getElementById('popup-link').href = toolData.link;
+        document.getElementById('popup-overlay').style.display = 'flex';
       }
     }
-  }
-</script>
-<script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+    function hidePopup() {
+      document.getElementById('popup-overlay').style.display = 'none';
+    }
+    // END POPUP JS
+  </script>
 </body>
-</html>
+  </html>
+  
