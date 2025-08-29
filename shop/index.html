@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Taxi Contact Card</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <div class="container mx-auto p-4 max-w-lg" id="driverContainer">
+    <!-- JS will inject driver cards here -->
+  </div>
+
+  <!-- Footer Section -->
+  <footer class="bg-white shadow-inner mt-10">
+    <div class="container mx-auto p-6 text-center text-gray-700">
+      <h2 class="text-lg font-semibold text-yellow-600 mb-2"> Wanted!</h2>
+      <p class="mb-4">
+        မိတ်ဆွေတို့၏လုပ်ငန်းများကို စနစ်ထဲသို့ စာရင်းသွင်းပြီး 
+        customer များမှ တိုက်ရိုက် ခေါ်ယူနိုင်ပါသည်။
+      </p>
+      <p class="mb-4">
+        Interested to join? <br/>
+        📩 Contact Web & App Developer
+      </p>
+
+      <!-- Contact Buttons -->
+      <div class="flex justify-center gap-3 flex-wrap">
+        <a href="tel:+959946369791"
+           class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-lg transition duration-200">
+          📞 Call Developer
+        </a>
+        <a href="mailto:powerctc91@gmail.com"
+           class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg transition duration-200">
+          📧 Email Developer
+        </a>
+        <a href="viber://chat?number=%2B959123456789"
+           class="bg-violet-500 hover:bg-violet-600 text-white px-5 py-2 rounded-lg transition duration-200">
+          📲 Viber
+        </a>
+      </div>
+
+      <p class="text-gray-400 text-sm mt-6">© 2025 Taxi Web & App. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>  
+    // Sample driver data  
+    const drivers =[  
+    {  
+        name: "U Maung",  
+        mname: "ဦးမောင်",  
+        rating: 4.9,  
+        phone: "+959946369791",  
+        Shop: "Android Box",  
+        about: "တပ်ဆင်ရောင်းဝယ်ရေး",  
+        avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9I1YkhYv5r2qAcK-zLhZwslPraqyjJBfP2VwieDnbWmckqkAz-PVcVQk&s",  
+        taxiImg: "https://thuwanawadi.vercel.app/image/androidcover.png"  
+      },  
+      {  
+        name: "Shwe Sar Oo",  
+        mname: "ရွှေစာဥ",  
+        rating: 4.9,  
+        phone: "+959978945956,",  
+        Shop: "အသင့်စားငပိအနှစ်",  
+        about: "ဗူးများထုပ်လုပ်ဖြန်ချီရေး",  
+        avatar: "https://thuwanawadi.vercel.app/image/shesarooprof.jpg",  
+        taxiImg: "https://thuwanawadi.vercel.app/image/shwesaroocover.jpg"  
+      },  
+      {  
+        name: "U KAN HTOO",  
+        mname: "ဦးကံထူး",  
+        rating: 4.7,  
+        phone: "+959987654321",  
+        car: "Suzuki Alto (Red)",  
+        plate: "MDY-54321",  
+        avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9I1YkhYv5r2qAcK-zLhZwslPraqyjJBfP2VwieDnbWmckqkAz-PVcVQk&s",  
+        taxiImg: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80"  
+      },  
+      {  
+        name: "U Maung Maung",  
+        mname: "ဦးမောင်မောင်",  
+        rating: 4.7,  
+        phone: "+959987654321",  
+        car: "အိုးဝေ(yellow)",  
+        plate: "MDY-54321",  
+        avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLpNZD8eWWjGzJDdCumr9KmdytVv0fxXVa-Q&s",  
+        taxiImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEmgCy1iUjtX6VUtkdV44OpMxBmhsd14PuVw&s"  
+      },  
+      {  
+        name: "Mg Arkar",  
+        mname: "အာကာ",  
+        rating: 4.7,  
+        phone: "+959987654321",  
+        car: "Dream (Blue)",  
+        plate: "MDY-54321",  
+        avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9I1YkhYv5r2qAcK-zLhZwslPraqyjJBfP2VwieDnbWmckqkAz-PVcVQk&s",  
+        taxiImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLpNZD8eWWjGzJDdCumr9KmdytVv0fxXVa-Q&s"  
+      }  
+    ];  
+
+    // Helper function: Rating → Stars
+    function renderStars(rating) {
+      const fullStars = Math.floor(rating);
+      const halfStar = rating % 1 >= 0.5;
+      let stars = "⭐".repeat(fullStars);
+      if (halfStar) stars += "✨";
+      return stars;
+    }
+
+    // Function to create driver card HTML
+    function createDriverCard(driver) {
+      return `
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden mb-6">
+          <!-- Taxi Image -->
+          <div class="h-48 overflow-hidden">
+            <img src="${driver.taxiImg}" alt="Taxi" class="w-full h-full object-cover">
+          </div>
+
+          <!-- Driver Info -->
+          <div class="p-5">
+            <div class="flex items-center space-x-4 mb-4">
+              <img src="${driver.avatar}" alt="Driver"
+                   class="w-16 h-16 rounded-full object-cover border-2 border-yellow-500">
+              <div>
+                <h2 class="text-xl font-semibold text-gray-800">${driver.name}</h2>
+                <p class="text-gray-600">${driver.mname}</p>
+                <p class="text-gray-600"> Rating • ${renderStars(driver.rating)} (${driver.rating})</p>
+              </div>
+            </div>
+
+            <!-- Contact / Extra Info -->
+            <div class="space-y-3 text-gray-700 mb-5">
+              <p><strong>Phone:</strong> 
+                <span class="text-blue-600">${driver.phone}</span>
+              </p>
+              ${driver.car ? `<p><strong>Car:</strong> ${driver.car}</p>` : ""}
+              ${driver.plate ? `<p><strong>License Plate:</strong> ${driver.plate}</p>` : ""}
+              ${driver.Shop ? `<p><strong>Shop:</strong> ${driver.Shop}</p>` : ""}
+              ${driver.about ? `<p><strong>About:</strong> ${driver.about}</p>` : ""}
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-3">
+              <a href="tel:${driver.phone.replace(/\s+/g,'')}"
+                 class="flex-1 bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-4 rounded-lg text-center transition duration-200 flex items-center justify-center gap-2">
+                📞 Call
+              </a>
+              <a href="viber://chat?number=${encodeURIComponent(driver.phone)}"
+                 class="flex-1 bg-violet-500 hover:bg-violet-600 text-white font-medium py-3 px-4 rounded-lg text-center transition duration-200 flex items-center justify-center gap-2">
+                📲 Viber
+              </a>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Render all drivers
+    const container = document.getElementById("driverContainer");
+    container.innerHTML = drivers.map(createDriverCard).join("");
+  </script>
+
+</body>
+  </html>
