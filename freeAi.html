@@ -218,19 +218,39 @@
   </style>
 </head>
 <body>
-
-  <button class="theme-switcher" onclick="toggleTheme()" aria-label="Toggle Theme">🌓Dark/Light</button>
+<!--
+  <button class="theme-switcher" onclick="toggleTheme()" aria-label="Toggle Theme">🌓Dark/Light</button>-->
   <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Open Menu">☰ Menu</button>
-  <button class="history-back-btn" onclick="history.back()" aria-label="Go Back">←Back</button>
+  <!--<button class="history-back-btn" onclick="history.back()" aria-label="Go Back">←Back</button>-->
 
   <div class="sidebar" id="sidebar">
-    <a href="index.html"><i class="fas fa-home"></i>&nbsp;Home</a>
-    <a href="about.html"><i class="fas fa-info-circle"></i>&nbsp;About</a>
-    <a href="contact.html"><i class="fas fa-phone"></i>&nbsp;Contact</a>
-    <a href="privacy.html"><i class="fas fa-lock"></i>&nbsp;Privacy</a>
-    <a href="term.html"><i>⚖️</i>Terms & Conditions</a>
-  </div>
-
+    
+ 
+  <div class="flex flex-col">
+       <a href="/" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-home mr-3"></i><span>Home</span>
+        </a>
+        <a href="https://thuwanawadi.vercel.app/index.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-tv mr-3"></i><span>မြန်မာတီဗွီ</span>
+        </a>
+        <a href="https://thuwanawadi.vercel.app/movie/index.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-film mr-3"></i><span>မြန်မာစာတန်းထိုး</span>
+        </a>
+        <a href="https://thuwanawadi.vercel.app/freeAi.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-tools mr-3"></i><span>အေအိုင်(Ai)</span>
+        </a>
+        <a href="https://thuwanawadi.vercel.app/coming/index.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-futbol mr-3"></i><span>ဘောလုံးပွဲ</span>
+        </a>
+        <a href="https://subuu-gq2t.vercel.app/" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-money-bill mr-3"></i><span>အွန်လိုင်ငွေရှာနည်း</span>
+        </a>
+        <a href="https://thuwanawadi.vercel.app/about.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-question-circle mr-3"></i><span>Appအကြောင်း</span>
+        </a>
+      </div>
+    </div>
+    
   <div id="overlay" onclick="toggleSidebar()"></div>
 
   <h1>🤖 POPULAR FREE AI TOOLS</h1>
