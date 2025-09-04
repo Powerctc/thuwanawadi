@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>City Service</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .sidebar {
+      height: 100vh;
+      transition: transform 0.3s ease-in-out;
+    }
+    .sidebar.hidden {
+      transform: translateX(-100%);
+    }
+    @media (min-width: 1024px) {
+      .sidebar {
+        transform: translateX(0) !important;
+      }
+      #menu-toggle {
+        display: none !important;
+      }
+    }
+    /* Hide scrollbar */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <!-- HEADER (Mobile Menu Button) -->
+  <header class="lg:hidden flex items-center justify-between bg-black p-4 fixed top-0 left-0 right-0 z-50">
+    <h1 class="text-white font-bold text-lg flex items-center">
+      <i class="fas fa-city mr-2 text-yellow-400"></i>သုဝဏ္ဏဝတီမြို့</h1>
+    <button id="menu-toggle" class="text-white text-2xl">
+      <i class="fas fa-bars"></i>
+    </button>
+  </header>
+
+  <div class="flex">
+    <!-- SIDEBAR -->
+    <div id="sidebar" class="sidebar bg-gray-800 w-48 fixed top-0 left-0 lg:translate-x-0 hidden lg:block z-40">
+      <div class="p-4 flex items-center">
+        <i class="fas fa-taxi text-yellow-400 text-2xl mr-2"></i>
+        <h1 class="text-lg font-bold text-yellow-400">Thuwanawadi</h1>
+      </div>
+      <div class="flex flex-col">
+        <a href="/" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-home mr-3"></i><span>Home</span>
+        </a>
+        <a href="mmtv/index.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-tv mr-3"></i><span>မြန်မာတီဗွီ</span>
+        </a>
+        <a href="movie/index.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-film mr-3"></i><span>မြန်မာစာတန်းထိုး</span>
+        </a>
+        <a href="freeAi.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-tools mr-3"></i><span>အေအိုင်(Ai)</span>
+        </a>
+        <a href="https://mmtvsport-site.vercel.app/" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-futbol mr-3"></i><span>ဘောလုံးပွဲ</span>
+        </a>
+        <a href="https://mmtvsport-site.vercel.app/" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-money-bill mr-3"></i><span>အွန်လိုင်ငွေရှာနည်း</span>
+        </a>
+        <a href="tiktok://@hahatv327" 
+   onclick="if(!window.open(this.href)) window.location='https://www.tiktok.com/@hahatv327?_t=ZS-8zKjvMZmNSz&_r=1'; return false;" 
+   class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+   <i class="fas fa-money-bill mr-3"></i><span>Tiktok</span>
+</a>
+        <a href="fb://facewebmodal/f?href=https://www.facebook.com/share/1AqzfD2mr8/"
+   class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+   <i class="fas fa-money-bill mr-3"></i><span>Facebook</span>
+</a>
+        <a href="about.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-question-circle mr-3"></i><span>Appအကြောင်း</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="flex-1 lg:ml-48 p-6 pb-16 mt-14 lg:mt-0">
+      <h2 class="text-2xl font-bold mb-6 text-black text-center">CITY SERVICE</h2>
+
+      <!-- SCROLLABLE BUTTONS -->
+      <div class="flex space-x-4 overflow-x-auto pb-4 no-scrollbar">
+        <a href="emergency/index.html" class="flex-shrink-0 bg-red-500 text-white font-bold py-3 px-6 rounded-xl shadow-md hover:bg-red-600 text-center">
+          <i class="fas fa-phone mr-2"></i> အရေးပေါ်
+        </a>
+        <a href="taxi/index.html" class="flex-shrink-0 bg-yellow-400 text-black font-bold py-3 px-6 rounded-xl shadow-md hover:bg-yellow-300 text-center">
+          <i class="fas fa-taxi mr-2"></i> Taxi
+        </a>
+        <a href="shop/index.html" class="flex-shrink-0 bg-yellow-400 text-black font-bold py-3 px-6 rounded-xl shadow-md hover:bg-yellow-300 text-center">
+          <i class="fas fa-box mr-2"></i> Shops
+        </a>
+        <a href="business/index.html" class="flex-shrink-0 bg-green-500 text-white font-bold py-3 px-6 rounded-xl shadow-md hover:bg-green-400 text-center">
+          <i class="fas fa-hospital mr-2"></i> Health
+        </a>
+        <a href="business/index.html" class="flex-shrink-0 bg-green-500 text-white font-bold py-3 px-6 rounded-xl shadow-md hover:bg-green-400 text-center">
+          <i class="fas fa-school mr-2"></i> Education
+        </a>
+        <a href="business/index.html" class="flex-shrink-0 bg-green-500 text-white font-bold py-3 px-6 rounded-xl shadow-md hover:bg-green-400 text-center">
+          <i class="fas fa-hotel mr-2"></i> Hotels
+        </a>
+      </div>
+
+      <!-- TIKTOK SHOP IFRAME -->
+      <div class="mt-6 w-full h-screen">
+        <iframe src="https://vt.tiktok.com/ZSHtQFHDt5fJE-cBA4N/" 
+                class="w-full h-full border-0 rounded-xl shadow-lg"
+                allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-800 text-center text-sm py-4 mt-12 text-white">
+    <p class="text-yellow-400">© 2025 Thuwanawaddy App</p>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    const toggleBtn = document.getElementById("menu-toggle");
+    const sidebar = document.getElementById("sidebar");
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("hidden");
+      });
+    }
+  </script>
+</body>
+  </html>
