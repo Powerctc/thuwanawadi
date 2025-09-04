@@ -88,37 +88,34 @@
     <div class="flex-1 lg:ml-48 p-6 pb-16 mt-14 lg:mt-0">
       <h2 class="text-2xl font-bold mb-6 text-black text-center">CITY SERVICE</h2>
 
-      <!-- SCROLLABLE BUTTONS -->
-      <div class="flex space-x-4 overflow-x-auto pb-4 no-scrollbar">
-        <a href="emergency/index.html" class="flex-shrink-0 bg-red-500 text-white font-bold py-3 px-6 rounded-xl shadow-md hover:bg-red-600 text-center">
-          <i class="fas fa-phone mr-2"></i> အရေးပေါ်
-        </a>
-        <a href="taxi/index.html" class="flex-shrink-0 bg-yellow-400 text-black font-bold py-3 px-6 rounded-xl shadow-md hover:bg-yellow-300 text-center">
-          <i class="fas fa-taxi mr-2"></i> Taxi
-        </a>
-        <a href="shop/index.html" class="flex-shrink-0 bg-yellow-400 text-black font-bold py-3 px-6 rounded-xl shadow-md hover:bg-yellow-300 text-center">
-          <i class="fas fa-box mr-2"></i> Shops
-        </a>
-        <a href="business/index.html" class="flex-shrink-0 bg-green-500 text-white font-bold py-3 px-6 rounded-xl shadow-md hover:bg-green-400 text-center">
-          <i class="fas fa-hospital mr-2"></i> Health
-        </a>
-        <a href="business/index.html" class="flex-shrink-0 bg-green-500 text-white font-bold py-3 px-6 rounded-xl shadow-md hover:bg-green-400 text-center">
-          <i class="fas fa-school mr-2"></i> Education
-        </a>
-        <a href="business/index.html" class="flex-shrink-0 bg-green-500 text-white font-bold py-3 px-6 rounded-xl shadow-md hover:bg-green-400 text-center">
-          <i class="fas fa-hotel mr-2"></i> Hotels
-        </a>
-      </div>
+     <!-- SCROLLABLE BUTTONS -->
+<div class="flex space-x-4 overflow-x-auto pb-4 no-scrollbar relative z-40 bg-gray-100">
+  <a href="emergency/index.html" class="flex-shrink-0 bg-red-500 text-white font-bold py-3 px-6 rounded-xl shadow-md hover:bg-red-600 text-center">
+    <i class="fas fa-phone mr-2"></i> အရေးပေါ်
+  </a>
+  <a href="taxi/index.html" class="flex-shrink-0 bg-yellow-400 text-black font-bold py-3 px-6 rounded-xl shadow-md hover:bg-yellow-300 text-center">
+    <i class="fas fa-taxi mr-2"></i> Taxi
+  </a>
+  <a href="shop/index.html" class="flex-shrink-0 bg-yellow-400 text-black font-bold py-3 px-6 rounded-xl shadow-md hover:bg-yellow-300 text-center">
+    <i class="fas fa-box mr-2"></i> Shops
+  </a>
+  <a href="business/index.html" class="flex-shrink-0 bg-green-500 text-white font-bold py-3 px-6 rounded-xl shadow-md hover:bg-green-400 text-center">
+    <i class="fas fa-hospital mr-2"></i> Health
+  </a>
+  <a href="business/index.html" class="flex-shrink-0 bg-green-500 text-white font-bold py-3 px-6 rounded-xl shadow-md hover:bg-green-400 text-center">
+    <i class="fas fa-school mr-2"></i> Education
+  </a>
+  <a href="business/index.html" class="flex-shrink-0 bg-green-500 text-white font-bold py-3 px-6 rounded-xl shadow-md hover:bg-green-400 text-center">
+    <i class="fas fa-hotel mr-2"></i> Hotels
+  </a>
+</div>
 
-      <!-- TIKTOK SHOP IFRAME -->
-      <div class="mt-6 w-full h-screen">
-        <iframe src="https://vt.tiktok.com/ZSHtQFHDt5fJE-cBA4N/" 
-                class="w-full h-full border-0 rounded-xl shadow-lg"
-                allowfullscreen></iframe>
-      </div>
-    </div>
-  </div>
-
+<!-- FIXED FULLSCREEN TIKTOK SHOP -->
+<div class="fixed top-[120px] left-0 w-full h-[calc(100vh-120px)] z-30">
+  <iframe src="https://vt.tiktok.com/ZSHtQFHDt5fJE-cBA4N/"
+          class="w-full h-full border-0"
+          allowfullscreen></iframe>
+</div>
   <!-- FOOTER -->
   <footer class="bg-gray-800 text-center text-sm py-4 mt-12 text-white">
     <p class="text-yellow-400">© 2025 Thuwanawaddy App</p>
@@ -136,4 +133,4 @@
     }
   </script>
 </body>
-  </html>
+          </html>
