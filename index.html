@@ -1,93 +1,360 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ZETFLIX - Movie Details</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-  body { background-color: #1a202c; color: #e2e8f0; margin:0; min-height:100vh; display:flex; flex-direction:column; }
-  main { flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:1.5rem; }
-  .movie-card { background:#2d3748; border-radius:0.75rem; box-shadow:0 10px 15px rgba(0,0,0,0.5); width:100%; max-width:400px; display:flex; flex-direction:column; align-items:center; padding:1.5rem; min-height:70vh; box-sizing:border-box; }
-  .movie-poster-large { width:100%; max-width:300px; border-radius:0.5rem; box-shadow:0 10px 15px rgba(0,0,0,0.5); margin-bottom:1rem; }
-  .play-button { background-color:#ef4444; color:white; padding:0.75rem 1.5rem; border-radius:0.5rem; font-weight:bold; transition:0.2s; }
-  .play-button:hover { background-color:#dc2626; }
-  .modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); display:flex; justify-content:center; align-items:center; z-index:1000; opacity:0; visibility:hidden; transition:0.3s; }
-  .modal-overlay.show { opacity:1; visibility:visible; }
-  .modal-content { background:#2d3748; padding:2rem; border-radius:0.75rem; box-shadow:0 20px 25px -5px rgba(0,0,0,0.5); width:90%; max-width:320px; text-align:center; transform:translateY(-20px); transition:0.3s; position:relative; display:flex; flex-direction:column; align-items:center;}
-  .modal-overlay.show .modal-content { transform:translateY(0); }
-  .modal-close-button { position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; color:#cbd5e0; cursor:pointer; }
-  .modal-close-button:hover { color:#ffffff; }
-  .install-button { background-color:#4299e1; color:white; padding:0.5rem 1rem; border-radius:0.375rem; font-weight:bold; margin-top:1rem; transition:0.2s; display:flex; align-items:center; justify-content:center; gap:0.5rem; text-decoration:none;}
-  .install-button:hover { background-color:#3182ce; }
-  .adhere-gif { text-align:center; margin-top:1rem; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Thuwanawaddy Taxi Service</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .sidebar { 
+      height: 100vh; 
+      transition: transform 0.3s ease-in-out; 
+      z-index: 30; /* Sidebar always above overlay */
+    }
+    .sidebar.hidden { 
+      transform: translateX(-100%); 
+    }
+    @media (min-width: 1024px) {
+      .sidebar { 
+        transform: translateX(0) !important; 
+      }
+      #menu-toggle { 
+        display: none !important; 
+      }
+    }
+
+    /* Marquee Wrapper */
+    .marquee-wrapper {
+      border: 2px solid #ffcc00;
+      border-radius: 8px;
+      padding: 6px 10px;
+      margin: 70px 10px 0;
+      background: #111;
+    }
+
+    /* Text Marquee */
+    .top-marquee {
+      font-weight: bold;
+      color: #ffcc00;
+      white-space: nowrap;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    #marquee-text {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scroll-left 15s linear infinite;
+    }
+    @keyframes scroll-left {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* Image Marquee */
+    .image-marquee {
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .image-marquee .marquee-content {
+      display: flex;
+      gap: 12px;
+      animation: scroll 25s linear infinite;
+    }
+    .image-marquee img {
+      height: 50px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+    @keyframes scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* Sidebar Overlay */
+    #sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 20; /* under sidebar */
+    }
+
+    main { 
+      transition: margin-left .3s ease; 
+    }
+
+    /* Adhere GIF */
+    .adhere-gif {
+      text-align: center;
+      margin: 10px auto;
+      max-width: 320px;
+      border: 2px solid #ffcc00;
+      border-radius: 8px;
+      padding: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .adhere-gif img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+    }
+
+    /* Overlay Menu */
+    #overlay-menu { z-index: 50; }
+  </style>
 </head>
-<body>
-<main>
-  <div id="movie-detail-container" class="movie-card">
-    <p class="text-center text-gray-400 w-full">Loading movie details...</p>
+<body class="bg-gray-100 font-sans">
+
+  <!-- HEADER -->
+  <header class="lg:hidden flex items-center justify-between bg-black p-4 fixed top-0 left-0 right-0 z-50">
+    <h1 class="text-white font-bold text-lg flex items-center">
+      <i class="fab fa-tiktok mr-2 text-pink-500"></i>
+      <i class="fas fa-shop mr-1 text-yellow-400"></i>
+      TIKTOK SHOP 🇲🇲
+    </h1>
+    <button id="menu-toggle" class="text-white text-2xl" aria-label="Open menu">
+      <i class="fas fa-bars"></i>
+    </button>
+  </header>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrapper">
+    <div class="top-marquee" role="status" aria-live="polite">
+      <div id="marquee-text">
+        အစီအစဉ်များကြည့်ရန် Network Streaming Video Player ကို install ပြုလုပ်ရန် လိုအပ်ပါသည် —
+        Please install the Network Streaming Video Player to watch streams.
+      </div>
+    </div>
+
+    <div class="image-marquee" role="region" aria-label="Promotional carousel">
+      <div class="marquee-content">
+        <img src="https://thuwanawadi.vercel.app/image/adhere.png" alt="Promo 1">
+        <img src="https://thuwanawadi.vercel.app/image/admm.png" alt="Promo 2">
+        <img src="https://thuwanawadi.vercel.app/image/tiktokshop.png" alt="Movie Promo">
+        <img src="https://thuwanawadi.vercel.app/image/shopping.png" alt="AI Tools">
+      </div>
+    </div>
   </div>
 
-  <!-- ADHERE GIF BELOW MOVIE CARD -->
-  <div class="adhere-gif">
-    <a href="https://aitools.tv" target="_blank">
-      <img src="https://djmorio.wordpress.com/wp-content/uploads/2020/04/place-your-advert-here-1.gif" alt="Adhere GIF">
-    </a>
-  </div>
-</main>
-
-<!-- POPUP MODAL -->
-<div id="player-modal" class="modal-overlay">
-  <div class="modal-content">
-    <button class="modal-close-button" id="close-modal">&times;</button>
-    <img src="https://i.ibb.co/2Nmfz3c/player-icon.png" alt="Player Icon" style="width:80px;height:80px;margin-bottom:15px;">
-    <h3 class="text-2xl font-bold mb-2">ZET Player</h3>
-    <p class="text-gray-300 mb-4">To watch this stream, please install the player app.</p>
-    <a href="https://play.google.com/store/apps/details?id=com.genuine.leone" target="_blank" class="install-button">
-      <i class="fab fa-android"></i> Install Now
-    </a>
-  </div>
+  <!-- ADHERE GIF WITH TEXT -->
+<div class="adhere-gif text-center">
+  <a href="https://aitools.tv" target="_blank">
+    <img src="https://djmorio.wordpress.com/wp-content/uploads/2020/04/place-your-advert-here-1.gif" alt="Adhere GIF">
+  </a>
+  <!-- Text below the GIF -->
+  <p class="mt-2 text-yellow-400 font-bold text-sm sm:text-base">
+    ဘာလိုလို Visit now!
+  </p>
 </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const movieDetailContainer = document.getElementById('movie-detail-container');
-  const playerModal = document.getElementById('player-modal');
-  const closeModalButton = document.getElementById('close-modal');
+  <!-- SIDEBAR & MAIN -->
+  <div class="flex">
+    <!-- SIDEBAR -->
+    <div id="sidebar" class="sidebar bg-gray-800 w-48 fixed top-0 left-0 lg:translate-x-0 hidden lg:block z-30">
+      <div class="p-4 flex items-center">
+        <i class="fas fa-taxi text-yellow-400 text-2xl mr-2"></i>
+        <h1 class="text-lg font-bold text-yellow-400">Thuwanawaddy</h1>
+      </div>
+      <div class="flex flex-col">
+        <a href="/" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-home mr-3"></i><span>Home</span>
+        </a>
+        <a href="indexbar.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-tv mr-3"></i><span>ဘာလိုလို</span>
+        </a>
+        <a href="mmtv/index.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-tv mr-3"></i><span>မြန်မာတီဗွီ</span>
+        </a>
+        
+        <a href="https://thuwanawadi.vercel.app/freeAi.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-tools mr-3"></i><span>အေအိုင်(Ai)</span>
+        </a>
+        <a href="https://thuwanawadi.vercel.app/coming/index.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-futbol mr-3"></i><span>ဘောလုံးပွဲ</span>
+        </a>
+        <a href="https://subuu-gq2t.vercel.app/" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-money-bill mr-3"></i><span>အွန်လိုင်ငွေရှာနည်း</span>
+        </a>
+        <a href="https://thuwanawadi.vercel.app/about.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-question-circle mr-3"></i><span>Appအကြောင်း</span>
+        </a>
+      </div>
+    </div>
 
-  const showModal = () => playerModal.classList.add('show');
-  const hideModal = () => playerModal.classList.remove('show');
-  closeModalButton.addEventListener('click', hideModal);
-  playerModal.addEventListener('click', e => { if(e.target===playerModal) hideModal(); });
+    <!-- MAIN -->
+    <main class="flex-1 lg:ml-56 p-6 pb-16 mt-6">
+      <div class="flex flex-wrap justify-center gap-2 mb-8">
+        <a href="https://www.tiktok.com/@nextplaymm?_t=ZS-8zRPIE4dwOL&_r=1" target="_blank" class="flex items-center gap-1 bg-pink-500 text-white font-bold px-4 py-2 rounded-lg shadow hover:bg-pink-600 transition text-sm sm:text-base">
+          <i class="fas fa-shopping-cart"></i> Shop
+        </a>
+        <a href="contact.html" class="flex items-center gap-1 bg-blue-500 text-white font-bold px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition text-sm sm:text-base">
+          <i class="fas fa-envelope"></i> Contact
+        </a>
+        <a href="https://www.tiktok.com/@hahatv327?_t=ZP-8zRPAWWqRkl&_r=1" target="_blank" class="flex items-center gap-1 bg-green-500 text-white font-bold px-4 py-2 rounded-lg shadow hover:bg-green-600 transition text-sm sm:text-base">
+          <i class="fas fa-gamepad"></i> Game
+        </a>
+      </div>
 
-  const storedMovie = localStorage.getItem('selectedMovie');
-  if(storedMovie){
-    const movie = JSON.parse(storedMovie);
-    displayMovieDetails(movie);
-  } else {
-    movieDetailContainer.innerHTML = `<div class="text-center text-red-400 w-full">
-      <p>No movie selected. Please go back to <a href="home.html" class="underline text-blue-400 hover:text-blue-500">Home Page</a>.</p>
-    </div>`;
-  }
-
-  function displayMovieDetails(movie){
-    movieDetailContainer.innerHTML = `
-      <img src="${movie.logo}" alt="${movie.title} Poster" class="movie-poster-large">
-      <div class="flex flex-col items-center text-center">
-        <h2 class="text-3xl font-bold mb-2 text-white">${movie.title}</h2>
-        <p class="text-gray-300 text-xl mb-4">${movie.year} | ${movie.category}</p>
-        <button id="watch-button" class="play-button flex items-center justify-center gap-2">
-          <i class="fas fa-play"></i> Watch Now
+      <div class="flex items-center justify-center gap-2 mb-6 flex-wrap">
+        <button id="movies-selector-btn" class="bg-yellow-500 text-black px-3 py-2 rounded-lg font-bold flex items-center gap-2 text-sm">
+          <i class="fas fa-film"></i> Selector
+        </button>
+        <button id="category-selector-btn" class="bg-blue-500 text-white px-3 py-2 rounded-lg font-bold flex items-center gap-2 text-sm">
+          <i class="fas fa-folder-open"></i> Category
+        </button>
+        <button id="year-group-btn" class="bg-green-500 text-white px-3 py-2 rounded-lg font-bold flex items-center gap-2 text-sm">
+          <i class="fas fa-calendar-alt"></i> Group
         </button>
       </div>
-    `;
-    document.getElementById('watch-button').addEventListener('click', () => {
-      showModal();
+
+      <div id="movie-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6"></div>
+    </main>
+  </div>
+
+  <!-- SIDEBAR OVERLAY -->
+  <div id="sidebar-overlay"></div>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-800 text-center text-sm py-4 mt-12">
+    <p class="text-yellow-400">Aitoolstv &copy; All rights reserved</p>
+    <p>Created by
+      <a href="https://t.me/aitools_tv" target="_blank" class="text-yellow-400 underline hover:text-yellow-300">Ai tools Tv</a>
+    </p>
+  </footer>
+
+  <!-- OVERLAY MENU -->
+  <div id="overlay-menu" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden">
+    <div class="bg-gray-900 text-white w-80 max-h-[80vh] rounded-lg shadow-lg overflow-y-auto">
+      <div class="p-4 border-b border-gray-700 flex justify-between items-center">
+        <h2 id="overlay-title" class="text-lg font-bold text-yellow-400">Menu</h2>
+        <button id="overlay-close" class="text-gray-400 hover:text-white">✖</button>
+      </div>
+      <ul id="overlay-list" class="p-2 space-y-2"></ul>
+    </div>
+  </div>
+
+  <script>
+    const toggleBtn = document.getElementById("menu-toggle");
+    const sidebar = document.getElementById("sidebar");
+    const sidebarOverlay = document.getElementById("sidebar-overlay");
+
+    function openSidebar() {
+      sidebar.classList.remove("hidden");
+      sidebarOverlay.style.display = "block";
+      document.body.style.overflow = "hidden";
+    }
+    function closeSidebar() {
+      if (window.innerWidth < 1024) sidebar.classList.add("hidden");
+      sidebarOverlay.style.display = "none";
+      document.body.style.overflow = "";
+    }
+
+    toggleBtn?.addEventListener("click", () => {
+      if (sidebar.classList.contains("hidden")) openSidebar();
+      else closeSidebar();
     });
-  }
-});
-</script>
+    sidebarOverlay?.addEventListener("click", closeSidebar);
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth >= 1024) {
+        sidebar.classList.remove("hidden");
+        sidebarOverlay.style.display = "none";
+        document.body.style.overflow = "";
+      } else {
+        sidebar.classList.add("hidden");
+      }
+    });
+
+    // Overlay Menu
+    const overlayMenu = document.getElementById("overlay-menu");
+    const overlayTitle = document.getElementById("overlay-title");
+    const overlayList = document.getElementById("overlay-list");
+    const overlayClose = document.getElementById("overlay-close");
+
+    let currentMovies = [];
+    let filteredMovies = [];
+    const movieFiles = ["movies.json", "movies-1.json", "myanmar.json"];
+
+    function openOverlay(title, items, onSelect) {
+      overlayTitle.textContent = title;
+      overlayList.innerHTML = "";
+      items.forEach((item, idx) => {
+        const li = document.createElement("li");
+        li.textContent = item.label;
+        li.className = "p-3 rounded bg-gray-800 hover:bg-yellow-500 hover:text-black cursor-pointer focus:bg-yellow-500";
+        li.tabIndex = 0;
+        li.addEventListener("click", () => { onSelect(item.value); closeOverlay(); });
+        overlayList.appendChild(li);
+        if (idx === 0) li.focus();
+      });
+      overlayMenu.classList.remove("hidden");
+    }
+    function closeOverlay() { overlayMenu.classList.add("hidden"); }
+
+    async function loadMovies(file) {
+      try {
+        const res = await fetch(file);
+        if (!res.ok) throw new Error('Failed to load');
+        currentMovies = await res.json();
+        filteredMovies = [...currentMovies];
+        displayMovies(filteredMovies);
+      } catch (e) {
+        console.error(e);
+        alert('Unable to load movie list. Check network or file path.');
+      }
+    }
+
+    function displayMovies(movies) {
+      const grid = document.getElementById("movie-grid");
+      grid.innerHTML = "";
+      movies.forEach(m => appendMovieCard(m));
+    }
+    function appendMovieCard(movie) {
+      const grid = document.getElementById("movie-grid");
+      const card = document.createElement("div");
+      card.className = "movie-card cursor-pointer relative group bg-gray-800 rounded-lg overflow-hidden";
+      card.innerHTML = `
+        <img src="${movie.logo}" alt="${movie.title}" class="w-full h-auto object-cover">
+        <div class="p-4">
+          <h3 class="text-lg font-semibold text-white truncate">${movie.title}</h3>
+          <p class="text-gray-400 text-sm">${movie.year} | ${movie.category}</p>
+        </div>`;
+      card.addEventListener("click", () => {
+        localStorage.setItem("selectedMovie", JSON.stringify(movie));
+        window.location.href = "movie_detail.html";
+      });
+      grid.appendChild(card);
+    }
+
+    document.getElementById("movies-selector-btn")?.addEventListener("click", () => {
+      openOverlay("Select Movies", movieFiles.map(f => ({ label: f, value: f })), (f) => loadMovies(f));
+    });
+
+    document.getElementById("category-selector-btn")?.addEventListener("click", () => {
+      const categories = [...new Set(currentMovies.map(m => m.category))];
+      openOverlay("Select Category", [{ label: "All", value: "all" }, ...categories.map(c => ({ label: c, value: c }))], (cat) => {
+        filteredMovies = (cat === "all") ? [...currentMovies] : currentMovies.filter(m => m.category === cat);
+        displayMovies(filteredMovies);
+      });
+    });
+
+    document.getElementById("year-group-btn")?.addEventListener("click", () => {
+      const years = [...new Set(currentMovies.map(m => m.year))].sort((a, b) => b - a);
+      const items = [{ label: "All", value: "all" }, ...years.map(y => ({ label: y, value: y }))];
+      openOverlay("Group by Year", items, (year) => {
+        filteredMovies = (year === "all") ? [...currentMovies] : currentMovies.filter(m => m.year == year);
+        displayMovies(filteredMovies);
+      });
+    });
+
+    overlayClose?.addEventListener("click", closeOverlay);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadMovies("https://moviesplaylist-github-io.vercel.app/2/movies.json");
+    });
+  </script>
 </body>
-</html>
+  </html>
