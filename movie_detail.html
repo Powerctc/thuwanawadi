@@ -1,116 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ZETFLIX - Movie Details</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    body { background-color: #1a202c; color: #e2e8f0; font-family: sans-serif; }
-    .movie-poster-large { width: 100%; max-width: 400px; height: auto; border-radius: 0.5rem; box-shadow: 0 10px 15px rgba(0,0,0,0.5); }
-    .play-button { background-color: #ef4444; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: bold; transition: background-color 0.2s; }
-    .play-button:hover { background-color: #dc2626; }
-    .adhere-gif img { max-width: 320px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
-    .modal-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background-color: rgba(0,0,0,0.75); display: flex; justify-content:center; align-items:center; z-index:1000; opacity:0; visibility:hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
-    .modal-overlay.show { opacity:1; visibility: visible; }
-    .modal-content { background-color:#2d3748; padding:2rem; border-radius:0.75rem; box-shadow:0 20px 25px -5px rgba(0,0,0,0.5); width:90%; max-width:500px; text-align:center; transform:translateY(-20px); transition: transform 0.3s ease-in-out; position: relative;}
-    .modal-overlay.show .modal-content { transform: translateY(0); }
-    .modal-close-button { position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; color:#cbd5e0; cursor:pointer;}
-    .modal-close-button:hover { color:#ffffff;}
-    .install-button { background-color: #4299e1; color: white; padding: 0.5rem 1rem; border-radius: 0.375rem; font-weight: bold; margin-top: 1rem; transition: background-color 0.2s; display:inline-flex; gap:0.5rem; align-items:center; justify-content:center;}
-    .install-button:hover { background-color: #3182ce; }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ZETFLIX - Movie Details</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  body { background-color: #1a202c; color: #e2e8f0; font-family: sans-serif; }
+  .movie-poster-large { width: 100%; max-width: 400px; height: auto; border-radius: 0.5rem; box-shadow: 0 10px 15px rgba(0,0,0,0.5); }
+  .play-button { background-color: #ef4444; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: bold; transition: background-color 0.2s; }
+  .play-button:hover { background-color: #dc2626; }
+  .adhere-gif img { max-width: 320px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
+  .modal-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background-color: rgba(0,0,0,0.7); display: flex; justify-content:center; align-items:center; z-index:1000; opacity:0; visibility:hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+  .modal-overlay.show { opacity:1; visibility: visible; }
+  .modal-content { background-color:#2d3748; padding:2rem; border-radius:0.75rem; box-shadow:0 20px 25px -5px rgba(0,0,0,0.5); width:90%; max-width:350px; text-align:center; transform:translateY(-20px); transition: transform 0.3s ease-in-out; position: relative;}
+  .modal-overlay.show .modal-content { transform: translateY(0); }
+  .modal-close-button { position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; color:#cbd5e0; cursor:pointer;}
+  .modal-close-button:hover { color:#ffffff;}
+  .install-button { background-color: #4299e1; color: white; padding: 0.5rem 1rem; border-radius: 0.375rem; font-weight: bold; margin-top: 1rem; transition: background-color 0.2s; display:inline-flex; gap:0.5rem; align-items:center; justify-content:center;}
+  .install-button:hover { background-color: #3182ce; }
+</style>
 </head>
 <body class="flex flex-col items-center p-6">
 
-  <main class="flex-1 flex flex-col items-center p-6 gap-6 w-full max-w-4xl">
+<main class="flex-1 flex flex-col items-center p-6 gap-6 w-full max-w-4xl">
 
-    <!-- MOVIE DETAIL -->
-    <div id="movie-detail-container" class="bg-gray-800 rounded-lg shadow-xl p-8 flex flex-col md:flex-row items-center gap-8 w-full">
-      <p class="text-center text-gray-400 w-full">Loading movie details...</p>
-    </div>
+  <!-- MOVIE DETAIL -->
+  <div id="movie-detail-container" class="bg-gray-800 rounded-lg shadow-xl p-8 flex flex-col md:flex-row items-center gap-8 w-full">
+    <p class="text-center text-gray-400 w-full">Loading movie details...</p>
+  </div>
 
-    <!-- ADHERE POSTER + TEXT -->
-    <div class="adhere-gif text-center mt-6">
-      <a href="https://aitools.tv" target="_blank">
-        <img src="https://djmorio.wordpress.com/wp-content/uploads/2020/04/place-your-advert-here-1.gif" alt="Adhere GIF" class="mx-auto">
+  <!-- ADHERE POSTER + TEXT -->
+  <div class="adhere-gif text-center mt-6">
+    <a href="https://aitools.tv" target="_blank">
+      <img src="https://djmorio.wordpress.com/wp-content/uploads/2020/04/place-your-advert-here-1.gif" alt="Adhere GIF" class="mx-auto">
+    </a>
+    <p class="mt-2 text-yellow-400 font-bold text-sm sm:text-base">
+      Check out our amazing AI tools! Visit now!
+    </p>
+  </div>
+
+  <!-- PLAYER INSTALL MODAL -->
+  <div id="player-modal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="modal-close-button" id="close-modal">&times;</button>
+      <img src="/icon/nsplayericon.jpg" alt="Player Icon" style="width:80px;height:80px;margin-bottom:15px;" class="mx-auto rounded">
+      <h3 class="text-xl font-bold mb-2 text-white">Player Not Installed</h3>
+      <p class="text-gray-300 mb-4">To watch this stream, please install the external player.</p>
+      <a id="install-link" href="https://play.google.com/store/apps/details?id=com.genuine.leone" target="_blank" class="install-button">
+        <i class="fab fa-android"></i> Install Player
       </a>
-      <p class="mt-2 text-yellow-400 font-bold text-sm sm:text-base">
-        Check out our amazing AI tools! Visit now!
-      </p>
     </div>
+  </div>
 
-    <!-- PLAYER MODAL -->
-    <div id="player-modal" class="modal-overlay">
-      <div class="modal-content">
-        <button class="modal-close-button" id="close-modal">&times;</button>
-        <h3 class="text-2xl font-bold mb-4">App Not Found!</h3>
-        <p class="text-gray-300 mb-4">It seems the required player app is not installed on your device.</p>
-        <p class="text-gray-300 mb-6">We recommend installing <strong>ZET Player</strong> for the best experience.</p>
-        <a id="install-link" href="https://play.google.com/store/apps/details?id=com.genuine.leone" target="_blank" class="install-button">
-          <i class="fab fa-android"></i> Install Now
-        </a>
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const movieDetailContainer = document.getElementById('movie-detail-container');
+  const playerModal = document.getElementById('player-modal');
+  const closeModalButton = document.getElementById('close-modal');
+
+  function showModal() { playerModal.classList.add('show'); }
+  function hideModal() { playerModal.classList.remove('show'); }
+
+  closeModalButton.addEventListener('click', hideModal);
+  playerModal.addEventListener('click', (e)=> { if(e.target === playerModal) hideModal(); });
+
+  const storedMovie = localStorage.getItem('selectedMovie');
+  if(storedMovie){
+    const movie = JSON.parse(storedMovie);
+    displayMovieDetails(movie);
+  } else {
+    movieDetailContainer.innerHTML = `<div class="text-center text-red-400 w-full">
+      <p>No movie selected. Please go back to the <a href="home.html" class="underline text-blue-400 hover:text-blue-500">Home Page</a>.</p>
+    </div>`;
+  }
+
+  function displayMovieDetails(movie){
+    movieDetailContainer.innerHTML = `
+      <img src="${movie.logo}" alt="${movie.title} Poster" class="movie-poster-large mb-6 md:mb-0">
+      <div class="flex flex-col items-center md:items-start text-center md:text-left">
+        <h2 class="text-3xl font-bold mb-2 text-white">${movie.title}</h2>
+        <p class="text-gray-300 text-xl mb-4">${movie.year} | ${movie.category}</p>
+        <button id="watch-button" class="play-button flex items-center justify-center gap-2">
+          <i class="fas fa-play"></i> Watch Now
+        </button>
       </div>
-    </div>
+    `;
+    document.getElementById('watch-button').addEventListener('click', ()=>openWithExternalPlayer(movie.url));
+  }
 
-  </main>
+  function openWithExternalPlayer(url){
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    if(isAndroid){
+      const intentUrl = `intent:${url}#Intent;package=com.genuine.leone;type=video/*;S.title=MMTV%20SPORT;end`;
+      let timeout;
+      const iframe = document.createElement('iframe');
+      iframe.style.display='none';
+      iframe.src=intentUrl;
+      document.body.appendChild(iframe);
+      setTimeout(()=>document.body.removeChild(iframe),1000);
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const movieDetailContainer = document.getElementById('movie-detail-container');
-      const playerModal = document.getElementById('player-modal');
-      const closeModalButton = document.getElementById('close-modal');
+      timeout = setTimeout(()=>showModal(),1500);
+      document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden') clearTimeout(timeout); }, {once:true});
+    } else {
+      showModal(); // non-Android devices also see popup
+    }
+  }
+});
+</script>
 
-      function showModal() { playerModal.classList.add('show'); }
-      function hideModal() { playerModal.classList.remove('show'); }
-
-      closeModalButton.addEventListener('click', hideModal);
-      playerModal.addEventListener('click', (e) => { if(e.target === playerModal) hideModal(); });
-
-      // Load selected movie from localStorage
-      const storedMovie = localStorage.getItem('selectedMovie');
-      if (storedMovie) {
-        const movie = JSON.parse(storedMovie);
-        displayMovieDetails(movie);
-      } else {
-        movieDetailContainer.innerHTML = `<div class="text-center text-red-400 w-full">
-          <p>No movie selected. Please go back to the <a href="home.html" class="underline text-blue-400 hover:text-blue-500">Home Page</a>.</p>
-        </div>`;
-      }
-
-      function displayMovieDetails(movie){
-        movieDetailContainer.innerHTML = `
-          <img src="${movie.logo}" alt="${movie.title} Poster" class="movie-poster-large mb-6 md:mb-0">
-          <div class="flex flex-col items-center md:items-start text-center md:text-left">
-            <h2 class="text-3xl font-bold mb-2 text-white">${movie.title}</h2>
-            <p class="text-gray-300 text-xl mb-4">${movie.year} | ${movie.category}</p>
-            <button id="watch-button" class="play-button flex items-center justify-center gap-2">
-              <i class="fas fa-play"></i> Watch Now
-            </button>
-          </div>
-        `;
-        document.getElementById('watch-button').addEventListener('click', () => openWithExternalPlayer(movie.url));
-      }
-
-      // Watch button logic: intent + fallback modal
-      function openWithExternalPlayer(url){
-        const isAndroid = /Android/i.test(navigator.userAgent);
-        if(isAndroid){
-          const intentUrl = `intent:${url}#Intent;package=com.genuine.leone;type=video/*;S.title=MMTV%20SPORT;end`;
-          let timeout;
-          const iframe = document.createElement('iframe');
-          iframe.style.display='none';
-          iframe.src=intentUrl;
-          document.body.appendChild(iframe);
-          setTimeout(()=>document.body.removeChild(iframe),1000);
-
-          timeout = setTimeout(()=>showModal(),1500);
-          const handleVisibility = () => { if(document.visibilityState==='hidden') clearTimeout(timeout); };
-          document.addEventListener('visibilitychange', handleVisibility,{once:true});
-        } else { alert('Only available on Android.'); }
-      }
-    });
-  </script>
 </body>
 </html>
