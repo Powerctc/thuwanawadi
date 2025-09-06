@@ -235,126 +235,151 @@
       <ul id="overlay-list" class="p-2 space-y-2"></ul>
     </div>
   </div>
+    <script>
+  const toggleBtn = document.getElementById("menu-toggle");
+  const sidebar = document.getElementById("sidebar");
+  const sidebarOverlay = document.getElementById("sidebar-overlay");
 
-  <script>
-    const toggleBtn = document.getElementById("menu-toggle");
-    const sidebar = document.getElementById("sidebar");
-    const sidebarOverlay = document.getElementById("sidebar-overlay");
+  function openSidebar() {
+    sidebar.classList.remove("hidden");
+    sidebarOverlay.style.display = "block";
+    document.body.style.overflow = "hidden";
+  }
+  function closeSidebar() {
+    if (window.innerWidth < 1024) sidebar.classList.add("hidden");
+    sidebarOverlay.style.display = "none";
+    document.body.style.overflow = "";
+  }
 
-    function openSidebar() {
+  toggleBtn?.addEventListener("click", () => {
+    if (sidebar.classList.contains("hidden")) openSidebar();
+    else closeSidebar();
+  });
+  sidebarOverlay?.addEventListener("click", closeSidebar);
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth >= 1024) {
       sidebar.classList.remove("hidden");
-      sidebarOverlay.style.display = "block";
-      document.body.style.overflow = "hidden";
-    }
-    function closeSidebar() {
-      if (window.innerWidth < 1024) sidebar.classList.add("hidden");
       sidebarOverlay.style.display = "none";
       document.body.style.overflow = "";
+    } else {
+      sidebar.classList.add("hidden");
     }
+  });
 
-    toggleBtn?.addEventListener("click", () => {
-      if (sidebar.classList.contains("hidden")) openSidebar();
-      else closeSidebar();
+  // Overlay Menu
+  const overlayMenu = document.getElementById("overlay-menu");
+  const overlayTitle = document.getElementById("overlay-title");
+  const overlayList = document.getElementById("overlay-list");
+  const overlayClose = document.getElementById("overlay-close");
+
+  let currentMovies = [];
+  let filteredMovies = [];
+
+  // 🎬 Movie files with label + value
+  const movieFiles = [
+    { label: "Movies List 1", value: "https://moviesplaylist-github-io.vercel.app/1/movies.json" },
+    { label: "Movies List 2", value: "https://moviesplaylist-github-io.vercel.app/2/movies.json" },
+    { label: "Myanmar Movies", value: "https://moviesplaylist-github-io.vercel.app/myanmar.json" }
+  ];
+
+  function openOverlay(title, items, onSelect) {
+    overlayTitle.textContent = title;
+    overlayList.innerHTML = "";
+    items.forEach((item, idx) => {
+      const li = document.createElement("li");
+      li.textContent = item.label;
+      li.className =
+        "p-3 rounded bg-gray-800 hover:bg-yellow-500 hover:text-black cursor-pointer focus:bg-yellow-500";
+      li.tabIndex = 0;
+      li.addEventListener("click", () => {
+        onSelect(item.value);
+        closeOverlay();
+      });
+      overlayList.appendChild(li);
+      if (idx === 0) li.focus();
     });
-    sidebarOverlay?.addEventListener("click", closeSidebar);
+    overlayMenu.classList.remove("hidden");
+  }
+  function closeOverlay() {
+    overlayMenu.classList.add("hidden");
+  }
 
-    window.addEventListener("resize", () => {
-      if (window.innerWidth >= 1024) {
-        sidebar.classList.remove("hidden");
-        sidebarOverlay.style.display = "none";
-        document.body.style.overflow = "";
-      } else {
-        sidebar.classList.add("hidden");
+  async function loadMovies(file) {
+    try {
+      const res = await fetch(file);
+      if (!res.ok) throw new Error("Failed to load");
+      currentMovies = await res.json();
+      filteredMovies = [...currentMovies];
+      displayMovies(filteredMovies);
+    } catch (e) {
+      console.error(e);
+      alert("Unable to load movie list. Check network or file path.");
+    }
+  }
+
+  function displayMovies(movies) {
+    const grid = document.getElementById("movie-grid");
+    grid.innerHTML = "";
+    movies.forEach((m) => appendMovieCard(m));
+  }
+  function appendMovieCard(movie) {
+    const grid = document.getElementById("movie-grid");
+    const card = document.createElement("div");
+    card.className =
+      "movie-card cursor-pointer relative group bg-gray-800 rounded-lg overflow-hidden";
+    card.innerHTML = `
+      <img src="${movie.logo}" alt="${movie.title}" class="w-full h-auto object-cover">
+      <div class="p-4">
+        <h3 class="text-lg font-semibold text-white truncate">${movie.title}</h3>
+        <p class="text-gray-400 text-sm">${movie.year} | ${movie.category}</p>
+      </div>`;
+    card.addEventListener("click", () => {
+      localStorage.setItem("selectedMovie", JSON.stringify(movie));
+      window.location.href = "movie_detail.html";
+    });
+    grid.appendChild(card);
+  }
+
+  // 🎬 Selector for Movie Lists
+  document.getElementById("movies-selector-btn")?.addEventListener("click", () => {
+    openOverlay("Select Movies", movieFiles, (f) => loadMovies(f));
+  });
+
+  // 🎬 Selector for Categories
+  document.getElementById("category-selector-btn")?.addEventListener("click", () => {
+    const categories = [...new Set(currentMovies.map((m) => m.category))];
+    openOverlay(
+      "Select Category",
+      [{ label: "All", value: "all" }, ...categories.map((c) => ({ label: c, value: c }))],
+      (cat) => {
+        filteredMovies =
+          cat === "all" ? [...currentMovies] : currentMovies.filter((m) => m.category === cat);
+        displayMovies(filteredMovies);
       }
+    );
+  });
+
+  // 🎬 Selector for Years
+  document.getElementById("year-group-btn")?.addEventListener("click", () => {
+    const years = [...new Set(currentMovies.map((m) => m.year))].sort((a, b) => b - a);
+    const items = [
+      { label: "All", value: "all" },
+      ...years.map((y) => ({ label: y, value: y }))
+    ];
+    openOverlay("Group by Year", items, (year) => {
+      filteredMovies =
+        year === "all" ? [...currentMovies] : currentMovies.filter((m) => m.year == year);
+      displayMovies(filteredMovies);
     });
+  });
 
-    // Overlay Menu
-    const overlayMenu = document.getElementById("overlay-menu");
-    const overlayTitle = document.getElementById("overlay-title");
-    const overlayList = document.getElementById("overlay-list");
-    const overlayClose = document.getElementById("overlay-close");
+  overlayClose?.addEventListener("click", closeOverlay);
 
-    let currentMovies = [];
-    let filteredMovies = [];
-    const movieFiles = ["https://moviesplaylist-github-io.vercel.app/1/movies.json", "https://moviesplaylist-github-io.vercel.app/2/movies.json", "https://moviesplaylist-github-io.vercel.app/myanmar.json"];
-
-    function openOverlay(title, items, onSelect) {
-      overlayTitle.textContent = title;
-      overlayList.innerHTML = "";
-      items.forEach((item, idx) => {
-        const li = document.createElement("li");
-        li.textContent = item.label;
-        li.className = "p-3 rounded bg-gray-800 hover:bg-yellow-500 hover:text-black cursor-pointer focus:bg-yellow-500";
-        li.tabIndex = 0;
-        li.addEventListener("click", () => { onSelect(item.value); closeOverlay(); });
-        overlayList.appendChild(li);
-        if (idx === 0) li.focus();
-      });
-      overlayMenu.classList.remove("hidden");
-    }
-    function closeOverlay() { overlayMenu.classList.add("hidden"); }
-
-    async function loadMovies(file) {
-      try {
-        const res = await fetch(file);
-        if (!res.ok) throw new Error('Failed to load');
-        currentMovies = await res.json();
-        filteredMovies = [...currentMovies];
-        displayMovies(filteredMovies);
-      } catch (e) {
-        console.error(e);
-        alert('Unable to load movie list. Check network or file path.');
-      }
-    }
-
-    function displayMovies(movies) {
-      const grid = document.getElementById("movie-grid");
-      grid.innerHTML = "";
-      movies.forEach(m => appendMovieCard(m));
-    }
-    function appendMovieCard(movie) {
-      const grid = document.getElementById("movie-grid");
-      const card = document.createElement("div");
-      card.className = "movie-card cursor-pointer relative group bg-gray-800 rounded-lg overflow-hidden";
-      card.innerHTML = `
-        <img src="${movie.logo}" alt="${movie.title}" class="w-full h-auto object-cover">
-        <div class="p-4">
-          <h3 class="text-lg font-semibold text-white truncate">${movie.title}</h3>
-          <p class="text-gray-400 text-sm">${movie.year} | ${movie.category}</p>
-        </div>`;
-      card.addEventListener("click", () => {
-        localStorage.setItem("selectedMovie", JSON.stringify(movie));
-        window.location.href = "movie_detail.html";
-      });
-      grid.appendChild(card);
-    }
-
-    document.getElementById("movies-selector-btn")?.addEventListener("click", () => {
-      openOverlay("Select Movies", movieFiles.map(f => ({ label: f, value: f })), (f) => loadMovies(f));
-    });
-
-    document.getElementById("category-selector-btn")?.addEventListener("click", () => {
-      const categories = [...new Set(currentMovies.map(m => m.category))];
-      openOverlay("Select Category", [{ label: "All", value: "all" }, ...categories.map(c => ({ label: c, value: c }))], (cat) => {
-        filteredMovies = (cat === "all") ? [...currentMovies] : currentMovies.filter(m => m.category === cat);
-        displayMovies(filteredMovies);
-      });
-    });
-
-    document.getElementById("year-group-btn")?.addEventListener("click", () => {
-      const years = [...new Set(currentMovies.map(m => m.year))].sort((a, b) => b - a);
-      const items = [{ label: "All", value: "all" }, ...years.map(y => ({ label: y, value: y }))];
-      openOverlay("Group by Year", items, (year) => {
-        filteredMovies = (year === "all") ? [...currentMovies] : currentMovies.filter(m => m.year == year);
-        displayMovies(filteredMovies);
-      });
-    });
-
-    overlayClose?.addEventListener("click", closeOverlay);
-
-    document.addEventListener('DOMContentLoaded', () => {
-      loadMovies("https://moviesplaylist-github-io.vercel.app/2/movies.json");
-    });
-  </script>
+  // Default Load
+  document.addEventListener("DOMContentLoaded", () => {
+    loadMovies("https://moviesplaylist-github-io.vercel.app/2/movies.json");
+  });
+    </script>
 </body>
   </html>
