@@ -3,83 +3,189 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>City Service</title>
+  <title>Thuwanawaddy Taxi Service</title>
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    .sidebar {
-      height: 100vh;
-      transition: transform 0.3s ease-in-out;
+    .sidebar { 
+      height: 100vh; 
+      transition: transform 0.3s ease-in-out; 
+      z-index: 30; /* Sidebar always above overlay */
     }
-    .sidebar.hidden {
-      transform: translateX(-100%);
+    .sidebar.hidden { 
+      transform: translateX(-100%); 
     }
     @media (min-width: 1024px) {
-      .sidebar {
-        transform: translateX(0) !important;
+      .sidebar { 
+        transform: translateX(0) !important; 
       }
-      #menu-toggle {
-        display: none !important;
+      #menu-toggle { 
+        display: none !important; 
       }
     }
+
+    /* Marquee Wrapper */
+    .marquee-wrapper {
+      border: 2px solid #ffcc00;
+      border-radius: 8px;
+      padding: 6px 10px;
+      margin: 70px 10px 0;
+      background: #111;
+    }
+
+    /* Text Marquee */
+    .top-marquee {
+      font-weight: bold;
+      color: #ffcc00;
+      white-space: nowrap;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    #marquee-text {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scroll-left 15s linear infinite;
+    }
+    @keyframes scroll-left {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* Image Marquee */
+    .image-marquee {
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .image-marquee .marquee-content {
+      display: flex;
+      gap: 12px;
+      animation: scroll 25s linear infinite;
+    }
+    .image-marquee img {
+      height: 50px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+    @keyframes scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* Sidebar Overlay */
+    #sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 20; /* under sidebar */
+    }
+
+    main { 
+      transition: margin-left .3s ease; 
+    }
+
+    /* Adhere GIF */
+    .adhere-gif {
+      text-align: center;
+      margin: 10px auto;
+      max-width: 320px;
+      border: 2px solid #ffcc00;
+      border-radius: 8px;
+      padding: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .adhere-gif img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+    }
+
+    /* Overlay Menu */
+    #overlay-menu { z-index: 50; }
   </style>
 </head>
 <body class="bg-gray-100 font-sans">
 
-  <!-- HEADER (Mobile Menu Button) -->
+  <!-- HEADER -->
   <header class="lg:hidden flex items-center justify-between bg-black p-4 fixed top-0 left-0 right-0 z-50">
     <h1 class="text-white font-bold text-lg flex items-center">
-      <i class="fas fa-city mr-2 text-yellow-400"></i>သုဝဏ္ဏဝတီမြို့</h1>
-    <button id="menu-toggle" class="text-white text-2xl">
+      <i class="fab fa-tiktok mr-2 text-pink-500"></i>
+      <i class="fas fa-shop mr-1 text-yellow-400"></i>
+      TIKTOK SHOP 🇲🇲
+    </h1>
+    <button id="menu-toggle" class="text-white text-2xl" aria-label="Open menu">
       <i class="fas fa-bars"></i>
     </button>
   </header>
 
+  <!-- MARQUEE -->
+  <div class="marquee-wrapper">
+    <div class="top-marquee" role="status" aria-live="polite">
+      <div id="marquee-text">
+        အစီအစဉ်များကြည့်ရန် Network Streaming Video Player ကို install ပြုလုပ်ရန် လိုအပ်ပါသည် —
+        Please install the Network Streaming Video Player to watch streams.
+      </div>
+    </div>
+
+    <div class="image-marquee" role="region" aria-label="Promotional carousel">
+      <div class="marquee-content">
+        <img src="https://thuwanawadi.vercel.app/image/adhere.png" alt="Promo 1">
+        <img src="https://thuwanawadi.vercel.app/image/admm.png" alt="Promo 2">
+        <img src="https://thuwanawadi.vercel.app/image/tiktokshop.png" alt="Movie Promo">
+        <img src="https://thuwanawadi.vercel.app/image/shopping.png" alt="AI Tools">
+      </div>
+    </div>
+  </div>
+
+  <!-- ADHERE GIF WITH TEXT -->
+<div class="adhere-gif text-center">
+  <a href="https://aitools.tv" target="_blank">
+    <img src="https://djmorio.wordpress.com/wp-content/uploads/2020/04/place-your-advert-here-1.gif" alt="Adhere GIF">
+  </a>
+  <!-- Text below the GIF -->
+  <p class="mt-2 text-yellow-400 font-bold text-sm sm:text-base">
+    ဘာလိုလို Visit now!
+  </p>
+</div>
+
+  <!-- SIDEBAR & MAIN -->
   <div class="flex">
     <!-- SIDEBAR -->
-    <div id="sidebar" class="sidebar bg-gray-800 w-48 fixed top-0 left-0 lg:translate-x-0 hidden lg:block z-40">
+    <div id="sidebar" class="sidebar bg-gray-800 w-48 fixed top-0 left-0 lg:translate-x-0 hidden lg:block z-30">
       <div class="p-4 flex items-center">
         <i class="fas fa-taxi text-yellow-400 text-2xl mr-2"></i>
-        <h1 class="text-lg font-bold text-yellow-400">Thuwanawadi</h1>
+        <h1 class="text-lg font-bold text-yellow-400">Thuwanawaddy</h1>
       </div>
       <div class="flex flex-col">
         <a href="/" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
           <i class="fas fa-home mr-3"></i><span>Home</span>
         </a>
+        <a href="indexbar.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+          <i class="fas fa-tv mr-3"></i><span>ဘာလိုလို</span>
+        </a>
         <a href="mmtv/index.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
           <i class="fas fa-tv mr-3"></i><span>မြန်မာတီဗွီ</span>
         </a>
-        <a href="movie/index.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
-          <i class="fas fa-film mr-3"></i><span>မြန်မာစာတန်းထိုး</span>
-        </a>
-        <a href="freeAi.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+        
+        <a href="https://thuwanawadi.vercel.app/freeAi.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
           <i class="fas fa-tools mr-3"></i><span>အေအိုင်(Ai)</span>
         </a>
-        <a href="https://mmtvsport-site.vercel.app/" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+        <a href="https://thuwanawadi.vercel.app/coming/index.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
           <i class="fas fa-futbol mr-3"></i><span>ဘောလုံးပွဲ</span>
         </a>
-        <a href="https://mmtvsport-site.vercel.app/" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+        <a href="https://subuu-gq2t.vercel.app/" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
           <i class="fas fa-money-bill mr-3"></i><span>အွန်လိုင်ငွေရှာနည်း</span>
         </a>
-        <a href="tiktok://@hahatv327" 
-   onclick="if(!window.open(this.href)) window.location='https://www.tiktok.com/@hahatv327?_t=ZS-8zKjvMZmNSz&_r=1'; return false;" 
-   class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
-   <i class="fas fa-money-bill mr-3"></i><span>Tiktok</span>
-</a>
-        <a href="fb://facewebmodal/f?href=https://www.facebook.com/share/1AqzfD2mr8/"
-   class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
-   <i class="fas fa-money-bill mr-3"></i><span>Facebook</span>
-</a>
-        <a href="about.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
+        <a href="https://thuwanawadi.vercel.app/about.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
           <i class="fas fa-question-circle mr-3"></i><span>Appအကြောင်း</span>
         </a>
       </div>
     </div>
-
-    <!-- MAIN CONTENT -->
-    <div class="flex-1 lg:ml-48 p-6 pb-16 mt-14 lg:mt-0">
-      <h2 class="text-2xl font-bold mb-6 text-black text-center">CITY SERVICE</h2>
-
+     <!-- MAIN CONTENT -->
+    <main class="flex-1 lg:ml-56 p-6 pb-16 mt-6">
+      
       <div class="max-w-md mx-auto space-y-4">
   <a href="emergency/index.html" class="block w-full bg-red-500 text-white font-bold py-4 rounded-xl shadow-md hover:bg-red-600 text-center">
     <i class="fas fa-triangle-exclamation mr-2"></i>
@@ -129,7 +235,7 @@
 
   <!-- FOOTER -->
   <footer class="bg-gray-800 text-center text-sm py-4 mt-12 text-white">
-    <p class="text-yellow-400">© 2025 Thuwanawaddy App</p>
+    <p class="text-yellow-400">Alright reserved © 2025 U Maung(Forever Study)</p>
   </footer>
 
   <!-- SCRIPT -->
@@ -144,4 +250,4 @@
     }
   </script>
 </body>
-    </html>
+  </html>
