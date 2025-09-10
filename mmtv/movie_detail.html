@@ -1,9 +1,9 @@
-strongayerayerDOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Movie Details</title>
+  <title>ZETFLIX - Movie Details</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -13,7 +13,7 @@ strongayerayerDOCTYPE html>
     }
     .movie-poster-large {
       width: 100%;
-      max-width: 400px;
+      max-width: 300px;
       height: auto;
       border-radius: 0.5rem;
       box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
@@ -48,7 +48,7 @@ strongayerayerDOCTYPE html>
     }
     .modal-content {
       background-color: #2d3748;
-      padding: 2rem;
+      padding: 1.5rem;
       border-radius: 0.75rem;
       box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
       width: 90%;
@@ -85,33 +85,48 @@ strongayerayerDOCTYPE html>
     .install-button:hover {
       background-color: #3182ce;
     }
+
+    /* ပိုကျစ်လျစ်တဲ့ mobile အတွက် */
+    @media (max-width: 640px) {
+      .movie-poster-large {
+        max-width: 250px;
+      }
+      .play-button {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.95rem;
+      }
+    }
   </style>
 </head>
-<!--<body class="bg-gray-900 text-white">
-  <div class="flex flex-col min-h-screen">
-    <header class="p-4 bg-gray-800 shadow-lg text-center">
-      <a href="home.html" class="flex items-center justify-center text-xl font-bold text-red-500">
-        <i class="fas fa-film text-2xl mr-2"></i> ZETFLIX
-      </a>
-    </header>-->
+<body class="bg-gray-900 text-white">
+  <!-- ADHERE GIF WITH TEXT -->
+  <div class="adhere-gif text-center">
+    <a href="https://aitools.tv" target="_blank">
+      <img src="https://djmorio.wordpress.com/wp-content/uploads/2020/04/place-your-advert-here-1.gif" alt="Adhere GIF" class="mx-auto">
+    </a>
+    <p class="mt-2 text-yellow-400 font-bold text-sm sm:text-base">
+      ဘာလိုလို Visit now!
+    </p>
+  </div>
 
-    <main class="flex-1 flex items-center justify-center p-6">
-      <div id="movie-detail-container" class="bg-gray-800 rounded-lg shadow-xl p-8 flex flex-col md:flex-row items-center gap-8 w-full max-w-4xl">
-        <p class="text-center text-gray-400 w-full">Loading movie details...</p>
-      </div>
-    </main>
+  <main class="flex-1 flex items-center justify-center p-4">
+    <div id="movie-detail-container" 
+         class="bg-gray-800 rounded-lg shadow-xl p-4 sm:p-6 md:p-8 flex flex-col md:flex-row items-center gap-4 sm:gap-6 md:gap-8 w-full max-w-4xl">
+      <p class="text-center text-gray-400 w-full">Loading movie details...</p>
+    </div>
+  </main>
 
-    <div id="player-modal" class="modal-overlay">
-      <div class="modal-content">
-        <button class="modal-close-button" id="close-modal">&times;</button>
-        <h3 class="text-2xl font-bold mb-4">App Not Found!</h3>
-        <p class="text-gray-300 mb-4">It seems the required player app is not installed on your device.</p>
-        <p class="text-gray-300 mb-6">We recommend installing <strong>NS Player</strong> (com.genuine.leone) for the best experience.</p>
-        <div class="flex flex-col sm:flex-row justify-center gap-4">
-          <a href="https://play.google.com/store/apps/details?id=com.genuine.leone" target="_blank" class="install-button flex items-center justify-center">
-            <i class="fab fa-android mr-2"></i> Download ZET Player
-          </a>
-        </div>
+  <!-- Modal -->
+  <div id="player-modal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="modal-close-button" id="close-modal">&times;</button>
+      <h3 class="text-2xl font-bold mb-4">App Not Found!</h3>
+      <p class="text-gray-300 mb-4">It seems the required player app is not installed on your device.</p>
+      <p class="text-gray-300 mb-6">We recommend installing <strong>Network Streaming Video Player</strong> (com.genuine.leone)</p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="https://play.google.com/store/apps/details?id=com.genuine.leone" target="_blank" class="install-button flex items-center justify-center">
+          <i class="fab fa-android mr-2"></i> Download Player
+        </a>
       </div>
     </div>
   </div>
@@ -144,10 +159,10 @@ strongayerayerDOCTYPE html>
 
       function displayMovieDetails(movie) {
         movieDetailContainer.innerHTML = `
-          <img src="${movie.logo}" alt="${movie.title} Poster" class="movie-poster-large mb-6 md:mb-0">
+          <img src="${movie.logo}" alt="${movie.title} Poster" class="movie-poster-large mb-4 sm:mb-6 md:mb-0">
           <div class="flex flex-col items-center md:items-start text-center md:text-left">
-            <h2 class="text-4xl font-bold mb-2 text-white">${movie.title}</h2>
-            <p class="text-gray-300 text-xl mb-4">${movie.year} | ${movie.category}</p>
+            <h2 class="text-2xl sm:text-3xl font-bold mb-2 text-white">${movie.title}</h2>
+            <p class="text-gray-300 text-lg mb-4">${movie.year} | ${movie.category}</p>
             <button id="watch-button" class="play-button flex items-center justify-center gap-2">
               <i class="fas fa-play"></i> Watch Now
             </button>
@@ -159,10 +174,8 @@ strongayerayerDOCTYPE html>
         });
       }
 
-      // ✅ FUNCTION TO OPEN WITH INTENT + FALLBACK MODAL
       function openWithExternalPlayer(url) {
         const isAndroid = /Android/i.test(navigator.userAgent);
-        const fallbackUrl = 'https://play.google.com/store/apps/details?id=com.genuine.leone';
         const intentUrl = `intent:${url}#Intent;package=com.genuine.leone;type=video/*;S.title=MMTV%20SPORT;end`;
 
         if (isAndroid) {
