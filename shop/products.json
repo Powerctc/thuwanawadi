@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Wireless Bluetooth Headphones",
+    "price": 59.99,
+    "category": "Electronics",
+    "description": "High-quality wireless headphones with noise cancellation and 20 hours battery life.",
+    "image": "https://example.com/images/headphones.jpg",
+    "link": "https://example.com/shop/headphones"
+  },
+  {
+    "id": 2,
+    "name": "Smart Fitness Watch",
+    "price": 89.99,
+    "category": "Wearables",
+    "description": "Track your health with a stylish smartwatch featuring heart rate monitor and GPS.",
+    "image": "https://example.com/images/fitnesswatch.jpg",
+    "link": "https://example.com/shop/fitnesswatch"
+  },
+  {
+    "id": 3,
+    "name": "Ergonomic Office Chair",
+    "price": 129.99,
+    "category": "Furniture",
+    "description": "Comfortable and adjustable office chair with lumbar support for long working hours.",
+    "image": "https://example.com/images/officechair.jpg",
+    "link": "https://example.com/shop/officechair"
+  },
+  {
+    "id": 4,
+    "name": "4K Ultra HD Smart TV",
+    "price": 499.99,
+    "category": "Electronics",
+    "description": "Stunning 4K resolution with built-in apps and voice control compatibility.",
+    "image": "https://example.com/images/smarttv.jpg",
+    "link": "https://example.com/shop/smarttv"
+  }
+]
