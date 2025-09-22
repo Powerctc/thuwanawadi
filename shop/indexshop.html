@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Thuwanawaddy Taxi Service</title>
+  <title>Tiktok Shop 🇲🇲 - Thuwanawaddy Taxi Service</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome -->
@@ -12,18 +12,14 @@
     .sidebar { 
       height: 100vh; 
       transition: transform 0.3s ease-in-out; 
-      z-index: 30; /* Sidebar always above overlay */
+      z-index: 30;
     }
     .sidebar.hidden { 
       transform: translateX(-100%); 
     }
     @media (min-width: 1024px) {
-      .sidebar { 
-        transform: translateX(0) !important; 
-      }
-      #menu-toggle { 
-        display: none !important; 
-      }
+      .sidebar { transform: translateX(0) !important; }
+      #menu-toggle { display: none !important; }
     }
 
     /* Marquee Wrapper */
@@ -34,8 +30,6 @@
       margin: 70px 10px 0;
       background: #111;
     }
-
-    /* Text Marquee */
     .top-marquee {
       font-weight: bold;
       color: #ffcc00;
@@ -52,8 +46,6 @@
       0%   { transform: translateX(0); }
       100% { transform: translateX(-100%); }
     }
-
-    /* Image Marquee */
     .image-marquee {
       overflow: hidden;
       white-space: nowrap;
@@ -79,11 +71,7 @@
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.5);
-      z-index: 20; /* under sidebar */
-    }
-
-    main { 
-      transition: margin-left .3s ease; 
+      z-index: 20;
     }
 
     /* Adhere GIF */
@@ -101,9 +89,6 @@
       height: auto;
       border-radius: 6px;
     }
-
-    /* Overlay Menu */
-    #overlay-menu { z-index: 50; }
   </style>
 </head>
 <body class="bg-gray-100 font-sans">
@@ -128,7 +113,6 @@
         Please install the Network Streaming Video Player to watch streams.
       </div>
     </div>
-
     <div class="image-marquee" role="region" aria-label="Promotional carousel">
       <div class="marquee-content">
         <img src="https://thuwanawadi.vercel.app/image/adhere.png" alt="Promo 1">
@@ -139,18 +123,16 @@
     </div>
   </div>
 
-  <!-- ADHERE GIF WITH TEXT -->
-<div class="adhere-gif text-center">
-  <a href="https://aitools.tv" target="_blank">
-    <img src="https://djmorio.wordpress.com/wp-content/uploads/2020/04/place-your-advert-here-1.gif" alt="Adhere GIF">
-  </a>
-  <!-- Text below the GIF -->
-  <p class="mt-2 text-yellow-400 font-bold text-sm sm:text-base">
-    ဘာလိုလို Visit now!
-  </p>
-</div>
+  <!-- ADHERE GIF -->
+  <div class="adhere-gif text-center">
+    <a href="https://aitools.tv" target="_blank">
+      <img src="https://djmorio.wordpress.com/wp-content/uploads/2020/04/place-your-advert-here-1.gif" alt="Adhere GIF">
+    </a>
+    <p class="mt-2 text-yellow-400 font-bold text-sm sm:text-base">
+      ဘာလိုလို Visit now!
+    </p>
+  </div>
 
-  <!-- SIDEBAR & MAIN -->
   <div class="flex">
     <!-- SIDEBAR -->
     <div id="sidebar" class="sidebar bg-gray-800 w-48 fixed top-0 left-0 lg:translate-x-0 hidden lg:block z-30">
@@ -168,7 +150,6 @@
         <a href="mmtv/index.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
           <i class="fas fa-tv mr-3"></i><span>မြန်မာတီဗွီ</span>
         </a>
-        
         <a href="https://thuwanawadi.vercel.app/freeAi.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
           <i class="fas fa-tools mr-3"></i><span>အေအိုင်(Ai)</span>
         </a>
@@ -186,123 +167,24 @@
         </a>
       </div>
     </div>
-  <!-- Search -->
-  <div class="p-4">
-    <input 
-      id="search" 
-      type="text" 
-      placeholder="Search products..." 
-      class="w-full p-2 rounded bg-gray-700 text-white focus:outline-none"
-    />
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 lg:ml-48 p-4 mt-20">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">Welcome to Tiktok Shop 🇲🇲</h2>
+      <p class="text-gray-600">
+        ဒီနေရာမှာ မောင့်လိုချင်တဲ့ Product List / Content တွေ ထည့်သွားနိုင်မယ်။  
+        (Product JSON ဖိုင်နဲ့ dynamic ဖော်ပြလို့ရတယ်)
+      </p>
+    </main>
   </div>
 
-  <!-- Product Grid -->
-  <main class="flex-1 p-4">
-    <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-      <!-- Products will load here -->
-    </div>
-  </main>
-
-  <!-- Overlay Selector -->
-  <div id="overlay" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-    <div class="bg-gray-800 rounded-lg p-6 w-80">
-      <h2 id="overlay-title" class="text-lg font-bold mb-4">Select Products</h2>
-      <div id="overlay-options" class="space-y-2"></div>
-      <button id="overlay-close" class="mt-4 bg-red-500 hover:bg-red-600 px-3 py-1 rounded w-full">
-        Close
-      </button>
-    </div>
-  </div>
-
+  <!-- JS FOR MENU TOGGLE -->
   <script>
-    // Product files
-    const productFiles = [
-      { label: "Product List 1", value: "products.json" }
-    ];
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.getElementById('sidebar');
 
-    let currentProducts = [];
-    let filteredProducts = [];
-
-    async function loadProducts(file) {
-      try {
-        const res = await fetch(file);
-        if (!res.ok) throw new Error("Failed to load");
-        currentProducts = await res.json();
-        filteredProducts = [...currentProducts];
-        displayProducts(filteredProducts);
-      } catch (e) {
-        console.error(e);
-        alert("Unable to load product list. Check network or file path.");
-      }
-    }
-
-    function displayProducts(products) {
-      const grid = document.getElementById("product-grid");
-      grid.innerHTML = "";
-      products.forEach((p) => appendProductCard(p));
-    }
-
-    function appendProductCard(product) {
-      const grid = document.getElementById("product-grid");
-      const card = document.createElement("div");
-      card.className =
-        "cursor-pointer bg-gray-800 rounded-lg overflow-hidden shadow hover:shadow-lg transition";
-      card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}" class="w-full h-40 object-cover">
-        <div class="p-4">
-          <h3 class="text-lg font-semibold text-white truncate">${product.name}</h3>
-          <p class="text-green-400 text-sm mb-2">$${product.price} | ${product.category}</p>
-          <button class="bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded w-full">
-            View Details
-          </button>
-        </div>`;
-      card.addEventListener("click", () => {
-        localStorage.setItem("selectedProduct", JSON.stringify(product));
-        window.location.href = "product_detail.html";
-      });
-      grid.appendChild(card);
-    }
-
-    // Search filter
-    document.getElementById("search").addEventListener("input", (e) => {
-      const term = e.target.value.toLowerCase();
-      filteredProducts = currentProducts.filter((p) =>
-        p.name.toLowerCase().includes(term)
-      );
-      displayProducts(filteredProducts);
-    });
-
-    // Overlay
-    function openOverlay(title, files, callback) {
-      const overlay = document.getElementById("overlay");
-      const options = document.getElementById("overlay-options");
-      document.getElementById("overlay-title").innerText = title;
-      options.innerHTML = "";
-      files.forEach((f) => {
-        const btn = document.createElement("button");
-        btn.className =
-          "w-full text-left px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded";
-        btn.innerText = f.label;
-        btn.onclick = () => {
-          callback(f.value);
-          overlay.classList.add("hidden");
-        };
-        options.appendChild(btn);
-      });
-      overlay.classList.remove("hidden");
-    }
-
-    document.getElementById("products-selector-btn").addEventListener("click", () => {
-      openOverlay("Select Products", productFiles, (f) => loadProducts(f));
-    });
-
-    document.getElementById("overlay-close").addEventListener("click", () => {
-      document.getElementById("overlay").classList.add("hidden");
-    });
-
-    // Default Load
-    document.addEventListener("DOMContentLoaded", () => {
-      loadProducts("products.json");
+    menuToggle?.addEventListener('click', () => {
+      sidebar.classList.toggle('hidden');
     });
   </script>
 </body>
