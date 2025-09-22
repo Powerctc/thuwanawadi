@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ZETSHOP - Product Details</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      background-color: #1a202c;
+      color: #e2e8f0;
+    }
+    .product-image {
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      border-radius: 0.5rem;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+    }
+    .buy-button {
+      background-color: #10b981;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: bold;
+      transition: background-color 0.2s;
+    }
+    .buy-button:hover {
+      background-color: #059669;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-white">
+  <!-- Ad Banner -->
+  <div class="adhere-gif text-center">
+    <a href="https://aitools.tv" target="_blank">
+      <img src="https://djmorio.wordpress.com/wp-content/uploads/2020/04/place-your-advert-here-1.gif" alt="Adhere GIF" class="mx-auto">
+    </a>
+    <p class="mt-2 text-yellow-400 font-bold text-sm sm:text-base">
+      Promotion! Visit now!
+    </p>
+  </div>
+
+  <main class="flex-1 flex items-center justify-center p-4">
+    <div id="product-detail-container" 
+         class="bg-gray-800 rounded-lg shadow-xl p-4 sm:p-6 md:p-8 flex flex-col md:flex-row items-center gap-4 sm:gap-6 md:gap-8 w-full max-w-4xl">
+      <p class="text-center text-gray-400 w-full">Loading product details...</p>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('product-detail-container');
+
+      const storedProduct = localStorage.getItem('selectedProduct');
+
+      if (storedProduct) {
+        const product = JSON.parse(storedProduct);
+        displayProductDetails(product);
+      } else {
+        container.innerHTML = `
+          <div class="text-center text-red-400 w-full">
+            <p>No product selected. Please go back to the <a href="shop.html" class="underline text-blue-400 hover:text-blue-500">Shop Page</a>.</p>
+          </div>
+        `;
+      }
+
+      function displayProductDetails(product) {
+        container.innerHTML = `
+          <img src="${product.image}" alt="${product.name}" class="product-image mb-4 sm:mb-6 md:mb-0">
+          <div class="flex flex-col items-center md:items-start text-center md:text-left">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-2 text-white">${product.name}</h2>
+            <p class="text-green-400 text-xl font-semibold mb-2">$${product.price}</p>
+            <p class="text-gray-300 text-lg mb-4">${product.category}</p>
+            <p class="text-gray-400 mb-6">${product.description}</p>
+            <a href="${product.link}" target="_blank" class="buy-button flex items-center justify-center gap-2">
+              <i class="fas fa-shopping-cart"></i> Buy Now
+            </a>
+          </div>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>
