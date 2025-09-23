@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MMFOT - Live Football</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.43/moment-timezone-with-data.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .nav-button {
+            padding: 12px 16px;
+            border: none;
+            background: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        .nav-button.active {
+            color: #38bdf8;
+            border-bottom: 3px solid #38bdf8;
+        }
+        .content-section {
+            display: none;
+            padding: 20px 10px;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .card {
+            background: #1e293b;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        .league {
+            color: #60a5fa;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .match-time {
+            min-height: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .live-badge {
+            color: #ef4444;
+            font-weight: bold;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .filter-select {
+            background: #334155;
+            color: white;
+            border: 1px solid #475569;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        img {
+            border-radius: 50%;
+            border: 2px solid #334155;
+        }
+        .team-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 120px;
+        }
+        @media (min-width: 768px) {
+            .grid-cols-11 {
+                grid-template-columns: repeat(11, 1fr);
+            }
+            .text-xs { font-size: 0.875rem; }
+            .text-sm { font-size: 1rem; }
+        }
+        @media (max-width: 767px) {
+            .grid-cols-11 {
+                grid-template-columns: 1fr auto 1fr;
+            }
+            .col-span-4, .col-span-3 {
+                grid-column: span 1;
+            }
+            .match-date, .match-time {
+                margin: 8px 0;
+            }
+            .team-name {
+                max-width: 80px;
+                font-size: 10px;
+            }
+            img {
+                width: 40px !important;
+                height: 40px !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+
+    <!-- Header -->
+    <div class="p-4 bg-gray-800 flex justify-between items-center sticky top-0 z-10">
+        <h1 class="text-lg font-bold">MMFOT Live</h1>
+        <div class="flex space-x-2">
+            <button id="fullscreen_btn" class="text-sm px-3 py-1 bg-blue-600 rounded">Fullscreen</button>
+            <button id="reload_btn" class="text-sm px-3 py-1 bg-gray-600 rounded">Reload</button>
+        </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="flex overflow-x-auto bg-gray-800 border-b border-gray-700">
+        <button class="nav-button active" data-tab="home">Home</button>
+        <button class="nav-button" data-tab="tv">TV Channels</button>
+        <button class="nav-button" data-tab="games">Games</button>
+    </div>
+
+    <!-- Content Sections -->
+    <div class="container mx-auto px-4 py-4">
+
+        <!-- Home Section -->
+        <div id="home" class="content-section active">
+            <h2 class="text-xl font-bold mb-4">Football Schedule Fixtures</h2>
+            
+            <!-- Match Filter -->
+            <select id="matchFilter" class="filter-select w-full md:w-auto">
+                <option value="all">All Matches</option>
+                <option value="hot">Hot Matches</option>
+                <option value="live">Live Matches</option>
+            </select>
+
+            <!-- Match List -->
+            <div id="matchList" class="mt-4 space-y-4">
+                <!-- Matches will be dynamically inserted here -->
+            </div>
+        </div>
+
+        <!-- TV Section -->
+        <div id="tv" class="content-section">
+            <h2 class="text-xl font-bold mb-4">TV Channels</h2>
+            <p class="text-gray-400">TV channel list will appear here.</p>
+        </div>
+
+        <!-- Games Section -->
+        <div id="games" class="content-section">
+            <h2 class="text-xl font-bold mb-4">Sports Games</h2>
+            <p class="text-gray-400">Sports games will appear here.</p>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="p-4 text-center text-gray-500 text-sm bg-gray-800 mt-8">
+        version 2.0
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        const tg = window.Telegram?.WebApp;
+        if (tg) {
+            tg.ready();
+            tg.expand();
+            tg.BackButton.hide();
+        }
+
+        const MMFotApp = {
+            encryptionKey: "devxseven",
+            fileName: "matches.json",
+            filePath: "mdata",
+            accName: "devxseven",
+            apiFirst: "ghp_",
+            apiSecond: "Lb8tjXZ9BggZwnUpJWneZ7NMa7Cmmo4bjZ4H",
+            now: moment(),
+            matchHour: 3.5,
+            intId: "intmmfot",
+            rewardId: "rwmmfot",
+            isFullscreen: false,
+            activeTab: 'home',
+            allMatches: [],
+            currentFilter: 'all',
+
+            init() {
+                if (tg) {
+                    tg.ready();
+                    tg.expand();
+                    this.initFullscreen();
+                }
+                this.initReload();
+                this.initNavigation();
+                this.initFilter();
+                this.initLoadMatches();
+                // this.fetchData('data/games.json').then(games => this.displayGames(games));
+                // this.fetchData('data/channels.json').then(channels => this.displayChannels(channels));
+                this.updateNavigation();
+                window.addEventListener('resize', () => this.updateNavigation());
+            },
+
+            initFullscreen() {
+                if (!tg) return;
+                const fullscreenBtn = document.getElementById('fullscreen_btn');
+                fullscreenBtn.addEventListener('click', () => this.toggleFullscreen(fullscreenBtn));
+
+                tg.onEvent('fullscreenChanged', () => this.updateFullscreenButton(fullscreenBtn));
+                tg.onEvent('fullscreenFailed', (params) => {
+                    if (params.error === 'ALREADY_FULLSCREEN') {
+                        this.updateFullscreenButton(fullscreenBtn);
+                    } else {
+                        tg.showAlert('Fullscreen failed: ' + params.error);
+                    }
+                });
+                this.updateFullscreenButton(fullscreenBtn);
+            },
+
+            toggleFullscreen(el) {
+                if (tg.isFullscreen) {
+                    tg.exitFullscreen();
+                    this.isFullscreen = false;
+                } else {
+                    tg.requestFullscreen();
+                    this.isFullscreen = true;
+                }
+            },
+
+            updateFullscreenButton(el) {
+                if (tg.isFullscreen) {
+                    el.innerHTML = `Exit Fullscreen`;
+                    this.isFullscreen = true;
+                } else {
+                    el.innerHTML = `Change Fullscreen`;
+                    this.isFullscreen = false;
+                }
+            },
+
+            initReload() {
+                const reloadBtn = document.getElementById('reload_btn');
+                reloadBtn.addEventListener('click', () => this.reloadApp());
+            },
+
+            reloadApp() {
+                window.location.reload();
+            },
+
+            initNavigation() {
+                const navButtons = document.querySelectorAll('.nav-button');
+                const sections = document.querySelectorAll('.content-section');
+
+                navButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        this.activeTab = button.getAttribute('data-tab');
+                        this.updateNavigation();
+                    });
+                });
+            },
+
+            initFilter() {
+                const matchFilter = document.getElementById('matchFilter');
+                matchFilter.addEventListener('change', (e) => {
+                    this.currentFilter = e.target.value;
+                    this.upcomingMatchesView(this.filterMatches(this.allMatches));
+                });
+            },
+
+            updateNavigation() {
+                const navButtons = document.querySelectorAll('.nav-button');
+                const sections = document.querySelectorAll('.content-section');
+
+                navButtons.forEach(btn => btn.classList.remove('active'));
+                sections.forEach(section => section.classList.remove('active'));
+
+                navButtons.forEach(button => {
+                    if (button.getAttribute('data-tab') === this.activeTab) {
+                        button.classList.add('active');
+                    }
+                });
+                document.getElementById(this.activeTab).classList.add('active');
+            },
+
+            initLoadMatches() {
+                this.loadMatches()
+                    .then(matches => {
+                        this.allMatches = matches;
+                        this.upcomingMatchesView(this.filterMatches(matches));
+                    })
+                    .catch(error => {
+                        console.error('Failed to load matches:', error);
+                        document.getElementById('matchList').innerHTML = '<p class="text-center text-red-500">Unable to load matches. Please try again later.</p>';
+                    });
+            },
+
+            decryptString(encryptedBase64, key) {
+                if (!encryptedBase64 || typeof encryptedBase64 !== 'string') return '';
+                if (!key) return encryptedBase64;
+
+                try {
+                    const decoded = atob(encryptedBase64);
+                    let decrypted = "";
+                    for (let i = 0; i < decoded.length; i++) {
+                        const charCode = decoded.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+                        decrypted += String.fromCharCode(charCode);
+                    }
+                    return decodeURIComponent(decrypted);
+                } catch (error) {
+                    return encryptedBase64;
+                }
+            },
+
+            decryptObject(encryptedObj, key) {
+                if (!encryptedObj || typeof encryptedObj !== 'object') return {};
+                const decryptedObj = {};
+                for (const [k, v] of Object.entries(encryptedObj)) {
+                    try {
+                        const decryptedKey = this.decryptString(k, key);
+                        const decryptedValue = JSON.parse(this.decryptString(v, key));
+                        decryptedObj[decryptedKey] = decryptedValue;
+                    } catch (error) {
+                        decryptedObj[k] = v;
+                    }
+                }
+                return decryptedObj;
+            },
+
+            async fetchAndDecryptJson() {
+                const response = await fetch(`https://raw.githubusercontent.com/${this.accName}/${this.filePath}/refs/heads/main/${this.fileName}`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const encryptedData = await response.json();
+                const decryptedData = this.decryptObject(encryptedData, this.encryptionKey);
+                return decryptedData.context || [];
+            },
+
+            async loadMatches() {
+                const matches = await this.fetchAndDecryptJson();
+                return matches;
+            },
+
+            filterMatches(matches) {
+                const now = moment();
+                const selectedLeagues = [
+                    'Premier League', 'La Liga', 'Serie A', 'Bundesliga', 'Ligue 1',
+                    'MLS', 'UEFA Champions League', 'UEFA Europa League',
+                    'UEFA Nations League', 'Saudi Pro League', 'UEFA Conference League',
+                    'Coppa Italia', 'FA Cup', 'Copa del Rey',
+                    'AFC Champions League Elite', 'Concacaf Champions Cup',
+                    'World Cup qualification (AFC)', 'World Cup qualification (CONMEBOL)',
+                    'World Cup qualification (UEFA)', 'AFC Asian Cup qualification',
+                    'World Cup qualification (CONCACAF)', 'FIFA Club World Cup'
+                ];
+
+                if (this.currentFilter === 'hot') {
+                    return matches.filter(match => selectedLeagues.includes(match.league));
+                } else if (this.currentFilter === 'live') {
+                    return matches.filter(match => {
+                        const matchStart = moment(match.match_time * 1000);
+                        const matchEnd = moment(match.match_time * 1000).add(2, 'hours');
+                        return now.isBetween(matchStart, matchEnd);
+                    });
+                }
+                return matches;
+            },
+
+            upcomingMatchesView(matches) {
+                const matchList = document.getElementById('matchList');
+                const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                matchList.innerHTML = '';
+
+                if (matches.length === 0) {
+                    matchList.innerHTML = '<p class="text-center text-gray-600">No matches found.</p>';
+                    return;
+                }
+
+                matches.forEach(match => {
+                    const matchDateTime = moment.tz(match.match_time * 1000, userTimezone);
+                    const isLive = this.currentFilter === 'live' || 
+                        (moment().isBetween(
+                            moment(match.match_time * 1000),
+                            moment(match.match_time * 1000).add(2, 'hours')
+                        ));
+
+                    const formattedDate = matchDateTime.format('MMM D');
+                    const formattedTime = matchDateTime.format('hh:mm A');
+
+                    const card = document.createElement('div');
+                    card.className = 'card shadow-xl p-3 md:p-4 flex flex-col items-center';
+                    card.innerHTML = `
+                        <h2 class="text-xs md:text-sm p-1 font-bold text-center league">${match.league || ''}</h2>
+                        <div class="grid grid-cols-11 gap-2 w-full text-center mt-2">
+                            <div class="col-span-4 flex flex-col items-center home-name">
+                                <img src="${match.home_img || 'https://via.placeholder.com/40'}" alt="${match.home_name}" class="w-10 h-10 md:w-12 md:h-12 object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/40'">
+                                <p class="text-[9px] md:text-[11px] pt-1 font-semibold team-name">${match.home_name || ''}</p>
+                            </div>
+                            <div class="col-span-3 flex flex-col items-center match-date match-time">
+                                <p class="text-xs md:text-sm font-semibold">${formattedDate}</p>
+                                <p class="text-xs md:text-sm font-bold">${formattedTime}</p>
+                                ${isLive ? '<p class="text-xs md:text-sm live-badge">⬤ LIVE NOW</p>' : ''}
+                            </div>
+                            <div class="col-span-4 flex flex-col items-center away-name">
+                                <img src="${match.away_img || 'https://via.placeholder.com/40'}" alt="${match.away_name}" class="w-10 h-10 md:w-12 md:h-12 object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/40'">
+                                <p class="text-[9px] md:text-[11px] pt-1 font-semibold team-name">${match.away_name || ''}</p>
+                            </div>
+                        </div>
+                    `;
+
+                    card.addEventListener('click', () => {
+                        if (match.id) {
+                            // Simulate ad or redirect
+                            alert(`Opening stream for: ${match.home_name} vs ${match.away_name}`);
+                            // window.location.href = `player.html?id=${match.id}&fullscreen=${this.isFullscreen}`;
+                        }
+                    });
+
+                    matchList.appendChild(card);
+                });
+            }
+        };
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            MMFotApp.init();
+        });
+    </script>
+
+</body>
+  </html>
