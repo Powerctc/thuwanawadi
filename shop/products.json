@@ -10,12 +10,12 @@
   },
   {
     "id": 2,
-    "name": "Smart Fitness Watch",
-    "price": 89.99,
-    "category": "Wearables",
-    "description": "Track your health with a stylish smartwatch featuring heart rate monitor and GPS.",
-    "image": "https://example.com/images/fitnesswatch.jpg",
-    "link": "https://example.com/shop/fitnesswatch"
+    "name": "ပရင့်ပုလဲ",
+    "price": 153.00,
+    "category": "မြန်မာအမျိုးသမီးဝတ်",
+    "description": "ပရင့် ပုလဲ ဝမ်းဆက် လက်ရှည်ဂျိတ်ထမိန် ပုလဲ ကြယ်သီး ဘယ်ဖုံးပါရှင်.",
+    "image": "https://thuwanawadi.vercel.app/shop/shop/image/printpeal.jpeg",
+    "link": "https://vt.tiktok.com/ZSHWNkgA6T3wM-bWuFG/"
   },
   {
     "id": 3,
@@ -35,4 +35,5 @@
     "image": "https://example.com/images/smarttv.jpg",
     "link": "https://example.com/shop/smarttv"
   }
+]  }
 ]
