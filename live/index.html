@@ -184,7 +184,7 @@
             color: #e2e8f0;
         }
         .install-btn {
-            background: #ef4444;
+            background: #0f9d58; /* Google Play Green */
             color: white;
             border: none;
             padding: 12px 30px;
@@ -196,7 +196,7 @@
             transition: background 0.2s;
         }
         .install-btn:hover {
-            background: #dc2626;
+            background: #0b8043;
         }
         .cancel-btn {
             background: #64748b;
@@ -261,9 +261,11 @@
     <div id="installPopup" class="modal">
         <div class="install-popup">
             <h3>Video Player Not Found</h3>
-            <p>Please install our official player to watch live streams.</p>
-            <img src="https://thuwanawadi.vercel.app/live/player-logo.png" alt="Player Logo">
-            <button class="install-btn" onclick="installPlayer()">Install Player</button>
+            <p>Please install our official Leone Player to watch live streams.</p>
+            <img src="https://thuwanawadi.vercel.app/live/player-logo.png" alt="Leone Player Logo">
+            <button class="install-btn" onclick="installPlayer()">
+                📲 Install Leone Player from Google Play
+            </button>
             <button class="install-btn cancel-btn" onclick="closeInstallPopup()">Cancel</button>
         </div>
     </div>
@@ -483,7 +485,7 @@
             },
 
             playStream(url) {
-                // Trim whitespace from URL (fixes space issue)
+                // Trim whitespace from URL
                 url = url.trim();
                 
                 if (!url) {
@@ -491,25 +493,26 @@
                     return;
                 }
 
-                // Check if player is available (for demo, always false)
-                if (this.isPlayerAvailable()) {
-                    // Open in player
-                    window.location.href = `player.html?url=${encodeURIComponent(url)}&matchId=${this.selectedMatch.id}`;
-                } else {
-                    // Show install popup
-                    document.getElementById('installPopup').style.display = 'flex';
-                }
+                // Try to open with Leone Player
+                const encodedUrl = encodeURIComponent(url);
+                const leoneUrl = `leoneplayer://play?url=${encodedUrl}`;
+
+                // Attempt to open Leone Player
+                window.location.href = leoneUrl;
+
+                // If Leone Player is not installed, redirect to Play Store after 1 second
+                setTimeout(() => {
+                    this.showInstallPopup();
+                }, 1000);
             },
 
-            isPlayerAvailable() {
-                // In real app, check if custom protocol or app is installed
-                // For now, return false to always show install popup
-                return false;
+            showInstallPopup() {
+                document.getElementById('installPopup').style.display = 'flex';
             },
 
             installPlayer() {
-                // Redirect to player download
-                window.open('https://thuwanawadi.vercel.app/live/player.apk', '_blank');
+                // Redirect to Google Play Store
+                window.open('https://play.google.com/store/apps/details?id=com.genuine.leone', '_blank');
                 this.closeInstallPopup();
             },
 
