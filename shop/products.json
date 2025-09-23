@@ -1,5 +1,5 @@
 [
-    {
+  {
     "id": 1,
     "name": "ပရင့်ချိတ်",
     "price": 290.00,
@@ -13,18 +13,18 @@
     "name": "ပရင့်ပုလဲ",
     "price": 153.00,
     "category": "မြန်မာအမျိုးသမီးဝတ်",
-    "description": "ပရင့် ပုလဲ ဝမ်းဆက် လက်ရှည်ဂျိတ်ထမိန် ပုလဲ ကြယ်သီး ဘယ်ဖုံးပါရှင်",
+    "description": "ပရင့် ပုလဲ ဝမ်းဆက် လက်ရှည်ဂျိတ်ထမိန် ပုလဲ ကြယ်သီး ဘယ်ဖုံးပါရှင်.",
     "image": "https://thuwanawadi.vercel.app/shop/image/printpeal.jpeg",
     "link": "https://vt.tiktok.com/ZSHWNkgA6T3wM-bWuFG/"
   },
   {
     "id": 3,
-    "name": "Ergonomic Office Chair",
-    "price": 129.99,
-    "category": "Furniture",
-    "description": "Comfortable and adjustable office chair with lumbar support for long working hours.",
-    "image": "https://example.com/images/officechair.jpg",
-    "link": "https://example.com/shop/officechair"
+    "name": "ပရင့်ဘလိုကိက်",
+    "price": 180,
+    "category": "မြန်မာအမျိုးသမီးဝတ်",
+    "description": "ပရင့် ဘလိုကိက်ဝမ်းဆက် ဂျိတ်ထမိန် ဘယ်ဖုံးဝမ်း ဆက် size M,L,Xl ကီလို50-65ထိဝတ်ရ",
+    "image": "https://thuwanawadi.vercel.app/shop/image/printbalow.jpeg",
+    "link": "https://vt.tiktok.com/ZSHWNykhCbTF5-mG7ON/"
   },
   {
     "id": 4,
@@ -35,4 +35,4 @@
     "image": "https://example.com/images/smarttv.jpg",
     "link": "https://example.com/shop/smarttv"
   }
-]  
+]
