@@ -1,0 +1,14 @@
+{
+    "match_001": {
+        "live_sd_1": "https://example.com/stream1_sd.m3u8",
+        "live_hd_1": "https://example.com/stream1_hd.m3u8",
+        "live_sd_2": "https://example.com/stream2_sd.m3u8",
+        "live_hd_2": "https://example.com/stream2_hd.m3u8"
+    },
+    "match_002": {
+        "live_sd_1": "https://example.com/mu_liverpool_sd1.m3u8",
+        "live_hd_1": "https://example.com/mu_liverpool_hd1.m3u8",
+        "live_sd_2": "https://example.com/mu_liverpool_sd2.m3u8",
+        "live_hd_2": "https://example.com/mu_liverpool_hd2.m3u8"
+    }
+}
