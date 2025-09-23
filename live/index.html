@@ -3,46 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MMFOT - Hot Matches</title>
+    <title>MMFOT - Hot Football Live</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.43/moment-timezone-with-data.min.js"></script>
     <style>
-        body {
-            background-color: #0f172a;
-            color: #e2e8f0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
-        .nav {
+        body {
+            background: #0f172a;
+            color: #e2e8f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+        .header {
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
             background: #1e293b;
-            padding: 10px;
-            gap: 10px;
             position: sticky;
             top: 0;
-            z-index: 10;
+            z-index: 100;
         }
-        .nav-button {
-            padding: 8px 16px;
-            border: none;
-            background: #334155;
+        .header h1 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        .header .controls button {
+            background: #3b82f6;
             color: white;
+            border: none;
+            padding: 8px 16px;
             border-radius: 6px;
+            margin-left: 8px;
             cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .match-list {
+            padding: 16px;
         }
         .match-card {
             background: #1e293b;
-            margin: 10px;
-            padding: 15px;
-            border-radius: 10px;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
         .match-card:hover {
-            transform: scale(1.02);
-            background: #334155;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
+        .league {
+            color: #60a5fa;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        .match-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 40%;
+        }
+        .team img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #334155;
+            margin-bottom: 8px;
+        }
+        .team-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100px;
+        }
+        .vs {
+            text-align: center;
+            color: #ef4444;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .time {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -50,98 +112,148 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 100;
+            background: rgba(0,0,0,0.85);
+            z-index: 1000;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
         .modal-content {
             background: #1e293b;
-            padding: 20px;
-            border-radius: 12px;
-            width: 90%;
+            border-radius: 16px;
+            padding: 24px;
+            width: 100%;
             max-width: 500px;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .close-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            font-size: 24px;
+            color: #94a3b8;
+            cursor: pointer;
+        }
+        .modal-title {
             text-align: center;
+            font-size: 1.3rem;
+            margin-bottom: 24px;
+            color: #f8fafc;
         }
         .stream-btn {
             display: block;
-            width: 80%;
-            margin: 10px auto;
-            padding: 12px;
+            width: 100%;
+            padding: 14px;
+            margin: 8px 0;
             background: #3b82f6;
             color: white;
             border: none;
             border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
             cursor: pointer;
+            transition: background 0.2s;
         }
         .stream-btn:hover {
             background: #2563eb;
         }
+        .stream-btn.live {
+            background: #ef4444;
+        }
+        .stream-btn.live:hover {
+            background: #dc2626;
+        }
+        /* Install Popup */
         .install-popup {
-            background: #1e293b;
-            padding: 30px;
-            border-radius: 12px;
             text-align: center;
+            padding: 30px 20px;
+        }
+        .install-popup img {
+            width: 80px;
+            margin: 20px auto;
+            display: block;
+        }
+        .install-popup p {
+            margin: 15px 0;
+            font-size: 1rem;
+            color: #e2e8f0;
         }
         .install-btn {
             background: #ef4444;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 8px;
             color: white;
-            margin-top: 20px;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
             cursor: pointer;
+            margin: 10px;
+            transition: background 0.2s;
         }
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 24px;
-            cursor: pointer;
-            color: #94a3b8;
+        .install-btn:hover {
+            background: #dc2626;
         }
-        .league {
-            color: #60a5fa;
-            font-weight: bold;
-            text-transform: uppercase;
+        .cancel-btn {
+            background: #64748b;
         }
-        .team-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #334155;
+        .cancel-btn:hover {
+            background: #475569;
         }
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #64748b;
+            font-size: 0.9rem;
+            border-top: 1px solid #334155;
+        }
+        /* Responsive */
         @media (max-width: 768px) {
-            .match-card {
-                margin: 5px;
-                padding: 10px;
-            }
-            .team-img {
+            .team img {
                 width: 40px;
                 height: 40px;
+            }
+            .team-name {
+                font-size: 0.8rem;
+                max-width: 80px;
+            }
+            .league {
+                font-size: 0.8rem;
+            }
+            .modal-content {
+                margin: 0 10px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Navigation -->
-    <div class="nav">
-        <button class="nav-button" onclick="location.reload()">Reload</button>
-        <button class="nav-button" id="fullscreen_btn">Fullscreen</button>
+    <!-- Header -->
+    <div class="header">
+        <h1>MMFOT Live Football</h1>
+        <div class="controls">
+            <button id="fullscreen_btn">Fullscreen</button>
+            <button id="reload_btn">Reload</button>
+        </div>
     </div>
 
     <!-- Match List -->
-    <h2 style="text-align:center; padding: 20px;">Hot Football Matches</h2>
-    <div id="matchList"></div>
+    <div class="match-list">
+        <h2 style="color: #60a5fa; margin-bottom: 20px; text-align: center;">Hot Football Matches</h2>
+        <div id="matchContainer"></div>
+    </div>
 
     <!-- Match Detail Modal -->
     <div id="matchModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h3 id="modalTitle">Match Detail</h3>
-            <div id="streamButtons"></div>
+            <h3 class="modal-title" id="modalMatchTitle">Match Detail</h3>
+            <div id="streamButtonsContainer"></div>
         </div>
     </div>
 
@@ -150,10 +262,15 @@
         <div class="install-popup">
             <h3>Video Player Not Found</h3>
             <p>Please install our official player to watch live streams.</p>
-            <img src="player-logo.png" alt="Player Logo" style="width: 80px; margin: 20px;">
+            <img src="https://thuwanawadi.vercel.app/live/player-logo.png" alt="Player Logo">
             <button class="install-btn" onclick="installPlayer()">Install Player</button>
-            <button class="install-btn" style="background:#64748b;" onclick="closeInstallPopup()">Cancel</button>
+            <button class="install-btn cancel-btn" onclick="closeInstallPopup()">Cancel</button>
         </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        version 2.0
     </div>
 
     <script>
@@ -164,28 +281,37 @@
             tg.BackButton.hide();
         }
 
-        const MMFotApp = {
+        const App = {
             encryptionKey: "devxseven",
-            fileName: "matches.json",
-            filePath: "mdata",
-            accName: "devxseven",
+            matchesUrl: "https://raw.githubusercontent.com/devxseven/mdata/refs/heads/main/matches.json",
+            streamsUrl: "https://thuwanawadi.vercel.app/live/liveurl.json",
             selectedMatch: null,
-            streamUrls: {},
+            streamData: {},
 
             init() {
-                this.initFullscreen();
+                this.initControls();
                 this.loadMatches();
-                this.loadStreamUrls();
+                this.loadStreamData();
             },
 
-            initFullscreen() {
-                const btn = document.getElementById('fullscreen_btn');
-                btn.addEventListener('click', () => {
+            initControls() {
+                // Fullscreen
+                document.getElementById('fullscreen_btn').addEventListener('click', () => {
                     if (tg?.isFullscreen) {
                         tg.exitFullscreen();
                     } else {
                         tg?.requestFullscreen();
                     }
+                });
+
+                // Reload
+                document.getElementById('reload_btn').addEventListener('click', () => {
+                    window.location.reload();
+                });
+
+                // Close modal
+                document.querySelector('.close-btn').addEventListener('click', () => {
+                    this.closeModal();
                 });
             },
 
@@ -199,6 +325,7 @@
                     }
                     return decodeURIComponent(decrypted);
                 } catch (error) {
+                    console.warn("Decrypt failed:", error);
                     return encryptedBase64;
                 }
             },
@@ -217,97 +344,146 @@
                 return decryptedObj;
             },
 
-            async fetchAndDecryptJson() {
-                const url = `https://raw.githubusercontent.com/${this.accName}/${this.filePath}/refs/heads/main/${this.fileName}`;
-                const res = await fetch(url);
-                const encrypted = await res.json();
-                const decrypted = this.decryptObject(encrypted, this.encryptionKey);
-                return decrypted.context || [];
-            },
-
-            async loadStreamUrls() {
+            async loadMatches() {
                 try {
-                    const res = await fetch('liveurl.json');
-                    this.streamUrls = await res.json();
+                    const response = await fetch(this.matchesUrl);
+                    if (!response.ok) throw new Error('Failed to fetch matches');
+                    
+                    const encryptedData = await response.json();
+                    const decryptedData = this.decryptObject(encryptedData, this.encryptionKey);
+                    const matches = decryptedData.context || [];
+
+                    this.displayHotMatches(matches);
                 } catch (error) {
-                    console.error("Failed to load stream URLs:", error);
+                    console.error("Error loading matches:", error);
+                    document.getElementById('matchContainer').innerHTML = `
+                        <p style="text-align: center; color: #ef4444;">Failed to load matches. Please try again later.</p>
+                    `;
                 }
             },
 
-            async loadMatches() {
+            async loadStreamData() {
                 try {
-                    const matches = await this.fetchAndDecryptJson();
-                    this.displayHotMatches(matches);
+                    const response = await fetch(this.streamsUrl);
+                    if (!response.ok) throw new Error('Failed to fetch stream data');
+                    
+                    this.streamData = await response.json();
                 } catch (error) {
-                    console.error("Failed to load matches:", error);
-                    document.getElementById('matchList').innerHTML = '<p style="text-align:center;color:red;">Failed to load matches.</p>';
+                    console.error("Error loading stream data:", error);
                 }
             },
 
             displayHotMatches(matches) {
                 const hotLeagues = [
                     'Premier League', 'La Liga', 'Serie A', 'Bundesliga', 'Ligue 1',
-                    'UEFA Champions League', 'UEFA Europa League'
+                    'UEFA Champions League', 'UEFA Europa League', 'MLS', 'Saudi Pro League'
                 ];
 
-                const hotMatches = matches.filter(m => hotLeagues.includes(m.league));
-                const container = document.getElementById('matchList');
+                const hotMatches = matches.filter(match => 
+                    hotLeagues.includes(match.league)
+                );
+
+                const container = document.getElementById('matchContainer');
                 container.innerHTML = '';
 
+                if (hotMatches.length === 0) {
+                    container.innerHTML = `
+                        <p style="text-align: center; color: #94a3b8;">No hot matches available at the moment.</p>
+                    `;
+                    return;
+                }
+
                 hotMatches.forEach(match => {
+                    const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                    const matchDateTime = moment.tz(match.match_time * 1000, userTimezone);
+                    const formattedDate = matchDateTime.format('MMM D');
+                    const formattedTime = matchDateTime.format('hh:mm A');
+
                     const card = document.createElement('div');
                     card.className = 'match-card';
-                    const time = moment(match.match_time * 1000).format('MMM D, hh:mm A');
                     card.innerHTML = `
-                        <div class="league">${match.league}</div>
-                        <div style="display:flex; align-items:center; justify-content:space-between; margin:15px 0;">
-                            <div style="text-align:center;">
-                                <img class="team-img" src="${match.home_img || 'https://via.placeholder.com/50'}" onerror="this.src='https://via.placeholder.com/50'">
-                                <div>${match.home_name}</div>
+                        <div class="league">${match.league || 'Unknown League'}</div>
+                        <div class="match-info">
+                            <div class="team">
+                                <img src="${match.home_img || 'https://via.placeholder.com/50'}" 
+                                     onerror="this.src='https://via.placeholder.com/50'" 
+                                     alt="${match.home_name}">
+                                <div class="team-name">${match.home_name || 'Home Team'}</div>
                             </div>
-                            <div>
-                                <div>${time}</div>
-                                <div style="color:#ef4444; font-weight:bold;">VS</div>
+                            <div class="vs">
+                                <div>${formattedDate}</div>
+                                <div>${formattedTime}</div>
+                                <div>VS</div>
                             </div>
-                            <div style="text-align:center;">
-                                <img class="team-img" src="${match.away_img || 'https://via.placeholder.com/50'}" onerror="this.src='https://via.placeholder.com/50'">
-                                <div>${match.away_name}</div>
+                            <div class="team">
+                                <img src="${match.away_img || 'https://via.placeholder.com/50'}" 
+                                     onerror="this.src='https://via.placeholder.com/50'" 
+                                     alt="${match.away_name}">
+                                <div class="team-name">${match.away_name || 'Away Team'}</div>
                             </div>
                         </div>
                     `;
-                    card.addEventListener('click', () => this.showMatchDetail(match));
+
+                    card.addEventListener('click', () => {
+                        this.showMatchDetail(match);
+                    });
+
                     container.appendChild(card);
                 });
             },
 
             showMatchDetail(match) {
                 this.selectedMatch = match;
-                document.getElementById('modalTitle').innerText = `${match.home_name} vs ${match.away_name}`;
+                
+                // Set title
+                document.getElementById('modalMatchTitle').innerText = 
+                    `${match.home_name} vs ${match.away_name}`;
+
+                // Generate stream buttons
                 this.renderStreamButtons();
+
+                // Show modal
                 document.getElementById('matchModal').style.display = 'flex';
             },
 
             renderStreamButtons() {
-                const container = document.getElementById('streamButtons');
+                const container = document.getElementById('streamButtonsContainer');
                 container.innerHTML = '';
 
-                const streams = this.streamUrls[match.id] || {};
-                const labels = ['Live SD(1)', 'Live HD(1)', 'Live SD(2)', 'Live HD(2)'];
+                const matchId = this.selectedMatch.id;
+                const streams = this.streamData[matchId] || {};
 
-                labels.forEach(label => {
-                    const url = streams[label.toLowerCase().replace(/\s+/g, '_')];
-                    if (url) {
+                const streamTypes = [
+                    { key: 'live_sd_1', label: 'Live SD (1)', className: 'stream-btn' },
+                    { key: 'live_hd_1', label: 'Live HD (1)', className: 'stream-btn live' },
+                    { key: 'live_sd_2', label: 'Live SD (2)', className: 'stream-btn' },
+                    { key: 'live_hd_2', label: 'Live HD (2)', className: 'stream-btn live' }
+                ];
+
+                streamTypes.forEach(type => {
+                    if (streams[type.key]) {
                         const btn = document.createElement('button');
-                        btn.className = 'stream-btn';
-                        btn.innerText = label;
-                        btn.addEventListener('click', () => this.playStream(url));
+                        btn.className = type.className;
+                        btn.innerText = type.label;
+                        btn.addEventListener('click', () => {
+                            this.playStream(streams[type.key]);
+                        });
                         container.appendChild(btn);
                     }
                 });
+
+                // If no streams available
+                if (container.children.length === 0) {
+                    container.innerHTML = `
+                        <p style="text-align: center; color: #94a3b8; margin: 20px 0;">
+                            No live streams available for this match yet.
+                        </p>
+                    `;
+                }
             },
 
             playStream(url) {
-                // Check if player is available
+                // Check if player is available (for demo, always false)
                 if (this.isPlayerAvailable()) {
                     // Open in player
                     window.location.href = `player.html?url=${encodeURIComponent(url)}&matchId=${this.selectedMatch.id}`;
@@ -318,15 +494,14 @@
             },
 
             isPlayerAvailable() {
-                // Check if custom protocol or app is installed
-                // For demo, return false to always show install popup
+                // In real app, check if custom protocol or app is installed
+                // For now, return false to always show install popup
                 return false;
             },
 
             installPlayer() {
-                alert("Redirecting to download player...");
-                // Redirect to APK/APK download or app store
-                window.open('https://your-player-download-link.com', '_blank');
+                // Redirect to player download
+                window.open('https://thuwanawadi.vercel.app/live/player.apk', '_blank');
                 this.closeInstallPopup();
             },
 
@@ -341,9 +516,9 @@
 
         // Initialize App
         document.addEventListener('DOMContentLoaded', () => {
-            MMFotApp.init();
+            App.init();
         });
     </script>
 
 </body>
-  </html>
+</html>
