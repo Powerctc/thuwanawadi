@@ -35,9 +35,7 @@
             cursor: pointer;
             font-size: 0.9rem;
         }
-        .match-list {
-            padding: 16px;
-        }
+        .match-list { padding: 16px; }
         .match-card {
             background: #1e293b;
             border-radius: 12px;
@@ -153,9 +151,7 @@
             font-weight: 500;
             cursor: pointer;
         }
-        .stream-btn.live {
-            background: #ef4444;
-        }
+        .stream-btn.live { background: #ef4444; }
         .install-popup {
             text-align: center;
             padding: 30px 20px;
@@ -181,9 +177,7 @@
             cursor: pointer;
             margin: 10px;
         }
-        .cancel-btn {
-            background: #64748b;
-        }
+        .cancel-btn { background: #64748b; }
         .footer {
             text-align: center;
             padding: 20px;
@@ -324,7 +318,6 @@
             },
 
             displayHotMatches(matches) {
-                // Case-insensitive + trim filter
                 const hotLeagues = [
                     'Premier League', 'La Liga', 'Serie A', 'Bundesliga', 'Ligue 1',
                     'UEFA Champions League', 'UEFA Europa League', 'MLS', 'Saudi Pro League',
@@ -353,7 +346,6 @@
                     const formattedDate = matchDateTime.format('MMM D');
                     const formattedTime = matchDateTime.format('hh:mm A');
 
-                    // Check if match is live
                     const now = moment();
                     const matchStart = moment(match.match_time * 1000);
                     const matchEnd = moment(match.match_time * 1000).add(2, 'hours');
@@ -384,7 +376,6 @@
                         </div>
                     `;
 
-                    // Use index (1-based) as key for liveurl.json
                     card.addEventListener('click', () => {
                         this.showMatchDetail(match, index + 1);
                     });
@@ -395,14 +386,8 @@
 
             showMatchDetail(match, matchIndex) {
                 this.selectedMatch = match;
-                
-                // Set title
                 document.getElementById('modalMatchTitle').innerText = `${match.home_name} vs ${match.away_name}`;
-                
-                // Generate stream buttons using match index
                 this.renderStreamButtons(matchIndex);
-                
-                // Show modal
                 document.getElementById('matchModal').style.display = 'flex';
             },
 
@@ -410,7 +395,6 @@
                 const container = document.getElementById('streamButtonsContainer');
                 container.innerHTML = '';
 
-                // Create key like "match_1", "match_2", etc.
                 const key = `match_${matchIndex}`;
                 const streams = this.streamData[key] || {};
 
@@ -435,7 +419,6 @@
                     }
                 });
 
-                // If no streams available
                 if (!hasStreams) {
                     container.innerHTML = `
                         <p style="text-align: center; color: #fbbf24; margin: 20px 0; font-weight:500;">
@@ -448,7 +431,6 @@
                 }
             },
 
-            // ✅ FUNCTION TO OPEN WITH INTENT + FALLBACK MODAL
             openWithExternalPlayer(url) {
                 const isAndroid = /Android/i.test(navigator.userAgent);
                 if (!isAndroid) {
@@ -464,19 +446,16 @@
                 iframe.src = intentUrl;
                 document.body.appendChild(iframe);
 
-                // Clean up iframe
                 setTimeout(() => {
                     if (iframe.parentNode) {
                         document.body.removeChild(iframe);
                     }
                 }, 1000);
 
-                // Fallback to install modal
                 timeout = setTimeout(() => {
                     this.showInstallPopup();
                 }, 1500);
 
-                // Cancel fallback if app opens
                 const handleVisibility = () => {
                     if (document.visibilityState === 'hidden') {
                         clearTimeout(timeout);
@@ -503,11 +482,14 @@
             }
         };
 
-        // Initialize App
         document.addEventListener('DOMContentLoaded', () => {
             App.init();
+            // ✅ Expose functions for inline onclick
+            window.installPlayer = () => App.installPlayer();
+            window.closeInstallPopup = () => App.closeInstallPopup();
+            window.closeModal = () => App.closeModal();
         });
     </script>
 
 </body>
-        </html>
+</html>
