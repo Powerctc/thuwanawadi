@@ -237,7 +237,7 @@
     <div class="header">
         <h1>MMFOT Live Football</h1>
         <div class="controls">
-            <button id="fullscreen_btn">Fullscreen</button>
+            <!-- Fullscreen button REMOVED as requested -->
             <button id="reload_btn">Reload</button>
         </div>
     </div>
@@ -295,16 +295,7 @@
             },
 
             initControls() {
-                // Fullscreen
-                document.getElementById('fullscreen_btn').addEventListener('click', () => {
-                    if (tg?.isFullscreen) {
-                        tg.exitFullscreen();
-                    } else {
-                        tg?.requestFullscreen();
-                    }
-                });
-
-                // Reload
+                // Reload button only (Fullscreen removed)
                 document.getElementById('reload_btn').addEventListener('click', () => {
                     window.location.reload();
                 });
@@ -450,8 +441,13 @@
                 const container = document.getElementById('streamButtonsContainer');
                 container.innerHTML = '';
 
-                const matchId = this.selectedMatch.id;
-                const streams = this.streamData[matchId] || {};
+                // Create a key from team names (instead of match.id)
+                const key = `${this.cleanTeamName(match.home_name)}_vs_${this.cleanTeamName(match.away_name)}`.toLowerCase();
+                
+                // Also try alternative key format
+                const altKey = `${this.cleanTeamName(match.away_name)}_vs_${this.cleanTeamName(match.home_name)}`.toLowerCase();
+
+                let streams = this.streamData[key] || this.streamData[altKey] || {};
 
                 const streamTypes = [
                     { key: 'live_sd_1', label: 'Live SD (1)', className: 'stream-btn' },
@@ -475,11 +471,23 @@
                 // If no streams available
                 if (container.children.length === 0) {
                     container.innerHTML = `
-                        <p style="text-align: center; color: #94a3b8; margin: 20px 0;">
-                            No live streams available for this match yet.
+                        <p style="text-align: center; color: #fbbf24; margin: 20px 0; font-weight:500;">
+                            ⏳ Streams will be available 15 minutes before kickoff!
+                        </p>
+                        <p style="text-align: center; color: #94a3b8; font-size: 0.9rem;">
+                            Please check back later.
                         </p>
                     `;
                 }
+            },
+
+            // Helper function to clean team names for key matching
+            cleanTeamName(name) {
+                if (!name) return '';
+                return name
+                    .toLowerCase()
+                    .replace(/\s+/g, '_')
+                    .replace(/[^a-z0-9_]/g, '');
             },
 
             playStream(url) {
@@ -521,4 +529,4 @@
     </script>
 
 </body>
-</html>
+    </html>
