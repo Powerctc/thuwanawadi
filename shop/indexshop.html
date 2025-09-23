@@ -127,9 +127,73 @@
       padding: 1rem;
       margin: 0;
     }
+    
+    /* Updated Product Card Styles */
+    .product-card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #1f2937;
+      border: 1px solid #374151;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .product-image {
+      height: 160px;
+      object-fit: cover;
+      width: 100%;
+    }
+    
+    .price-tag {
+      color: #10b981;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+    
+    .category-badge {
+      color: #d1d5db;
+      font-size: 0.75rem;
+    }
+    
+    .view-details-btn {
+      background: #3b82f6;
+      transition: all 0.3s ease;
+      color: white;
+      font-weight: bold;
+      border-radius: 4px;
+    }
+    
+    .view-details-btn:hover {
+      background: #2563eb;
+    }
+    
+    /* Product grid with 2 columns on mobile, fixed on desktop */
+    #product-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    
+    @media (min-width: 768px) {
+      #product-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      #product-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+      }
+    }
   </style>
 </head>
-<body class="bg-gray-100 font-sans">
+<body class="bg-gray-900 font-sans">
 
   <!-- HEADER -->
   <header class="lg:hidden flex items-center justify-between bg-black p-4 fixed top-0 left-0 right-0 z-50">
@@ -161,7 +225,7 @@
         </a>
         
         <a href="https://thuwanawadi.vercel.app/freeAi.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
-          <i class="fas fa-tools mr-3"></i><span>အေအိုင်(Ai)</span>
+          <i class="fas fa-tools mr-3"></i><span>အေအိုင်း(Ai)</span>
         </a>
         <a href="https://thuwanawadi.vercel.app/live/index.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
           <i class="fas fa-futbol mr-3"></i><span>ဘောလုံးပွဲ(main)</span>
@@ -219,42 +283,44 @@
           Select Products
         </button>
       </header>
-<main class="flex-1 lg:ml-56 p-6 pb-16 mt-2"> 
-  <p class="mt-1 text-blue-500 font-bold text-sm sm:text-base">
-    Tiktok Shop မှာပစ္စည်းစုံဝယ်ရန်
-  </p>
+      
+      <main class="flex-1 lg:ml-56 p-6 pb-16 mt-2"> 
+        <p class="mt-1 text-blue-500 font-bold text-sm sm:text-base">
+          Tiktok Shop မှာပစ္စည်းစုံဝယ်ရန်
+        </p>
 
-  <div class="flex flex-wrap justify-center gap-2 mb-2">
-    <a href="http://tiktok.com/@tiktokshopth25" target="_blank" 
-       class="flex items-center gap-1 bg-pink-500 text-white font-bold px-4 py-2 rounded-lg shadow hover:bg-pink-600 transition text-sm sm:text-base">
-      <i class="fas fa-shopping-cart"></i>Shop-1
-    </a>
-    <a href="https://www.tiktok.com/@nextplaymm" target="_blank" 
-       class="flex items-center gap-1 bg-pink-500 text-white font-bold px-4 py-2 rounded-lg shadow hover:bg-pink-600 transition text-sm sm:text-base">
-      <i class="fas fa-shopping-cart"></i>Shop-2
-    </a>
-    <a href="http://tiktok.com/@tiktokshopmyanmar" 
-       class="flex items-center gap-1 bg-blue-500 text-white font-bold px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition text-sm sm:text-base">
-      <i class="fas fa-shopping-cart"></i>Shop-3
-    </a>
-  </div>
-
-  <!-- Search -->
-  <div class="search-container mt-0">
-    <input 
-      id="search" 
-      type="text" 
-      placeholder="Search products..." 
-      class="w-full p-2 rounded bg-gray-700 text-white focus:outline-none"
-    />
-  </div>
-
-      <!-- Product Grid -->
-      <div class="product-grid-container">
-        <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-          <!-- Products will load here -->
+        <div class="flex flex-wrap justify-center gap-2 mb-2">
+          <a href="http://tiktok.com/@tiktokshopth25" target="_blank" 
+             class="flex items-center gap-1 bg-pink-500 text-white font-bold px-4 py-2 rounded-lg shadow hover:bg-pink-600 transition text-sm sm:text-base">
+            <i class="fas fa-shopping-cart"></i>Shop-1
+          </a>
+          <a href="https://www.tiktok.com/@nextplaymm" target="_blank" 
+             class="flex items-center gap-1 bg-pink-500 text-white font-bold px-4 py-2 rounded-lg shadow hover:bg-pink-600 transition text-sm sm:text-base">
+            <i class="fas fa-shopping-cart"></i>Shop-2
+          </a>
+          <a href="http://tiktok.com/@tiktokshopmyanmar" 
+             class="flex items-center gap-1 bg-blue-500 text-white font-bold px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition text-sm sm:text-base">
+            <i class="fas fa-shopping-cart"></i>Shop-3
+          </a>
         </div>
-      </div>
+
+        <!-- Search -->
+        <div class="search-container mt-0">
+          <input 
+            id="search" 
+            type="text" 
+            placeholder="Search products..." 
+            class="w-full p-2 rounded bg-gray-700 text-white focus:outline-none"
+          />
+        </div>
+
+        <!-- Product Grid -->
+        <div class="product-grid-container">
+          <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <!-- Products will load here -->
+          </div>
+        </div>
+      </main>
     </div>
   </div>
 
@@ -311,28 +377,40 @@
       if (products.length === 0) {
         const sampleProducts = [
           {
-            name: "Wireless Bluetooth Headphones",
-            price: 49.99,
-            category: "Electronics",
-            image: "https://via.placeholder.com/300x200/4B5563/FFFFFF?text=Headphones"
+            id: 1,
+            name: "ပရင့်ချိတ်",
+            price: 290.00,
+            category: "မြန်မာအမျိုးသမီးဝတ်",
+            description: "ပရင့်ချိတ် လက်ရှည် ဝမ်းဆက် ဘယ်ဖုံးလေး ချုပ်ထားပေးတယ်နော် ဆိုဒ် M,L,XL",
+            image: "https://thuwanawadi.vercel.app/shop/image/print.jpg",
+            link: "https://vt.tiktok.com/ZSHWLoSu3MNs1-7gGGN/"
           },
           {
+            id: 2,
             name: "Smart Fitness Watch",
             price: 89.99,
             category: "Wearables",
-            image: "https://via.placeholder.com/300x200/4B5563/FFFFFF?text=Smart+Watch"
+            description: "Track your health with a stylish smartwatch featuring heart rate monitor and GPS.",
+            image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2F0Y2h8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
+            link: "https://example.com/shop/fitnesswatch"
           },
           {
-            name: "Laptop Backpack",
-            price: 39.99,
-            category: "Accessories",
-            image: "https://via.placeholder.com/300x200/4B5563/FFFFFF?text=Backpack"
+            id: 3,
+            name: "Ergonomic Office Chair",
+            price: 129.99,
+            category: "Furniture",
+            description: "Comfortable and adjustable office chair with lumbar support for long working hours.",
+            image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y2hhaXJ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
+            link: "https://example.com/shop/officechair"
           },
           {
-            name: "USB-C Charging Cable",
-            price: 19.99,
+            id: 4,
+            name: "4K Ultra HD Smart TV",
+            price: 499.99,
             category: "Electronics",
-            image: "https://via.placeholder.com/300x200/4B5563/FFFFFF?text=USB+Cable"
+            description: "Stunning 4K resolution with built-in apps and voice control compatibility.",
+            image: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHZ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
+            link: "https://example.com/shop/smarttv"
           }
         ];
         
@@ -346,21 +424,33 @@
     function appendProductCard(product) {
       const grid = document.getElementById("product-grid");
       const card = document.createElement("div");
-      card.className =
-        "cursor-pointer bg-gray-800 rounded-lg overflow-hidden shadow hover:shadow-lg transition";
+      card.className = "product-card cursor-pointer rounded-lg overflow-hidden";
       card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}" class="w-full h-40 object-cover">
-        <div class="p-4">
-          <h3 class="text-lg font-semibold text-white truncate">${product.name}</h3>
-          <p class="text-green-400 text-sm mb-2">฿${product.price} | ${product.category}</p>
-          <button class="bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded w-full text-white">
+        <div class="relative">
+          <img src="${product.image}" alt="${product.name}" class="product-image">
+        </div>
+        <div class="p-3">
+          <h3 class="text-sm font-semibold text-white truncate mb-1">${product.name}</h3>
+          <div class="flex items-center gap-1 mb-2">
+            <span class="price-tag">B${product.price}</span>
+            <span class="text-gray-400">|</span>
+            <span class="category-badge">${product.category}</span>
+          </div>
+          <button class="view-details-btn w-full py-2 rounded text-sm">
             View Details
           </button>
         </div>`;
+      
+      // Use the product link if available, otherwise use the default behavior
       card.addEventListener("click", () => {
-        localStorage.setItem("selectedProduct", JSON.stringify(product));
-        window.location.href = "product_detail.html";
+        if (product.link) {
+          window.open(product.link, '_blank');
+        } else {
+          localStorage.setItem("selectedProduct", JSON.stringify(product));
+          window.location.href = "product_detail.html";
+        }
       });
+      
       grid.appendChild(card);
     }
 
@@ -368,7 +458,7 @@
     document.getElementById("search").addEventListener("input", (e) => {
       const term = e.target.value.toLowerCase();
       filteredProducts = currentProducts.filter((p) =>
-        p.name.toLowerCase().includes(term)
+        p.name.toLowerCase().includes(term) || p.category.toLowerCase().includes(term)
       );
       displayProducts(filteredProducts);
     });
@@ -408,4 +498,4 @@
     });
   </script>
 </body>
-  </html>
+      </html>
