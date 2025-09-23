@@ -12,6 +12,7 @@
             background: #0f172a;
             color: #e2e8f0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
         }
         .header {
             display: flex;
@@ -34,7 +35,9 @@
             cursor: pointer;
             font-size: 0.9rem;
         }
-        .match-list { padding: 16px; }
+        .match-list {
+            padding: 16px;
+        }
         .match-card {
             background: #1e293b;
             border-radius: 12px;
@@ -44,7 +47,15 @@
             transition: transform 0.2s;
         }
         .match-card:hover { transform: translateY(-2px); }
-        .league { color: #60a5fa; font-weight: 600; font-size: 0.9rem; margin-bottom: 8px; }
+        .league {
+            color: #60a5fa;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            text-align: center;
+        }
         .match-info {
             display: flex;
             align-items: center;
@@ -78,6 +89,20 @@
             color: #ef4444;
             font-weight: bold;
             font-size: 0.9rem;
+        }
+        .time {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+        .live-badge {
+            color: #ef4444;
+            font-weight: bold;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
         /* Modal */
         .modal {
@@ -128,7 +153,9 @@
             font-weight: 500;
             cursor: pointer;
         }
-        .stream-btn.live { background: #ef4444; }
+        .stream-btn.live {
+            background: #ef4444;
+        }
         .install-popup {
             text-align: center;
             padding: 30px 20px;
@@ -137,6 +164,11 @@
             width: 80px;
             margin: 20px auto;
             display: block;
+        }
+        .install-popup p {
+            margin: 15px 0;
+            font-size: 1rem;
+            color: #e2e8f0;
         }
         .install-btn {
             background: #0f9d58;
@@ -149,7 +181,9 @@
             cursor: pointer;
             margin: 10px;
         }
-        .cancel-btn { background: #64748b; }
+        .cancel-btn {
+            background: #64748b;
+        }
         .footer {
             text-align: center;
             padding: 20px;
@@ -160,12 +194,14 @@
         @media (max-width: 768px) {
             .team img { width: 40px; height: 40px; }
             .team-name { font-size: 0.8rem; max-width: 80px; }
+            .league { font-size: 0.8rem; }
             .modal-content { margin: 0 10px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Header -->
     <div class="header">
         <h1>MMFOT Live Football</h1>
         <div class="controls">
@@ -173,11 +209,13 @@
         </div>
     </div>
 
+    <!-- Match List -->
     <div class="match-list">
-        <h2 style="color: #60a5fa; margin-bottom: 20px; text-align: center;">Hot Football Matches</h2>
+        <h2 style="color: #60a5fa; margin-bottom: 20px; text-align: center;">Football Schedule Fixtures</h2>
         <div id="matchContainer"></div>
     </div>
 
+    <!-- Match Detail Modal -->
     <div id="matchModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -186,6 +224,7 @@
         </div>
     </div>
 
+    <!-- Install Player Popup -->
     <div id="installPopup" class="modal">
         <div class="install-popup">
             <h3>Video Player Not Found</h3>
@@ -196,6 +235,7 @@
         </div>
     </div>
 
+    <!-- Footer -->
     <div class="footer">version 2.0</div>
 
     <script>
@@ -239,6 +279,7 @@
                     }
                     return decodeURIComponent(decrypted);
                 } catch (error) {
+                    console.warn("Decrypt failed:", error);
                     return encryptedBase64;
                 }
             },
@@ -263,9 +304,13 @@
                     const encryptedData = await response.json();
                     const decryptedData = this.decryptObject(encryptedData, this.encryptionKey);
                     const matches = decryptedData.context || [];
+
                     this.displayHotMatches(matches);
                 } catch (error) {
-                    document.getElementById('matchContainer').innerHTML = `<p style="text-align:center;color:red;">Failed to load matches.</p>`;
+                    console.error("Error loading matches:", error);
+                    document.getElementById('matchContainer').innerHTML = `
+                        <p style="text-align: center; color: #ef4444;">Failed to load matches. Please try again later.</p>
+                    `;
                 }
             },
 
@@ -274,15 +319,33 @@
                     const response = await fetch(this.streamsUrl);
                     this.streamData = await response.json();
                 } catch (error) {
-                    console.error("Stream data load failed:", error);
+                    console.error("Error loading stream data:", error);
                 }
             },
 
             displayHotMatches(matches) {
-                const hotLeagues = ['Premier League', 'La Liga', 'Serie A', 'Bundesliga', 'Ligue 1', 'UEFA Champions League'];
-                this.hotMatches = matches.filter(m => hotLeagues.includes(m.league));
+                // Case-insensitive + trim filter
+                const hotLeagues = [
+                    'Premier League', 'La Liga', 'Serie A', 'Bundesliga', 'Ligue 1',
+                    'UEFA Champions League', 'UEFA Europa League', 'MLS', 'Saudi Pro League',
+                    'Coppa Italia', 'FA Cup', 'Copa del Rey'
+                ];
+                const normalizedLeagues = hotLeagues.map(l => l.toLowerCase().trim());
+
+                this.hotMatches = matches.filter(match => {
+                    const league = (match.league || '').toLowerCase().trim();
+                    return normalizedLeagues.includes(league);
+                });
+
                 const container = document.getElementById('matchContainer');
                 container.innerHTML = '';
+
+                if (this.hotMatches.length === 0) {
+                    container.innerHTML = `
+                        <p style="text-align: center; color: #94a3b8;">No hot matches available at the moment.</p>
+                    `;
+                    return;
+                }
 
                 this.hotMatches.forEach((match, index) => {
                     const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -290,35 +353,56 @@
                     const formattedDate = matchDateTime.format('MMM D');
                     const formattedTime = matchDateTime.format('hh:mm A');
 
+                    // Check if match is live
+                    const now = moment();
+                    const matchStart = moment(match.match_time * 1000);
+                    const matchEnd = moment(match.match_time * 1000).add(2, 'hours');
+                    const isLive = now.isBetween(matchStart, matchEnd);
+
                     const card = document.createElement('div');
                     card.className = 'match-card';
                     card.innerHTML = `
-                        <div class="league">${match.league || 'League'}</div>
+                        <div class="league">${match.league || 'Unknown League'}</div>
                         <div class="match-info">
                             <div class="team">
-                                <img src="${match.home_img || 'https://via.placeholder.com/50'}" onerror="this.src='https://via.placeholder.com/50'">
-                                <div class="team-name">${match.home_name || 'Home'}</div>
+                                <img src="${match.home_img || 'https://via.placeholder.com/50'}" 
+                                     onerror="this.src='https://via.placeholder.com/50'" 
+                                     alt="${match.home_name}">
+                                <div class="team-name">${match.home_name || 'Home Team'}</div>
                             </div>
                             <div class="vs">
                                 <div>${formattedDate}</div>
                                 <div>${formattedTime}</div>
-                                <div>VS</div>
+                                ${isLive ? '<p class="live-badge">● LIVE</p>' : ''}
                             </div>
                             <div class="team">
-                                <img src="${match.away_img || 'https://via.placeholder.com/50'}" onerror="this.src='https://via.placeholder.com/50'">
-                                <div class="team-name">${match.away_name || 'Away'}</div>
+                                <img src="${match.away_img || 'https://via.placeholder.com/50'}" 
+                                     onerror="this.src='https://via.placeholder.com/50'" 
+                                     alt="${match.away_name}">
+                                <div class="team-name">${match.away_name || 'Away Team'}</div>
                             </div>
                         </div>
                     `;
-                    card.addEventListener('click', () => this.showMatchDetail(match, index + 1));
+
+                    // Use index (1-based) as key for liveurl.json
+                    card.addEventListener('click', () => {
+                        this.showMatchDetail(match, index + 1);
+                    });
+
                     container.appendChild(card);
                 });
             },
 
             showMatchDetail(match, matchIndex) {
                 this.selectedMatch = match;
+                
+                // Set title
                 document.getElementById('modalMatchTitle').innerText = `${match.home_name} vs ${match.away_name}`;
+                
+                // Generate stream buttons using match index
                 this.renderStreamButtons(matchIndex);
+                
+                // Show modal
                 document.getElementById('matchModal').style.display = 'flex';
             },
 
@@ -326,6 +410,7 @@
                 const container = document.getElementById('streamButtonsContainer');
                 container.innerHTML = '';
 
+                // Create key like "match_1", "match_2", etc.
                 const key = `match_${matchIndex}`;
                 const streams = this.streamData[key] || {};
 
@@ -350,16 +435,24 @@
                     }
                 });
 
+                // If no streams available
                 if (!hasStreams) {
-                    container.innerHTML = `<p style="text-align:center;color:#fbbf24;">⏳ Streams not available yet.</p>`;
+                    container.innerHTML = `
+                        <p style="text-align: center; color: #fbbf24; margin: 20px 0; font-weight:500;">
+                            ⏳ Streams will be available 15 minutes before kickoff!
+                        </p>
+                        <p style="text-align: center; color: #94a3b8; font-size: 0.9rem;">
+                            Please check back later.
+                        </p>
+                    `;
                 }
             },
 
-            // ✅ MAIN FUNCTION: OPEN WITH INTENT + FALLBACK
+            // ✅ FUNCTION TO OPEN WITH INTENT + FALLBACK MODAL
             openWithExternalPlayer(url) {
                 const isAndroid = /Android/i.test(navigator.userAgent);
                 if (!isAndroid) {
-                    alert('Live streaming is only available on Android devices.');
+                    alert('Only available on Android.');
                     return;
                 }
 
@@ -383,7 +476,7 @@
                     this.showInstallPopup();
                 }, 1500);
 
-                // Cancel fallback if app opens (user leaves browser)
+                // Cancel fallback if app opens
                 const handleVisibility = () => {
                     if (document.visibilityState === 'hidden') {
                         clearTimeout(timeout);
@@ -410,10 +503,11 @@
             }
         };
 
+        // Initialize App
         document.addEventListener('DOMContentLoaded', () => {
             App.init();
         });
     </script>
 
 </body>
-    </html>
+        </html>
