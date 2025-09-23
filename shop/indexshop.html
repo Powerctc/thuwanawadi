@@ -1,501 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Tiktok Shop 🇲🇲 - Thuwanawaddy Taxi Service</title>
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    .sidebar { 
-      height: 100vh; 
-      transition: transform 0.3s ease-in-out; 
-      z-index: 30;
-    }
-    .sidebar.hidden { 
-      transform: translateX(-100%); 
-    }
-    @media (min-width: 1024px) {
-      .sidebar { transform: translateX(0) !important; }
-      #menu-toggle { display: none !important; }
-    }
-
-    /* Marquee Wrapper - Reduced top margin */
-    .marquee-wrapper {
-      border: 2px solid #ffcc00;
-      border-radius: 8px;
-      padding: 6px 10px;
-      margin: 10px 10px 0; /* Reduced from 70px to 10px */
-      background: #111;
-    }
-    .top-marquee {
-      font-weight: bold;
-      color: #ffcc00;
-      white-space: nowrap;
-      overflow: hidden;
-      margin-bottom: 8px;
-    }
-    #marquee-text {
-      display: inline-block;
-      padding-left: 100%;
-      animation: scroll-left 15s linear infinite;
-    }
-    @keyframes scroll-left {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
-    }
-    .image-marquee {
-      overflow: hidden;
-      white-space: nowrap;
-    }
-    .image-marquee .marquee-content {
-      display: flex;
-      gap: 12px;
-      animation: scroll 25s linear infinite;
-    }
-    .image-marquee img {
-      height: 50px;
-      border-radius: 6px;
-      object-fit: cover;
-    }
-    @keyframes scroll {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
-    }
-
-    /* Sidebar Overlay */
-    #sidebar-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      z-index: 20;
-    }
-
-    /* Adhere GIF */
-    .adhere-gif {
-      text-align: center;
-      margin: 10px auto;
-      max-width: 320px;
-      border: 2px solid #ffcc00;
-      border-radius: 8px;
-      padding: 6px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    }
-    .adhere-gif img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 6px;
-    }
-
-    /* Main content adjustment for sidebar */
-    .main-content {
-      margin-left: 0;
-      width: 100%;
-      padding-top: 0;
-    }
-    @media (min-width: 1024px) {
-      .main-content {
-        margin-left: 12rem;
-        width: calc(100% - 12rem);
-      }
-    }
-
-    /* Product section styling */
-    .products-header {
-      background: #1f2937;
-      padding: 0.75rem 1rem;
-      margin: 10px 0 0 0; /* Added top margin */
-    }
-    
-    /* Remove extra margins */
-    .content-section {
-      margin: 0;
-      padding: 0;
-    }
-    
-    /* Adjust search bar */
-    .search-container {
-      padding: 1rem;
-      margin: 0;
-    }
-    
-    /* Product grid adjustment */
-    .product-grid-container {
-      padding: 1rem;
-      margin: 0;
-    }
-    
-    /* Updated Product Card Styles */
-    .product-card {
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      border-radius: 8px;
-      overflow: hidden;
-      background: #1f2937;
-      border: 1px solid #374151;
-    }
-    
-    .product-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    }
-    
-    .product-image {
-      height: 160px;
-      object-fit: cover;
-      width: 100%;
-    }
-    
-    .price-tag {
-      color: #10b981;
-      font-weight: bold;
-      font-size: 1rem;
-    }
-    
-    .category-badge {
-      color: #d1d5db;
-      font-size: 0.75rem;
-    }
-    
-    .view-details-btn {
-      background: #3b82f6;
-      transition: all 0.3s ease;
-      color: white;
-      font-weight: bold;
-      border-radius: 4px;
-    }
-    
-    .view-details-btn:hover {
-      background: #2563eb;
-    }
-    
-    /* Product grid with 2 columns on mobile, fixed on desktop */
-    #product-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
-    }
-    
-    @media (min-width: 768px) {
-      #product-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1.5rem;
-      }
-    }
-    
-    @media (min-width: 1024px) {
-      #product-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 1.5rem;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Tiktok Shop 🇲🇲 - Thuwanawaddy Taxi Service</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+/* Your previous CSS (sidebar, marquee, products, etc.) */
+body { background: #111; color: #fff; font-family: sans-serif; }
+.product-card { transition: transform 0.2s ease, box-shadow 0.2s ease; border-radius: 8px; overflow: hidden; background: #1f2937; border: 1px solid #374151; cursor: pointer; }
+.product-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+.product-image { height: 160px; object-fit: cover; width: 100%; }
+.price-tag { color: #10b981; font-weight: bold; font-size: 1rem; }
+.category-badge { color: #d1d5db; font-size: 0.75rem; }
+.view-details-btn { background: #3b82f6; transition: all 0.3s ease; color: white; font-weight: bold; border-radius: 4px; width: 100%; padding: 0.5rem; }
+.view-details-btn:hover { background: #2563eb; }
+#product-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; }
+@media (min-width: 768px){#product-grid{grid-template-columns:repeat(3,1fr); gap:1.5rem;}}
+@media (min-width: 1024px){#product-grid{grid-template-columns:repeat(4,1fr); gap:1.5rem;}}
+</style>
 </head>
 <body class="bg-gray-900 font-sans">
 
-  <!-- HEADER -->
-  <header class="lg:hidden flex items-center justify-between bg-black p-4 fixed top-0 left-0 right-0 z-50">
-    <h1 class="text-white font-bold text-lg flex items-center">
-      <i class="fab fa-tiktok mr-2 text-pink-500"></i>
-      <i class="fas fa-shop mr-1 text-yellow-400"></i>
-      TIKTOK SHOP 🇲🇲
-    </h1>
-    <button id="menu-toggle" class="text-white text-2xl" aria-label="Open menu">
-      <i class="fas fa-bars"></i>
-    </button>
-  </header>
+<header class="lg:hidden flex items-center justify-between bg-black p-4 fixed top-0 left-0 right-0 z-50">
+<h1 class="text-white font-bold text-lg flex items-center">
+<i class="fab fa-tiktok mr-2 text-pink-500"></i>
+<i class="fas fa-shop mr-1 text-yellow-400"></i>
+TIKTOK SHOP 🇲🇲
+</h1>
+<button id="menu-toggle" class="text-white text-2xl"><i class="fas fa-bars"></i></button>
+</header>
 
-  <!-- SIDEBAR -->
-  <div id="sidebar" class="sidebar bg-gray-800 w-48 fixed top-0 left-0 lg:translate-x-0 hidden lg:block z-30">
-    <div class="p-4 flex items-center">
-      <i class="fas fa-taxi text-yellow-400 text-2xl mr-2"></i>
-      <h1 class="text-lg font-bold text-yellow-400">Thuwanawaddy</h1>
+<div class="main-content pt-16 lg:pt-0 p-4">
+<h2 class="text-white font-bold text-xl mb-4">Products</h2>
+
+<div id="product-grid">
+<!-- Product cards go here -->
+</div>
+</div>
+
+<script>
+const products = [
+  {
+    id: 1,
+    name: "ပရင့်ချိတ်",
+    price: 290.00,
+    category: "မြန်မာအမျိုးသမီးဝတ်",
+    description: "ပရင့်ချိတ် လက်ရှည် ဝမ်းဆက် ဘယ်ဖုံးလေး ချုပ်ထားပေးတယ်နော် ဆိုဒ် M,L,XL",
+    image: "https://thuwanawadi.vercel.app/shop/image/print.jpg",
+    link: "https://vt.tiktok.com/ZSHWLoSu3MNs1-7gGGN/"
+  },
+  {
+    id: 2,
+    name: "ပရင့်ပုလဲ",
+    price: 153.00,
+    category: "မြန်မာအမျိုးသမီးဝတ်",
+    description: "ပရင့် ပုလဲ ဝမ်းဆက် လက်ရှည်ဂျိတ်ထမိန် ပုလဲ ကြယ်သီး ဘယ်ဖုံးပါရှင်",
+    image: "https://thuwanawadi.vercel.app/shop/shop/image/printpeal.jpeg",
+    link: "https://vt.tiktok.com/ZSHWNkgA6T3wM-bWuFG/"
+  },
+  {
+    id: 3,
+    name: "Ergonomic Office Chair",
+    price: 129.99,
+    category: "Furniture",
+    description: "Comfortable and adjustable office chair with lumbar support for long working hours.",
+    image: "https://example.com/images/officechair.jpg",
+    link: ""
+  },
+  {
+    id: 4,
+    name: "4K Ultra HD Smart TV",
+    price: 499.99,
+    category: "Electronics",
+    description: "Stunning 4K resolution with built-in apps and voice control compatibility.",
+    image: "https://example.com/images/smarttv.jpg",
+    link: ""
+  }
+];
+
+const grid = document.getElementById("product-grid");
+
+function appendProductCard(product){
+  const card = document.createElement("div");
+  card.className = "product-card";
+  card.innerHTML = `
+    <img src="${product.image}" alt="${product.name}" class="product-image mb-2">
+    <h3 class="text-white font-semibold mb-1">${product.name}</h3>
+    <div class="flex items-center gap-1 mb-2">
+      <span class="price-tag">B${product.price}</span>
+      <span class="category-badge">${product.category}</span>
     </div>
-    <div class="flex flex-col">
-      <a href="/" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
-          <i class="fas fa-home mr-3"></i><span>Home</span>
-        </a>
-        <a href="https://thuwanawadi.vercel.app/movie/index.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
-          <i class="fas fa-tv mr-3"></i><span>မြန်မာစာတန်းထိုး</span>
-        </a>
-        <a href="mmtv/index.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
-          <i class="fas fa-tv mr-3"></i><span>မြန်မာတီဗွီ</span>
-        </a>
-        
-        <a href="https://thuwanawadi.vercel.app/freeAi.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
-          <i class="fas fa-tools mr-3"></i><span>အေအိုင်း(Ai)</span>
-        </a>
-        <a href="https://thuwanawadi.vercel.app/live/index.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
-          <i class="fas fa-futbol mr-3"></i><span>ဘောလုံးပွဲ(main)</span>
-        <a href="https://www.rbtvplus.com/football.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
-          <i class="fas fa-futbol mr-3"></i><span>ဘောလုံးပွဲ(rbtv)</span>
-        </a>
-        <a href="https://app.mmfot.com/" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
-          <i class="fas fa-futbol mr-3"></i><span>ဘောလုံးပွဲ(mm)</span>
-        </a>
-        <a href="https://subuu-gq2t.vercel.app/" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
-          <i class="fas fa-money-bill mr-3"></i><span>အွန်လိုင်ငွေရှာနည်း</span>
-        </a>
-        <a href="https://thuwanawadi.vercel.app/about.html" class="py-3 px-4 flex items-center text-gray-300 hover:bg-yellow-400 hover:text-black">
-          <i class="fas fa-question-circle mr-3"></i><span>Appအကြောင်း</span>
-        </a>
-      </div>
-    </div>
-
-  <!-- MAIN CONTENT -->
-  <div class="main-content pt-16 lg:pt-0">
-    <!-- MARQUEE -->
-    <div class="marquee-wrapper">
-      <div class="top-marquee" role="status" aria-live="polite">
-        <div id="marquee-text">
-          အစီအစဉ်များကြည့်ရန် Network Streaming Video Player ကို install ပြုလုပ်ရန် လိုအပ်ပါသည် —
-          Please install the Network Streaming Video Player to watch streams.
-        </div>
-      </div>
-      <div class="image-marquee" role="region" aria-label="Promotional carousel">
-        <div class="marquee-content">
-          <img src="https://thuwanawadi.vercel.app/image/adhere.png" alt="Promo 1">
-          <img src="https://thuwanawadi.vercel.app/image/admm.png" alt="Promo 2">
-          <img src="https://thuwanawadi.vercel.app/image/tiktokshop.png" alt="Movie Promo">
-          <img src="https://thuwanawadi.vercel.app/image/shopping.png" alt="AI Tools">
-        </div>
-      </div>
-    </div>
-
-    <!-- ADHERE GIF -->
-    <div class="adhere-gif text-center">
-      <a href="https://aitools.tv" target="_blank">
-        <img src="https://djmorio.wordpress.com/wp-content/uploads/2020/04/place-your-advert-here-1.gif" alt="Adhere GIF">
-      </a>
-      <p class="mt-2 text-yellow-400 font-bold text-sm sm:text-base">
-        ဘာလိုလို Visit now!
-      </p>
-    </div>
-
-    <!-- PRODUCTS SECTION -->
-    <div class="content-section">
-      <!-- PRODUCTS HEADER -->
-      <header class="products-header flex justify-between items-center">
-        <h2 class="text-white font-bold text-xl">Products</h2>
-        <button id="products-selector-btn" class="bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded text-white">
-          Select Products
-        </button>
-      </header>
-      
-      <main class="flex-1 lg:ml-56 p-6 pb-16 mt-2"> 
-        <p class="mt-1 text-blue-500 font-bold text-sm sm:text-base">
-          Tiktok Shop မှာပစ္စည်းစုံဝယ်ရန်
-        </p>
-
-        <div class="flex flex-wrap justify-center gap-2 mb-2">
-          <a href="http://tiktok.com/@tiktokshopth25" target="_blank" 
-             class="flex items-center gap-1 bg-pink-500 text-white font-bold px-4 py-2 rounded-lg shadow hover:bg-pink-600 transition text-sm sm:text-base">
-            <i class="fas fa-shopping-cart"></i>Shop-1
-          </a>
-          <a href="https://www.tiktok.com/@nextplaymm" target="_blank" 
-             class="flex items-center gap-1 bg-pink-500 text-white font-bold px-4 py-2 rounded-lg shadow hover:bg-pink-600 transition text-sm sm:text-base">
-            <i class="fas fa-shopping-cart"></i>Shop-2
-          </a>
-          <a href="http://tiktok.com/@tiktokshopmyanmar" 
-             class="flex items-center gap-1 bg-blue-500 text-white font-bold px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition text-sm sm:text-base">
-            <i class="fas fa-shopping-cart"></i>Shop-3
-          </a>
-        </div>
-
-        <!-- Search -->
-        <div class="search-container mt-0">
-          <input 
-            id="search" 
-            type="text" 
-            placeholder="Search products..." 
-            class="w-full p-2 rounded bg-gray-700 text-white focus:outline-none"
-          />
-        </div>
-
-        <!-- Product Grid -->
-        <div class="product-grid-container">
-          <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <!-- Products will load here -->
-          </div>
-        </div>
-      </main>
-    </div>
-  </div>
-
-  <!-- Overlay Selector -->
-  <div id="overlay" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-    <div class="bg-gray-800 rounded-lg p-6 w-80">
-      <h2 id="overlay-title" class="text-lg font-bold mb-4 text-white">Select Products</h2>
-      <div id="overlay-options" class="space-y-2"></div>
-      <button id="overlay-close" class="mt-4 bg-red-500 hover:bg-red-600 px-3 py-1 rounded w-full text-white">
-        Close
-      </button>
-    </div>
-  </div>
-
-  <!-- JS FOR MENU TOGGLE -->
-  <script>
-    const menuToggle = document.getElementById('menu-toggle');
-    const sidebar = document.getElementById('sidebar');
-
-    menuToggle?.addEventListener('click', () => {
-      sidebar.classList.toggle('hidden');
-    });
-  </script>
-
-  <!-- Product Loading Script -->
-  <script>
-    // Product files
-    const productFiles = [
-      { label: "Product List 1", value: "products.json" }
-    ];
-
-    let currentProducts = [];
-    let filteredProducts = [];
-
-    async function loadProducts(file) {
-      try {
-        const res = await fetch(file);
-        if (!res.ok) throw new Error("Failed to load");
-        currentProducts = await res.json();
-        filteredProducts = [...currentProducts];
-        displayProducts(filteredProducts);
-      } catch (e) {
-        console.error(e);
-        // If loading fails, show sample products
-        displayProducts([]);
-      }
+    <button class="view-details-btn">View Details</button>
+  `;
+  // Click handler
+  card.querySelector(".view-details-btn").addEventListener("click", (e)=>{
+    e.stopPropagation(); // Prevent card click
+    // If external link exists, open in new tab
+    if(product.link){
+      window.open(product.link,"_blank");
+    } else {
+      localStorage.setItem("selectedProduct", JSON.stringify(product));
+      window.location.href = "product_detail.html";
     }
+  });
+  grid.appendChild(card);
+}
 
-    function displayProducts(products) {
-      const grid = document.getElementById("product-grid");
-      grid.innerHTML = "";
-      
-      // Add sample products if none are loaded
-      if (products.length === 0) {
-        const sampleProducts = [
-          {
-            id: 1,
-            name: "ပရင့်ချိတ်",
-            price: 290.00,
-            category: "မြန်မာအမျိုးသမီးဝတ်",
-            description: "ပရင့်ချိတ် လက်ရှည် ဝမ်းဆက် ဘယ်ဖုံးလေး ချုပ်ထားပေးတယ်နော် ဆိုဒ် M,L,XL",
-            image: "https://thuwanawadi.vercel.app/shop/image/print.jpg",
-            link: "https://vt.tiktok.com/ZSHWLoSu3MNs1-7gGGN/"
-          },
-          {
-            id: 2,
-            name: "Smart Fitness Watch",
-            price: 89.99,
-            category: "Wearables",
-            description: "Track your health with a stylish smartwatch featuring heart rate monitor and GPS.",
-            image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2F0Y2h8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
-            link: "https://example.com/shop/fitnesswatch"
-          },
-          {
-            id: 3,
-            name: "Ergonomic Office Chair",
-            price: 129.99,
-            category: "Furniture",
-            description: "Comfortable and adjustable office chair with lumbar support for long working hours.",
-            image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y2hhaXJ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
-            link: "https://example.com/shop/officechair"
-          },
-          {
-            id: 4,
-            name: "4K Ultra HD Smart TV",
-            price: 499.99,
-            category: "Electronics",
-            description: "Stunning 4K resolution with built-in apps and voice control compatibility.",
-            image: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHZ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
-            link: "https://example.com/shop/smarttv"
-          }
-        ];
-        
-        sampleProducts.forEach((p) => appendProductCard(p));
-        return;
-      }
-      
-      products.forEach((p) => appendProductCard(p));
-    }
+// Load products
+products.forEach(p=>appendProductCard(p));
+</script>
 
-    function appendProductCard(product) {
-      const grid = document.getElementById("product-grid");
-      const card = document.createElement("div");
-      card.className = "product-card cursor-pointer rounded-lg overflow-hidden";
-      card.innerHTML = `
-        <div class="relative">
-          <img src="${product.image}" alt="${product.name}" class="product-image">
-        </div>
-        <div class="p-3">
-          <h3 class="text-sm font-semibold text-white truncate mb-1">${product.name}</h3>
-          <div class="flex items-center gap-1 mb-2">
-            <span class="price-tag">B${product.price}</span>
-            <span class="text-gray-400">|</span>
-            <span class="category-badge">${product.category}</span>
-          </div>
-          <button class="view-details-btn w-full py-2 rounded text-sm">
-            View Details
-          </button>
-        </div>`;
-      
-      // Use the product link if available, otherwise use the default behavior
-      card.addEventListener("click", () => {
-        if (product.link) {
-          window.open(product.link, '_blank');
-        } else {
-          localStorage.setItem("selectedProduct", JSON.stringify(product));
-          window.location.href = "product_detail.html";
-        }
-      });
-      
-      grid.appendChild(card);
-    }
-
-    // Search filter
-    document.getElementById("search").addEventListener("input", (e) => {
-      const term = e.target.value.toLowerCase();
-      filteredProducts = currentProducts.filter((p) =>
-        p.name.toLowerCase().includes(term) || p.category.toLowerCase().includes(term)
-      );
-      displayProducts(filteredProducts);
-    });
-
-    // Overlay
-    function openOverlay(title, files, callback) {
-      const overlay = document.getElementById("overlay");
-      const options = document.getElementById("overlay-options");
-      document.getElementById("overlay-title").innerText = title;
-      options.innerHTML = "";
-      files.forEach((f) => {
-        const btn = document.createElement("button");
-        btn.className =
-          "w-full text-left px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded text-white";
-        btn.innerText = f.label;
-        btn.onclick = () => {
-          callback(f.value);
-          overlay.classList.add("hidden");
-        };
-        options.appendChild(btn);
-      });
-      overlay.classList.remove("hidden");
-    }
-
-    document.getElementById("products-selector-btn").addEventListener("click", () => {
-      openOverlay("Select Products", productFiles, (f) => loadProducts(f));
-    });
-
-    document.getElementById("overlay-close").addEventListener("click", () => {
-      document.getElementById("overlay").classList.add("hidden");
-    });
-
-    // Default Load
-    document.addEventListener("DOMContentLoaded", () => {
-      // Try to load products, if fails, show sample products
-      loadProducts("https://thuwanawadi.vercel.app/shop/products.json");
-    });
-  </script>
 </body>
-      </html>
+</html>
