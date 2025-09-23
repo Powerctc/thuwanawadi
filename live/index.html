@@ -7,16 +7,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.43/moment-timezone-with-data.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: #0f172a;
             color: #e2e8f0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
         }
         .header {
             display: flex;
@@ -28,10 +23,7 @@
             top: 0;
             z-index: 100;
         }
-        .header h1 {
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
+        .header h1 { font-size: 1.2rem; font-weight: 600; }
         .header .controls button {
             background: #3b82f6;
             color: white;
@@ -42,29 +34,17 @@
             cursor: pointer;
             font-size: 0.9rem;
         }
-        .match-list {
-            padding: 16px;
-        }
+        .match-list { padding: 16px; }
         .match-card {
             background: #1e293b;
             border-radius: 12px;
             padding: 16px;
             margin-bottom: 16px;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s;
         }
-        .match-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        .league {
-            color: #60a5fa;
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-        }
+        .match-card:hover { transform: translateY(-2px); }
+        .league { color: #60a5fa; font-weight: 600; font-size: 0.9rem; margin-bottom: 8px; }
         .match-info {
             display: flex;
             align-items: center;
@@ -99,11 +79,6 @@
             font-weight: bold;
             font-size: 0.9rem;
         }
-        .time {
-            text-align: center;
-            font-size: 0.85rem;
-            color: #94a3b8;
-        }
         /* Modal */
         .modal {
             display: none;
@@ -125,11 +100,6 @@
             width: 100%;
             max-width: 500px;
             position: relative;
-            animation: slideUp 0.3s ease;
-        }
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
         }
         .close-btn {
             position: absolute;
@@ -157,18 +127,8 @@
             font-size: 1rem;
             font-weight: 500;
             cursor: pointer;
-            transition: background 0.2s;
         }
-        .stream-btn:hover {
-            background: #2563eb;
-        }
-        .stream-btn.live {
-            background: #ef4444;
-        }
-        .stream-btn.live:hover {
-            background: #dc2626;
-        }
-        /* Install Popup */
+        .stream-btn.live { background: #ef4444; }
         .install-popup {
             text-align: center;
             padding: 30px 20px;
@@ -178,13 +138,8 @@
             margin: 20px auto;
             display: block;
         }
-        .install-popup p {
-            margin: 15px 0;
-            font-size: 1rem;
-            color: #e2e8f0;
-        }
         .install-btn {
-            background: #0f9d58; /* Google Play Green */
+            background: #0f9d58;
             color: white;
             border: none;
             padding: 12px 30px;
@@ -193,18 +148,8 @@
             font-weight: 500;
             cursor: pointer;
             margin: 10px;
-            transition: background 0.2s;
         }
-        .install-btn:hover {
-            background: #0b8043;
-        }
-        .cancel-btn {
-            background: #64748b;
-        }
-        .cancel-btn:hover {
-            background: #475569;
-        }
-        /* Footer */
+        .cancel-btn { background: #64748b; }
         .footer {
             text-align: center;
             padding: 20px;
@@ -212,43 +157,27 @@
             font-size: 0.9rem;
             border-top: 1px solid #334155;
         }
-        /* Responsive */
         @media (max-width: 768px) {
-            .team img {
-                width: 40px;
-                height: 40px;
-            }
-            .team-name {
-                font-size: 0.8rem;
-                max-width: 80px;
-            }
-            .league {
-                font-size: 0.8rem;
-            }
-            .modal-content {
-                margin: 0 10px;
-            }
+            .team img { width: 40px; height: 40px; }
+            .team-name { font-size: 0.8rem; max-width: 80px; }
+            .modal-content { margin: 0 10px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
     <div class="header">
         <h1>MMFOT Live Football</h1>
         <div class="controls">
-            <!-- Fullscreen button REMOVED -->
             <button id="reload_btn">Reload</button>
         </div>
     </div>
 
-    <!-- Match List -->
     <div class="match-list">
         <h2 style="color: #60a5fa; margin-bottom: 20px; text-align: center;">Hot Football Matches</h2>
         <div id="matchContainer"></div>
     </div>
 
-    <!-- Match Detail Modal -->
     <div id="matchModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -257,23 +186,17 @@
         </div>
     </div>
 
-    <!-- Install Player Popup -->
     <div id="installPopup" class="modal">
         <div class="install-popup">
             <h3>Video Player Not Found</h3>
-            <p>Please install our official Leone Player to watch live streams.</p>
-            <img src="https://thuwanawadi.vercel.app/live/player-logo.png" alt="Leone Player Logo">
-            <button class="install-btn" onclick="installPlayer()">
-                📲 Install Leone Player from Google Play
-            </button>
+            <p>Please install Leone Player to watch live streams.</p>
+            <img src="https://thuwanawadi.vercel.app/live/player-logo.png" alt="Leone Player">
+            <button class="install-btn" onclick="installPlayer()">Install from Play Store</button>
             <button class="install-btn cancel-btn" onclick="closeInstallPopup()">Cancel</button>
         </div>
     </div>
 
-    <!-- Footer -->
-    <div class="footer">
-        version 2.0
-    </div>
+    <div class="footer">version 2.0</div>
 
     <script>
         const tg = window.Telegram?.WebApp;
@@ -298,12 +221,9 @@
             },
 
             initControls() {
-                // Reload button only
                 document.getElementById('reload_btn').addEventListener('click', () => {
                     window.location.reload();
                 });
-
-                // Close modal
                 document.querySelector('.close-btn').addEventListener('click', () => {
                     this.closeModal();
                 });
@@ -319,7 +239,6 @@
                     }
                     return decodeURIComponent(decrypted);
                 } catch (error) {
-                    console.warn("Decrypt failed:", error);
                     return encryptedBase64;
                 }
             },
@@ -341,51 +260,29 @@
             async loadMatches() {
                 try {
                     const response = await fetch(this.matchesUrl);
-                    if (!response.ok) throw new Error('Failed to fetch matches');
-                    
                     const encryptedData = await response.json();
                     const decryptedData = this.decryptObject(encryptedData, this.encryptionKey);
                     const matches = decryptedData.context || [];
-
                     this.displayHotMatches(matches);
                 } catch (error) {
-                    console.error("Error loading matches:", error);
-                    document.getElementById('matchContainer').innerHTML = `
-                        <p style="text-align: center; color: #ef4444;">Failed to load matches. Please try again later.</p>
-                    `;
+                    document.getElementById('matchContainer').innerHTML = `<p style="text-align:center;color:red;">Failed to load matches.</p>`;
                 }
             },
 
             async loadStreamData() {
                 try {
                     const response = await fetch(this.streamsUrl);
-                    if (!response.ok) throw new Error('Failed to fetch stream data');
-                    
                     this.streamData = await response.json();
                 } catch (error) {
-                    console.error("Error loading stream ", error);
+                    console.error("Stream data load failed:", error);
                 }
             },
 
             displayHotMatches(matches) {
-                const hotLeagues = [
-                    'Premier League', 'La Liga', 'Serie A', 'Bundesliga', 'Ligue 1',
-                    'UEFA Champions League', 'UEFA Europa League', 'MLS', 'Saudi Pro League'
-                ];
-
-                this.hotMatches = matches.filter(match => 
-                    hotLeagues.includes(match.league)
-                );
-
+                const hotLeagues = ['Premier League', 'La Liga', 'Serie A', 'Bundesliga', 'Ligue 1', 'UEFA Champions League'];
+                this.hotMatches = matches.filter(m => hotLeagues.includes(m.league));
                 const container = document.getElementById('matchContainer');
                 container.innerHTML = '';
-
-                if (this.hotMatches.length === 0) {
-                    container.innerHTML = `
-                        <p style="text-align: center; color: #94a3b8;">No hot matches available at the moment.</p>
-                    `;
-                    return;
-                }
 
                 this.hotMatches.forEach((match, index) => {
                     const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -396,13 +293,11 @@
                     const card = document.createElement('div');
                     card.className = 'match-card';
                     card.innerHTML = `
-                        <div class="league">${match.league || 'Unknown League'}</div>
+                        <div class="league">${match.league || 'League'}</div>
                         <div class="match-info">
                             <div class="team">
-                                <img src="${match.home_img || 'https://via.placeholder.com/50'}" 
-                                     onerror="this.src='https://via.placeholder.com/50'" 
-                                     alt="${match.home_name}">
-                                <div class="team-name">${match.home_name || 'Home Team'}</div>
+                                <img src="${match.home_img || 'https://via.placeholder.com/50'}" onerror="this.src='https://via.placeholder.com/50'">
+                                <div class="team-name">${match.home_name || 'Home'}</div>
                             </div>
                             <div class="vs">
                                 <div>${formattedDate}</div>
@@ -410,34 +305,20 @@
                                 <div>VS</div>
                             </div>
                             <div class="team">
-                                <img src="${match.away_img || 'https://via.placeholder.com/50'}" 
-                                     onerror="this.src='https://via.placeholder.com/50'" 
-                                     alt="${match.away_name}">
-                                <div class="team-name">${match.away_name || 'Away Team'}</div>
+                                <img src="${match.away_img || 'https://via.placeholder.com/50'}" onerror="this.src='https://via.placeholder.com/50'">
+                                <div class="team-name">${match.away_name || 'Away'}</div>
                             </div>
                         </div>
                     `;
-
-                    // Use index (1-based) as key for liveurl.json
-                    card.addEventListener('click', () => {
-                        this.showMatchDetail(match, index + 1);
-                    });
-
+                    card.addEventListener('click', () => this.showMatchDetail(match, index + 1));
                     container.appendChild(card);
                 });
             },
 
             showMatchDetail(match, matchIndex) {
                 this.selectedMatch = match;
-                
-                // Set title
-                document.getElementById('modalMatchTitle').innerText = 
-                    `${match.home_name} vs ${match.away_name}`;
-
-                // Generate stream buttons using match index
+                document.getElementById('modalMatchTitle').innerText = `${match.home_name} vs ${match.away_name}`;
                 this.renderStreamButtons(matchIndex);
-
-                // Show modal
                 document.getElementById('matchModal').style.display = 'flex';
             },
 
@@ -445,7 +326,6 @@
                 const container = document.getElementById('streamButtonsContainer');
                 container.innerHTML = '';
 
-                // Create key like "match_1", "match_2", etc.
                 const key = `match_${matchIndex}`;
                 const streams = this.streamData[key] || {};
 
@@ -457,53 +337,59 @@
                 ];
 
                 let hasStreams = false;
-
                 streamTypes.forEach(type => {
                     if (streams[type.key]) {
                         const btn = document.createElement('button');
                         btn.className = type.className;
                         btn.innerText = type.label;
                         btn.addEventListener('click', () => {
-                            this.playStream(streams[type.key]);
+                            this.openWithExternalPlayer(streams[type.key].trim());
                         });
                         container.appendChild(btn);
                         hasStreams = true;
                     }
                 });
 
-                // If no streams available
                 if (!hasStreams) {
-                    container.innerHTML = `
-                        <p style="text-align: center; color: #fbbf24; margin: 20px 0; font-weight:500;">
-                            ⏳ Streams will be available 15 minutes before kickoff!
-                        </p>
-                        <p style="text-align: center; color: #94a3b8; font-size: 0.9rem;">
-                            Please check back later.
-                        </p>
-                    `;
+                    container.innerHTML = `<p style="text-align:center;color:#fbbf24;">⏳ Streams not available yet.</p>`;
                 }
             },
 
-            playStream(url) {
-                // Trim whitespace from URL
-                url = url.trim();
-                
-                if (!url) {
-                    alert("Stream URL is invalid or empty.");
+            // ✅ MAIN FUNCTION: OPEN WITH INTENT + FALLBACK
+            openWithExternalPlayer(url) {
+                const isAndroid = /Android/i.test(navigator.userAgent);
+                if (!isAndroid) {
+                    alert('Live streaming is only available on Android devices.');
                     return;
                 }
 
-                // Try to open with Leone Player
-                const encodedUrl = encodeURIComponent(url);
-                const leoneUrl = `leoneplayer://play?url=${encodedUrl}`;
+                const intentUrl = `intent:${url}#Intent;package=com.genuine.leone;type=video/*;S.title=MMFOT%20LIVE;end`;
 
-                // Attempt to open Leone Player
-                window.location.href = leoneUrl;
+                let timeout;
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.src = intentUrl;
+                document.body.appendChild(iframe);
 
-                // If Leone Player is not installed, redirect to Play Store after 1 second
+                // Clean up iframe
                 setTimeout(() => {
-                    this.showInstallPopup();
+                    if (iframe.parentNode) {
+                        document.body.removeChild(iframe);
+                    }
                 }, 1000);
+
+                // Fallback to install modal
+                timeout = setTimeout(() => {
+                    this.showInstallPopup();
+                }, 1500);
+
+                // Cancel fallback if app opens (user leaves browser)
+                const handleVisibility = () => {
+                    if (document.visibilityState === 'hidden') {
+                        clearTimeout(timeout);
+                    }
+                };
+                document.addEventListener('visibilitychange', handleVisibility, { once: true });
             },
 
             showInstallPopup() {
@@ -511,7 +397,6 @@
             },
 
             installPlayer() {
-                // Redirect to Google Play Store
                 window.open('https://play.google.com/store/apps/details?id=com.genuine.leone', '_blank');
                 this.closeInstallPopup();
             },
@@ -525,7 +410,6 @@
             }
         };
 
-        // Initialize App
         document.addEventListener('DOMContentLoaded', () => {
             App.init();
         });
