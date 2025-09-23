@@ -237,7 +237,7 @@
     <div class="header">
         <h1>MMFOT Live Football</h1>
         <div class="controls">
-            <!-- Fullscreen button REMOVED as requested -->
+            <!-- Fullscreen button REMOVED -->
             <button id="reload_btn">Reload</button>
         </div>
     </div>
@@ -287,6 +287,7 @@
             streamsUrl: "https://thuwanawadi.vercel.app/live/liveurl.json",
             selectedMatch: null,
             streamData: {},
+            hotMatches: [],
 
             init() {
                 this.initControls();
@@ -295,7 +296,7 @@
             },
 
             initControls() {
-                // Reload button only (Fullscreen removed)
+                // Reload button only
                 document.getElementById('reload_btn').addEventListener('click', () => {
                     window.location.reload();
                 });
@@ -360,7 +361,7 @@
                     
                     this.streamData = await response.json();
                 } catch (error) {
-                    console.error("Error loading stream data:", error);
+                    console.error("Error loading stream ", error);
                 }
             },
 
@@ -370,21 +371,21 @@
                     'UEFA Champions League', 'UEFA Europa League', 'MLS', 'Saudi Pro League'
                 ];
 
-                const hotMatches = matches.filter(match => 
+                this.hotMatches = matches.filter(match => 
                     hotLeagues.includes(match.league)
                 );
 
                 const container = document.getElementById('matchContainer');
                 container.innerHTML = '';
 
-                if (hotMatches.length === 0) {
+                if (this.hotMatches.length === 0) {
                     container.innerHTML = `
                         <p style="text-align: center; color: #94a3b8;">No hot matches available at the moment.</p>
                     `;
                     return;
                 }
 
-                hotMatches.forEach(match => {
+                this.hotMatches.forEach((match, index) => {
                     const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
                     const matchDateTime = moment.tz(match.match_time * 1000, userTimezone);
                     const formattedDate = matchDateTime.format('MMM D');
@@ -415,39 +416,36 @@
                         </div>
                     `;
 
+                    // Use index (1-based) as key for liveurl.json
                     card.addEventListener('click', () => {
-                        this.showMatchDetail(match);
+                        this.showMatchDetail(match, index + 1);
                     });
 
                     container.appendChild(card);
                 });
             },
 
-            showMatchDetail(match) {
+            showMatchDetail(match, matchIndex) {
                 this.selectedMatch = match;
                 
                 // Set title
                 document.getElementById('modalMatchTitle').innerText = 
                     `${match.home_name} vs ${match.away_name}`;
 
-                // Generate stream buttons
-                this.renderStreamButtons();
+                // Generate stream buttons using match index
+                this.renderStreamButtons(matchIndex);
 
                 // Show modal
                 document.getElementById('matchModal').style.display = 'flex';
             },
 
-            renderStreamButtons() {
+            renderStreamButtons(matchIndex) {
                 const container = document.getElementById('streamButtonsContainer');
                 container.innerHTML = '';
 
-                // Create a key from team names (instead of match.id)
-                const key = `${this.cleanTeamName(match.home_name)}_vs_${this.cleanTeamName(match.away_name)}`.toLowerCase();
-                
-                // Also try alternative key format
-                const altKey = `${this.cleanTeamName(match.away_name)}_vs_${this.cleanTeamName(match.home_name)}`.toLowerCase();
-
-                let streams = this.streamData[key] || this.streamData[altKey] || {};
+                // Create key like "match_1", "match_2", etc.
+                const key = `match_${matchIndex}`;
+                const streams = this.streamData[key] || {};
 
                 const streamTypes = [
                     { key: 'live_sd_1', label: 'Live SD (1)', className: 'stream-btn' },
@@ -455,6 +453,8 @@
                     { key: 'live_sd_2', label: 'Live SD (2)', className: 'stream-btn' },
                     { key: 'live_hd_2', label: 'Live HD (2)', className: 'stream-btn live' }
                 ];
+
+                let hasStreams = false;
 
                 streamTypes.forEach(type => {
                     if (streams[type.key]) {
@@ -465,11 +465,12 @@
                             this.playStream(streams[type.key]);
                         });
                         container.appendChild(btn);
+                        hasStreams = true;
                     }
                 });
 
                 // If no streams available
-                if (container.children.length === 0) {
+                if (!hasStreams) {
                     container.innerHTML = `
                         <p style="text-align: center; color: #fbbf24; margin: 20px 0; font-weight:500;">
                             ⏳ Streams will be available 15 minutes before kickoff!
@@ -481,16 +482,15 @@
                 }
             },
 
-            // Helper function to clean team names for key matching
-            cleanTeamName(name) {
-                if (!name) return '';
-                return name
-                    .toLowerCase()
-                    .replace(/\s+/g, '_')
-                    .replace(/[^a-z0-9_]/g, '');
-            },
-
             playStream(url) {
+                // Trim whitespace from URL (fixes space issue)
+                url = url.trim();
+                
+                if (!url) {
+                    alert("Stream URL is invalid or empty.");
+                    return;
+                }
+
                 // Check if player is available (for demo, always false)
                 if (this.isPlayerAvailable()) {
                     // Open in player
