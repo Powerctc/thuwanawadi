@@ -14,8 +14,8 @@
   "match_3": {
     "live_sd_1": "https://pull.niues.live/live/stream-356042_lsd.m3u8?auth_key=1758743000-0-0-442e5830ad7b299f6ee4d67475bb6a66",
     "live_hd_1": "https://pull.niues.live/live/stream-356042_lhd.m3u8?auth_key=1758743000-0-0-3d7b9237ac739dd96d296d518422accc",
-    "live_sd_2": "https://pull.niur.live/live/stream-9912110_lsd.m3u8?txSecret=8e2ca3fa6080cf76a3c02fa88c70253a&txTime=68d46d3b",
-    "live_hd_2": "https://pull.niur.live/live/stream-9912110_lhd.m3u8?txSecret=5a7b8d2b09491e977209e5819c306238&txTime=68d46d3b"
+    "live_sd_2": "https://pull.niues.live/live/stream-356042_lsd.m3u8?auth_key=1758743000-0-0-442e5830ad7b299f6ee4d67475bb6a66",
+    "live_hd_2": "https://pull.niues.live/live/stream-356042_lhd.m3u8?auth_key=1758743000-0-0-3d7b9237ac739dd96d296d518422accc"
   },
   "match_4": {
     "live_sd_1": "https://pullsgp.yyzb456.top/live/stream-669624_lsd.flv?auth_key=1758733864-0-0-ff1aa4a25cdeb1c6e4b73416a4b4f840",
