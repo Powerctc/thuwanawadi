@@ -128,33 +128,40 @@
 
   <!-- ACCESS DENIED POPUP -->
   <div id="access-denied-popup" class="fixed inset-0 bg-black/70 z-[60] hidden">
-    <div class="absolute inset-0 flex items-center justify-center p-4">
-      <div class="bg-gray-900 rounded-xl shadow-xl p-6 w-full max-w-md">
-        <h3 class="text-xl font-bold text-red-400 flex items-center gap-2">
-          <i class="fa-solid fa-triangle-exclamation"></i> Access Denied
-        </h3>
-        <p class="text-sm text-gray-300 mt-2">Your device is not approved or has expired.</p>
+  <div class="absolute inset-0 flex items-center justify-center p-4">
+    <div class="bg-gray-900 rounded-xl shadow-xl p-6 w-full max-w-md">
+      <h3 class="text-xl font-bold text-red-400 flex items-center gap-2">
+        <i class="fa-solid fa-triangle-exclamation"></i> Access Denied
+      </h3>
+      <p class="text-sm text-gray-300 mt-2">Your device is not approved or has expired.->telegram Group မှာidလာပေးပါရန်</p>
 
-        <div class="mt-4">
-          <label class="text-xs text-gray-400">Device ID</label>
-          <div class="flex gap-2 mt-1">
-            <input id="device-id-display" class="flex-1 bg-gray-800 rounded px-3 py-2 text-sm" readonly />
-            <button onclick="copyDeviceId()" class="bg-yellow-500 text-black px-3 py-2 rounded font-semibold">
-              Copy
-            </button>
-          </div>
-        </div>
-
-        <div id="popup-expiry-msg" class="text-xs text-red-400 mt-3"></div>
-
-        <div class="mt-5 text-right">
-          <button class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded" onclick="document.getElementById('access-denied-popup').classList.add('hidden')">
-            Close
+      <div class="mt-4">
+        <label class="text-xs text-gray-400">Device ID</label>
+        <div class="flex gap-2 mt-1">
+          <input id="device-id-display" class="flex-1 bg-gray-800 rounded px-3 py-2 text-sm" readonly />
+          <button onclick="copyDeviceId()" class="bg-yellow-500 text-black px-3 py-2 rounded font-semibold">
+            Copy
           </button>
         </div>
       </div>
+
+      <div id="popup-expiry-msg" class="text-xs text-red-400 mt-3"></div>
+
+      <div class="mt-5 flex justify-between">
+        <!-- Contact button -->
+        <a href="https://t.me/next_play_tv" target="_blank" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded text-white font-semibold flex items-center gap-2">
+          <i class="fab fa-telegram"></i> Contact (Telegram)
+        </a>
+
+        <!-- Close button -->
+        <button class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded" 
+                onclick="document.getElementById('access-denied-popup').classList.add('hidden')">
+          Close
+        </button>
+      </div>
     </div>
   </div>
+</div>
 
   <!-- MAIN SCRIPT -->
   <script>
@@ -374,4 +381,4 @@
     // ====== END ACCESS CONTROL ======
   </script>
 </body>
-            </html>
+  </html>
