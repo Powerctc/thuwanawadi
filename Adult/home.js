@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function fetchMovies() {
     try {
-      const response = await fetch('movies.json'); // Path to your JSON file
+      const response = await fetch('24hours.json'); // Path to your JSON file
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
