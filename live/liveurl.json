@@ -6,15 +6,15 @@
     "live_hd_2": "https://pull.niur.live/live/stream-9912041_lhd.m3u8?txSecret=0448eddce7f55b50e0d4a5acb93a0281&txTime=68d98678"
   },
   "match_2": {
-    "live_sd_1": "https://pull01.yyzb456.top/live/stream-492306_lsd.flv?auth_key=1759001767-0-0-6252302c5be0f6ef862480609f5c7a37",
+    "live_sd_1": "https://pull01.yyzb456.top/live/stream-505050_lsd.flv?auth_key=1759251967-0-0-266c1bdfb4b2e844aea2338cd7e6a61f",
     "live_hd_1": "https://pull01.yyzb456.top/live/stream-492306_lhd.flv?auth_key=1759001767-0-0-332c8e561f1290c55c42196416b14c97",
-    "live_sd_2": "https://pull.niur.live/live/stream-344370_lsd.m3u8?txSecret=9174546d4c49cb38f75b5bccb65fdeb2&txTime=68d8837c",
-    "live_hd_2": "https://pull.niur.live/live/stream-344370_lhd.m3u8?txSecret=a22d39429fe58d832322c852b901a00f&txTime=68d8837c"
+    "live_sd_2": "https://pull01.yyzb456.top/live/stream-505050_lsd.flv?auth_key=1759251967-0-0-266c1bdfb4b2e844aea2338cd7e6a61f",
+    "live_hd_2": "https://pull01.yyzb456.top/live/stream-505050_lhd.flv?auth_key=1759251967-0-0-d9c8ca5e4135cc20b0f829589bf65d86"
   },
   "match_3": {
     "live_sd_1": "https://pull01.yyzb456.top/live/stream-752338_lsd.flv?auth_key=1758984847-0-0-61373472d21ec4fa3c3c8de741543e36",
     "live_hd_1": "https://pull01.yyzb456.top/live/stream-752338_lhd.flv?auth_key=1758984787-0-0-180be33c4db35b3a254259a2197d1f78",
-    "live_sd_2": "https://pull.niues.live/live/stream-334434_lsd.m3u8?auth_key=1758985057-0-0-36aeacd2d9039f7cdb175801d2dfcf43",
+    "live_sd_2": "https://pull01.yyzb456.top/live/stream-505050_lsd.flv?auth_key=1759251967-0-0-266c1bdfb4b2e844aea2338cd7e6a61f",
     "live_hd_2": "https://pull.niues.live/live/stream-334434_lhd.m3u8?auth_key=1758985057-0-0-74285be3346929f0851cc0348ea865a3"
   },
   "match_4": {
