@@ -8,8 +8,8 @@
   "match_2": {
     "live_sd_1": "https://pull01.yyzb456.top/live/stream-505050_lsd.flv?auth_key=1759251967-0-0-266c1bdfb4b2e844aea2338cd7e6a61f",
     "live_hd_1": "https://pull01.yyzb456.top/live/stream-492306_lhd.flv?auth_key=1759001767-0-0-332c8e561f1290c55c42196416b14c97",
-    "live_sd_2": "https://pull01.yyzb456.top/live/stream-505050_lsd.flv?auth_key=1759251967-0-0-266c1bdfb4b2e844aea2338cd7e6a61f",
-    "live_hd_2": "https://pull01.yyzb456.top/live/stream-505050_lhd.flv?auth_key=1759251967-0-0-d9c8ca5e4135cc20b0f829589bf65d86"
+    "live_sd_2": "https://pull.niur.live/live/stream-9912100_lsd.m3u8?txSecret=86fc51eb882bf5c521b590ce019ddf30&txTime=68dc5588",
+    "live_hd_2": "https://pull.niur.live/live/stream-9912100_lhd.m3u8?txSecret=b0996e32d6c842039b003054f0fe8894&txTime=68dc5588"
   },
   "match_3": {
     "live_sd_1": "https://pull01.yyzb456.top/live/stream-752338_lsd.flv?auth_key=1758984847-0-0-61373472d21ec4fa3c3c8de741543e36",
