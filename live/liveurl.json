@@ -36,8 +36,8 @@
     "live_hd_2": "https://pull.niues.live/live/stream-511367_lhd.m3u8?auth_key=1758743600-0-0-85c88c6da69d52cbd6082bad6e03cc87"
   },
   "match_7": {
-    "live_sd_1": "https://example.com/real_madrid_sd1.m3u8",
-    "live_hd_1": "https://example.com/real_madrid_hd1.m3u8",
+    "live_sd_1": "https://pull.niues.live/live/stream-304148_lsd.m3u8?auth_key=1759262840-0-0-8ba0418a17be00748a85c0f95982280c",
+    "live_hd_1": "https://pull.niues.live/live/stream-304148_lhd.m3u8?auth_key=1759262840-0-0-c196f0e7b55906ab301bf1e3ef59f14b",
     "live_sd_2": "https://example.com/athletic_sd1.m3u8",
     "live_hd_2": "https://example.com/athletic_hd1.m3u8"
   }
