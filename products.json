@@ -1,5 +1,14 @@
 [
   {
+    "id": 8,
+    "name": "လုံချီ",
+    "price": 430.00,
+    "category": "မြန်မာအမျိုးသားဝတ်",
+    "description": "ငါးကွင်းငါးရောင်ဈေး",
+    "image": "https://thuwanawadi.vercel.app/shop/image/lonegyi.jpg",
+    "link": "https://vt.tiktok.com/ZSHWLoSu3MNs1-7gGGN/"
+  },
+  {
     "id": 1,
     "name": "ပရင့်ချိတ်",
     "price": 290.00,
