@@ -25,6 +25,11 @@
       border-radius: 0.5rem;
       font-weight: bold;
       transition: background-color 0.2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin: 0.25rem 0;
     }
     .buy-button:hover {
       background-color: #059669;
@@ -67,6 +72,28 @@
       }
 
       function displayProductDetails(product) {
+        // စစ်ဆေး: link သည် array လား သို့မဟုတ် string လား
+        let buyButtonsHtml = '';
+        if (Array.isArray(product.link)) {
+          product.link.forEach((url, index) => {
+            if (url) {
+              buyButtonsHtml += `
+                <a href="${url}" target="_blank" class="buy-button">
+                  <i class="fas fa-shopping-cart"></i> Buy Now -${index + 1}
+                </a>
+              `;
+            }
+          });
+        } else if (product.link) {
+          buyButtonsHtml = `
+            <a href="${product.link}" target="_blank" class="buy-button">
+              <i class="fas fa-shopping-cart"></i> Buy Now
+            </a>
+          `;
+        } else {
+          buyButtonsHtml = `<p class="text-red-400">No purchase link available.</p>`;
+        }
+
         container.innerHTML = `
           <img src="${product.image}" alt="${product.name}" class="product-image mb-4 sm:mb-6 md:mb-0">
           <div class="flex flex-col items-center md:items-start text-center md:text-left">
@@ -74,9 +101,9 @@
             <p class="text-green-400 text-xl font-semibold mb-2">฿${product.price}</p>
             <p class="text-gray-300 text-lg mb-4">${product.category}</p>
             <p class="text-gray-400 mb-6">${product.description}</p>
-            <a href="${product.link}" target="_blank" class="buy-button flex items-center justify-center gap-2">
-              <i class="fas fa-shopping-cart"></i> Buy Now
-            </a>
+            <div class="flex flex-col items-center md:items-start w-full">
+              ${buyButtonsHtml}
+            </div>
           </div>
         `;
       }
