@@ -11,6 +11,15 @@
 ]
   },
   {
+    "id": 9,
+    "name": "မိုဟာနား",
+    "price": 190.00,
+    "category": "မြန်မာအမျိုးသမီးဝမ်းဆက်",
+    "description": "မိုဟာနာဖောင်းကြွအသား‌ဘောင်းဘီရှည်+ခါးကြိုးပါ ကီလို45,65ထိရ",
+    "image": "https://thuwanawadi.vercel.app/shop/image/မိုဟာနာ.jpg",
+   "link": "https://vt.tiktok.com/ZSH7e6FEue4Kv-zK7hF/"
+  },
+    {
     "id": 8,
     "name": "လုံချီ",
     "price": 430.00,
