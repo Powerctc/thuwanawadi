@@ -10,6 +10,16 @@
 "https://www.facebook.com/share/17PHKxGeQ3/"
 ]
   },
+  
+  {
+    "id": 14,
+    "name": "ချည်သား",
+    "price": 130.00,
+    "category": "မြန်မာအမျိုးသမီးဝမ်းဆက်",
+    "description": "ချစ်စရာကောင်းချည်သားအကွက်+ဘီတို Kg.43,ချစ်စရာကောင်းချည်သားအကွက်ဘီတို",
+    "image": "https://thuwanawadi.vercel.app/shop/image/ချည်သားဘီတို.jpg",
+   "link": "https://vt.tiktok.com/ZSH7ekmUTFEP7-RBj6z/"
+  },
   {
     "id": 10,
     "name": "မိုဟာနား",
