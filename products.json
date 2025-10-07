@@ -10,7 +10,15 @@
 "https://www.facebook.com/share/17PHKxGeQ3/"
 ]
   },
-  
+  {
+    "id": 15,
+    "name": "Xiaomi 5",
+    "price": 1250.12,
+    "category": "Mobile Phone",
+    "description": "Global Version",
+    "image": "https://thuwanawadi.vercel.app/shop/image/Xiaomi5.jpg",
+    "link": "https://vt.tiktok.com/ZSH7MMLxtPjP6-hy8WW/"
+  },
   {
     "id": 14,
     "name": "ချည်သား",
