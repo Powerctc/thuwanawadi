@@ -11,6 +11,15 @@
 ]
   },
   {
+    "id": 16,
+    "name": "Samsung Galaxy  S25 ultra 5G",
+    "price": 1660.06,
+    "category": "Mobile Phone",
+    "description": "(แนะนำ) Sansung S25 Ultra [COD] 5G ประกัน 1 ปี! RAM 16GB+1TB หน้าจอ 7.3 นิ้ว ชาร์จเร็ว 8000mAh รองรับเกม ปลดล็อคด้วยลายนิ้วมือ/ใบหน้า Android 14 ราคาถูก",
+    "image": "https://thuwanawadi.vercel.app/shop/image/s25ultra.jpg",
+    "link": "https://vt.tiktok.com/ZSH79prT65jov-ByTiC/"
+  },
+  {
     "id": 15,
     "name": "Xiaomi 15",
     "price": 1250.12,
