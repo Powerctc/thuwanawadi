@@ -22,7 +22,7 @@
       #menu-toggle { display: none !important; }
     }
 
-    /* Marquee Wrapper - Reduced top margin */
+    /* Marquee Wrapper */
     .marquee-wrapper {
       border: 2px solid #ffcc00;
       border-radius: 8px;
@@ -126,6 +126,12 @@
     .product-grid-container {
       padding: 1rem;
       margin: 0;
+    }
+
+    /* Ensure focus works on TV */
+    button:focus {
+      outline: 2px solid #3b82f6;
+      outline-offset: 2px;
     }
   </style>
 </head>
@@ -267,7 +273,7 @@
 
         <!-- Product Grid -->
         <div class="product-grid-container">
-          <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 justify-items-center w-full max-w-6xl mx-auto">
             <!-- Products will load here -->
           </div>
         </div>
@@ -362,9 +368,10 @@
 
     function appendProductCard(product) {
       const grid = document.getElementById("product-grid");
-      const card = document.createElement("div");
+      const card = document.createElement("button"); // ✅ Button အဖြစ် ပြောင်းထားပါသည်
+      card.type = "button"; // important for accessibility
       card.className =
-        "cursor-pointer bg-gray-800 rounded-lg overflow-hidden shadow hover:shadow-lg transition";
+        "w-full text-left cursor-pointer bg-gray-800 rounded-lg overflow-hidden shadow hover:shadow-lg transition";
       card.innerHTML = `
         <img src="${product.image}" alt="${product.name}" class="w-full h-40 object-cover">
         <div class="p-4">
@@ -418,10 +425,15 @@
       document.getElementById("overlay").classList.add("hidden");
     });
 
-    // Default Load
+    // Default Load + Auto Focus First Product
     document.addEventListener("DOMContentLoaded", () => {
       loadProducts("https://thuwanawadi.vercel.app/products.json");
+
+      setTimeout(() => {
+        const firstButton = document.querySelector("#product-grid button");
+        if (firstButton) firstButton.focus();
+      }, 500);
     });
   </script>
 </body>
-         </html>
+  </html>
